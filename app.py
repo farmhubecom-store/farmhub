@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from datetime import datetime
-from sqlalchemy import func
+from sqlalchemy import func, text
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
@@ -19,6 +19,38 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:/
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 db = SQLAlchemy(app)
+
+# Auto-migrate database if needed
+def auto_migrate_database():
+    """Automatically add missing columns to existing database"""
+    try:
+        # Check if commission_paid column exists
+        inspector = db.inspect(db.engine)
+        shop_columns = [col['name'] for col in inspector.get_columns('shop')]
+
+        if 'commission_paid' not in shop_columns:
+            print("Adding missing commission_paid column to Shop table...")
+
+            # Use raw SQL to add the column
+            with db.engine.connect() as conn:
+                if str(db.engine.url).startswith('sqlite'):
+                    conn.execute(text("ALTER TABLE shop ADD COLUMN commission_paid BOOLEAN DEFAULT 0"))
+                else:
+                    # PostgreSQL
+                    conn.execute(text("ALTER TABLE shop ADD COLUMN commission_paid BOOLEAN DEFAULT FALSE"))
+                conn.commit()
+
+            print("✓ Successfully added commission_paid column")
+        else:
+            print("commission_paid column already exists")
+
+    except Exception as e:
+        print(f"Auto-migration failed: {e}")
+        # Don't fail the app startup if migration fails
+
+# Run auto-migration
+with app.app_context():
+    auto_migrate_database()
 
 # Configure Cloudinary
 cloudinary.config(
@@ -86,6 +118,7 @@ class Shop(db.Model):
     total_income = db.Column(db.Float, default=0.0)  # Track total income for commission threshold
     commission_payment_status = db.Column(db.String(20), default='clear')  # 'clear', 'pending', 'blocked'
     commission_amount_owed = db.Column(db.Float, default=0.0)  # Current amount owed in commission
+    commission_paid = db.Column(db.Boolean, default=False)  # Whether shop has paid the one-time commission
     commission_paid = db.Column(db.Boolean, default=False)  # Whether shop has paid the one-time commission
 
 
