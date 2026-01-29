@@ -5,6 +5,9 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from sqlalchemy import func
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 
 from werkzeug.utils import secure_filename
@@ -16,6 +19,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:/
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 db = SQLAlchemy(app)
+
+# Configure Cloudinary
+cloudinary.config(
+    cloud_name='dg3w9gpfn',
+    api_key='854776724223841',
+    api_secret='GLY9xeg5RqBVL6YE0ehIDWhY0K0'
+)
 
 # Message model for user-shop chat
 class Message(db.Model):
@@ -294,12 +304,9 @@ def seller_commission_payment():
             return redirect(url_for('seller_commission_payment'))
         
         # Save payment proof
-        filename = secure_filename(f"payment_proof_{shop_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}.{payment_proof.filename.rsplit('.', 1)[1].lower()}")
-        proof_folder = os.path.join('static', 'images', 'payment-proofs')
-        os.makedirs(proof_folder, exist_ok=True)
-        proof_path = os.path.join(proof_folder, filename)
-        payment_proof.save(proof_path)
-        proof_path = '/' + proof_path.replace('\\', '/').replace(os.path.sep, '/')
+        # Upload to Cloudinary
+        upload_result = cloudinary.uploader.upload(payment_proof, folder="payment-proofs")
+        proof_path = upload_result['secure_url']
         
         # Create commission payment record
         commission_payment = CommissionPayment(
@@ -1111,29 +1118,9 @@ def upload_user_profile_image():
         try:
             user = User.query.get_or_404(user_id)
             
-            # Remove old profile image if it exists
-            if user.profile_image:
-                old_path = user.profile_image.lstrip('/')
-                if os.path.exists(old_path):
-                    try:
-                        os.remove(old_path)
-                    except Exception:
-                        pass
-
-            filename = secure_filename(file.filename)
-            # Add timestamp to filename to avoid conflicts
-            timestamp = str(int(datetime.utcnow().timestamp()))
-            name, ext = os.path.splitext(filename)
-            filename = f"user_{user_id}_{timestamp}{ext}"
-            
-            # Ensure profile upload folder exists
-            os.makedirs(app.config['PROFILE_UPLOAD_FOLDER'], exist_ok=True)
-            
-            file_path = os.path.join(app.config['PROFILE_UPLOAD_FOLDER'], filename)
-            file.save(file_path)
-            
-            # Store relative path in database
-            user.profile_image = '/' + file_path.replace('\\', '/').replace(os.path.sep, '/')
+            # Upload to Cloudinary
+            upload_result = cloudinary.uploader.upload(file, folder="profile-images")
+            user.profile_image = upload_result['secure_url']
             db.session.commit()
             
             # Update session
@@ -1168,29 +1155,9 @@ def upload_shop_profile_image():
         try:
             shop = Shop.query.get_or_404(shop_id)
             
-            # Remove old profile image if it exists
-            if shop.profile_image:
-                old_path = shop.profile_image.lstrip('/')
-                if os.path.exists(old_path):
-                    try:
-                        os.remove(old_path)
-                    except Exception:
-                        pass
-
-            filename = secure_filename(file.filename)
-            # Add timestamp to filename to avoid conflicts
-            timestamp = str(int(datetime.utcnow().timestamp()))
-            name, ext = os.path.splitext(filename)
-            filename = f"shop_{shop_id}_{timestamp}{ext}"
-            
-            # Ensure profile upload folder exists
-            os.makedirs(app.config['PROFILE_UPLOAD_FOLDER'], exist_ok=True)
-            
-            file_path = os.path.join(app.config['PROFILE_UPLOAD_FOLDER'], filename)
-            file.save(file_path)
-            
-            # Store relative path in database
-            shop.profile_image = '/' + file_path.replace('\\', '/').replace(os.path.sep, '/')
+            # Upload to Cloudinary
+            upload_result = cloudinary.uploader.upload(file, folder="profile-images")
+            shop.profile_image = upload_result['secure_url']
             db.session.commit()
             
             # Update session
@@ -1222,30 +1189,9 @@ def upload_admin_profile_image():
 
     if file and allowed_file(file.filename):
         try:
-            # Remove old admin profile image if it exists
-            old_admin_image = session.get('admin_profile_image')
-            if old_admin_image:
-                old_path = old_admin_image.lstrip('/')
-                if os.path.exists(old_path):
-                    try:
-                        os.remove(old_path)
-                    except Exception:
-                        pass
-
-            filename = secure_filename(file.filename)
-            # Add timestamp to filename to avoid conflicts
-            timestamp = str(int(datetime.utcnow().timestamp()))
-            name, ext = os.path.splitext(filename)
-            filename = f"admin_{timestamp}{ext}"
-            
-            # Ensure profile upload folder exists
-            os.makedirs(app.config['PROFILE_UPLOAD_FOLDER'], exist_ok=True)
-            
-            file_path = os.path.join(app.config['PROFILE_UPLOAD_FOLDER'], filename)
-            file.save(file_path)
-            
-            # Store relative path in session
-            session['admin_profile_image'] = '/' + file_path.replace('\\', '/').replace(os.path.sep, '/')
+            # Upload to Cloudinary
+            upload_result = cloudinary.uploader.upload(file, folder="profile-images")
+            session['admin_profile_image'] = upload_result['secure_url']
             
             flash('Profile picture updated successfully!', 'success')
         except Exception as e:
@@ -1675,22 +1621,9 @@ def rate_product():
         if 'rating_image' in request.files:
             file = request.files['rating_image']
             if file and file.filename != '' and allowed_file(file.filename):
-                # Create a secure filename
-                filename = secure_filename(file.filename)
-                # Add timestamp and user ID to avoid conflicts
-                timestamp = str(int(datetime.utcnow().timestamp()))
-                name, ext = os.path.splitext(filename)
-                filename = f"rating_{user_id}_{product_id}_{timestamp}{ext}"
-                
-                # Ensure rating images folder exists
-                rating_folder = os.path.join('static', 'images', 'rating-images')
-                os.makedirs(rating_folder, exist_ok=True)
-                
-                file_path = os.path.join(rating_folder, filename)
-                file.save(file_path)
-                
-                # Store relative path for database
-                image_path = '/' + file_path.replace('\\', '/').replace(os.path.sep, '/')
+                # Upload to Cloudinary
+                upload_result = cloudinary.uploader.upload(file, folder="rating-images")
+                image_path = upload_result['secure_url']
 
         existing = Rating.query.filter_by(user_id=user_id, product_id=product_id, order_id=order_id).first()
         if existing:
@@ -1820,12 +1753,9 @@ def add_product():
 
         image_path = None
         if image_file and allowed_file(image_file.filename):
-            filename = secure_filename(image_file.filename)
-            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            # Ensure upload folder exists
-            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-            image_file.save(image_path)
-            image_path = '/' + image_path.replace('\\', '/').replace(os.path.sep, '/')
+            # Upload to Cloudinary
+            upload_result = cloudinary.uploader.upload(image_file, folder="product-images")
+            image_path = upload_result['secure_url']
 
         new_product = Product(
             name=name,
@@ -1873,11 +1803,9 @@ def edit_product(product_id):
         
         image_file = request.files.get("product-image")
         if image_file and allowed_file(image_file.filename):
-            filename = secure_filename(image_file.filename)
-            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-            image_file.save(image_path)
-            product.image = '/' + image_path.replace('\\', '/').replace(os.path.sep, '/')
+            # Upload to Cloudinary
+            upload_result = cloudinary.uploader.upload(image_file, folder="product-images")
+            product.image = upload_result['secure_url']
         
         db.session.commit()
         flash("Product updated successfully!", "success")
