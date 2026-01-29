@@ -264,11 +264,11 @@
 
                     <div class="info-box">
                         <strong>📋 Payment Information</strong>
-                        <p>Your income this month: ₱{{ '%.2f'|format(shop.total_income) }}</p>
-                        <p>Monthly threshold: ₱{{ '%.2f'|format(commission_settings.threshold_amount) }}</p>
+                        <p>Total products sold: {{ total_sold|default(0) }}</p>
+                        <p>Threshold: 1000 products sold</p>
                         <p>Commission rate: 
                             {% if commission_settings.commission_type == 'percentage' %}
-                                {{ commission_settings.commission_rate }}%
+                                {{ commission_settings.commission_rate }}% of total income
                             {% else %}
                                 ₱{{ '%.2f'|format(commission_settings.commission_rate) }} (fixed)
                             {% endif %}

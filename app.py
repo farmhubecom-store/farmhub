@@ -86,6 +86,7 @@ class Shop(db.Model):
     total_income = db.Column(db.Float, default=0.0)  # Track total income for commission threshold
     commission_payment_status = db.Column(db.String(20), default='clear')  # 'clear', 'pending', 'blocked'
     commission_amount_owed = db.Column(db.Float, default=0.0)  # Current amount owed in commission
+    commission_paid = db.Column(db.Boolean, default=False)  # Whether shop has paid the one-time commission
 
 
 # Cart model to store user cart items
@@ -181,7 +182,9 @@ with app.app_context():
         if Tip.query.count() == 0:
             sample_tips = [
                 Tip(title="Welcome to FarmHub!", body="Get started by browsing products or registering your shop."),
-                Tip(title="Commission System", body="Sellers pay a commission on monthly sales above the threshold."),
+                Tip(title="Commission System", body="Sellers pay a one-time commission after selling 1000+ products."),
+
+
                 Tip(title="Product Approval", body="All products need admin approval before appearing publicly."),
             ]
             db.session.add_all(sample_tips)
@@ -276,25 +279,23 @@ def seller_commission_payment():
         flash("Commission settings not configured.", "warning")
         return redirect(url_for('seller_products'))
     
-    from datetime import datetime, date
+    # Calculate commission owed based on total sold products (1000 threshold)
+    total_sold = db.session.query(func.sum(Product.sold)).filter(Product.shop_id == shop_id).scalar() or 0
     
-    # Calculate THIS MONTH's income
-    today = date.today()
-    start_of_month = datetime(today.year, today.month, 1)
-    
-    monthly_income = db.session.query(func.sum(Order.total)).filter(
-        Order.shop_id == shop_id,
-        Order.status == 'delivered',
-        Order.timestamp >= start_of_month
-    ).scalar() or 0.0
-    
-    # Calculate commission owed based on monthly income
-    if shop.commission_amount_owed == 0 and monthly_income >= commission_settings.threshold_amount:
-        if commission_settings.commission_type == 'percentage':
-            shop.commission_amount_owed = (monthly_income * commission_settings.commission_rate) / 100.0
-        else:
-            shop.commission_amount_owed = commission_settings.commission_rate
-        db.session.commit()
+    if shop.commission_amount_owed == 0 and not shop.commission_paid:
+        total_sold = db.session.query(func.sum(Product.sold)).filter(Product.shop_id == shop_id).scalar() or 0
+        
+        if total_sold >= 1000:
+            if commission_settings.commission_type == 'percentage':
+                # Calculate commission based on total income from all delivered orders
+                total_income = db.session.query(func.sum(Order.total)).filter(
+                    Order.shop_id == shop_id,
+                    Order.status == 'delivered'
+                ).scalar() or 0.0
+                shop.commission_amount_owed = (total_income * commission_settings.commission_rate) / 100.0
+            else:
+                shop.commission_amount_owed = commission_settings.commission_rate
+            db.session.commit()
     
     if request.method == "POST":
         payment_proof = request.files.get('payment_proof')
@@ -326,7 +327,8 @@ def seller_commission_payment():
     
     return render_template('seller/commission_payment.html',
                          shop=shop,
-                         commission_settings=commission_settings)
+                         commission_settings=commission_settings,
+                         total_sold=total_sold)
 
 @app.route("/seller/products")
 def seller_products():
@@ -1703,31 +1705,22 @@ def add_product():
         flash("You need to submit commission payment proof before adding products.", "warning")
         return redirect(url_for("seller_commission_payment"))
     
-    # Check if shop has exceeded MONTHLY threshold and needs to pay commission
-    if shop and commission_settings and shop.commission_payment_status == 'clear':
-        # Calculate THIS MONTH's income
-        today = date.today()
-        start_of_month = datetime(today.year, today.month, 1)
+    # Check if shop needs to pay one-time commission (after 1000 sold products)
+    if shop and commission_settings and not shop.commission_paid:
+        # Calculate total sold products for this shop
+        total_sold = db.session.query(func.sum(Product.sold)).filter(Product.shop_id == shop_id).scalar() or 0
         
-        monthly_income = db.session.query(func.sum(Order.total)).filter(
-            Order.shop_id == shop_id,
-            Order.status == 'delivered',
-            Order.timestamp >= start_of_month
-        ).scalar() or 0.0
-        
-        # Check if they have an approved payment for this month
-        approved_payment_this_month = CommissionPayment.query.filter(
-            CommissionPayment.shop_id == shop_id,
-            CommissionPayment.status == 'approved',
-            CommissionPayment.reviewed_at >= start_of_month
-        ).first()
-        
-        # If monthly income >= threshold and no approved payment this month, require commission payment
-        if monthly_income >= commission_settings.threshold_amount and not approved_payment_this_month:
+        # If total sold >= 1000 and hasn't paid commission yet, require payment
+        if total_sold >= 1000:
             # Calculate commission amount if not already set
             if shop.commission_amount_owed == 0:
                 if commission_settings.commission_type == 'percentage':
-                    shop.commission_amount_owed = (monthly_income * commission_settings.commission_rate) / 100.0
+                    # Calculate commission based on total income from sold products
+                    total_income = db.session.query(func.sum(Order.total)).filter(
+                        Order.shop_id == shop_id,
+                        Order.status == 'delivered'
+                    ).scalar() or 0.0
+                    shop.commission_amount_owed = (total_income * commission_settings.commission_rate) / 100.0
                 else:
                     shop.commission_amount_owed = commission_settings.commission_rate
                 shop.commission_payment_status = 'blocked'
@@ -1735,7 +1728,7 @@ def add_product():
             
             # Block and redirect to payment
             if request.method == "POST":
-                flash("You've reached the threshold this month. Please pay commission before adding new products.", "warning")
+                flash("You've sold 1000+ products. Please pay the one-time commission before adding new products.", "warning")
                 return redirect(url_for("seller_commission_payment"))
             else:
                 return redirect(url_for("seller_commission_payment"))
@@ -2738,15 +2731,12 @@ def admin_update_payment_settings():
     try:
         commission_rate = float(request.form.get('commission_rate', 5.0))
         commission_type = request.form.get('commission_type', 'percentage')
-        threshold_amount = float(request.form.get('threshold_amount', 1000.0))
+        # Threshold is now fixed at 1000 products
+        threshold_amount = 1000.0
         
         # Validate inputs
         if commission_rate < 0 or commission_rate > 100:
             flash('Commission rate must be between 0 and 100.', 'warning')
-            return redirect(url_for('admin_payment_settings'))
-        
-        if threshold_amount < 0:
-            flash('Threshold amount must be positive.', 'warning')
             return redirect(url_for('admin_payment_settings'))
         
         # Get or create settings
@@ -2757,7 +2747,8 @@ def admin_update_payment_settings():
         
         settings.commission_rate = commission_rate
         settings.commission_type = commission_type
-        settings.threshold_amount = threshold_amount
+        # Threshold is fixed at 1000 products
+        settings.threshold_amount = 1000.0
         
         # Handle QR code upload
         qr_code_file = request.files.get('qr_code_image')
@@ -2849,6 +2840,8 @@ def admin_approve_commission_payment(payment_id):
         # Reset shop commission status - allow adding products again
         shop.commission_payment_status = 'clear'
         shop.commission_amount_owed = 0.0
+        # Mark as paid so they never have to pay commission again
+        shop.commission_paid = True
         
         db.session.commit()
         
