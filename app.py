@@ -193,6 +193,12 @@ class CommissionSettings(db.Model):
     qr_code_image = db.Column(db.String(200))  # Path to QR code image for commission payments
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
+# Admin model for admin profile
+class Admin(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    profile_image = db.Column(db.String(200))
+    email = db.Column(db.String(120), default='admin@gmail.com')
+
 # Commission payment model to track seller commission payments
 class CommissionPayment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -1226,6 +1232,16 @@ def upload_admin_profile_image():
         try:
             # Upload to Cloudinary
             upload_result = cloudinary.uploader.upload(file, folder="profile-images")
+            
+            # Save to database
+            admin = Admin.query.first()
+            if not admin:
+                admin = Admin()
+                db.session.add(admin)
+            admin.profile_image = upload_result['secure_url']
+            db.session.commit()
+            
+            # Also set in session for current session
             session['admin_profile_image'] = upload_result['secure_url']
             
             flash('Profile picture updated successfully!', 'success')
@@ -2489,6 +2505,13 @@ def admin_dashboard():
     if not session.get('admin_logged_in') or session.get('user_type') != 'admin':
         flash('Please log in as admin to access the admin dashboard.', 'warning')
         return redirect(url_for('login'))
+    
+    # Load admin profile image from db if not in session
+    if 'admin_profile_image' not in session:
+        admin = Admin.query.first()
+        if admin and admin.profile_image:
+            session['admin_profile_image'] = admin.profile_image
+    
     # query all products with their shop names for admin view
     products = db.session.query(Product, Shop).join(Shop, Product.shop_id == Shop.id).all()
     # compute totals
@@ -2504,6 +2527,12 @@ def admin_view_shops():
     if not session.get('admin_logged_in') or session.get('user_type') != 'admin':
         flash('Please log in as admin to access this page.', 'warning')
         return redirect(url_for('login'))
+    
+    # Load admin profile image from db if not in session
+    if 'admin_profile_image' not in session:
+        admin = Admin.query.first()
+        if admin and admin.profile_image:
+            session['admin_profile_image'] = admin.profile_image
 
     shops = Shop.query.all()
     total_users = db.session.query(User).count()
@@ -2518,6 +2547,12 @@ def admin_view_users():
     if not session.get('admin_logged_in') or session.get('user_type') != 'admin':
         flash('Please log in as admin to access this page.', 'warning')
         return redirect(url_for('login'))
+    
+    # Load admin profile image from db if not in session
+    if 'admin_profile_image' not in session:
+        admin = Admin.query.first()
+        if admin and admin.profile_image:
+            session['admin_profile_image'] = admin.profile_image
 
     users = User.query.all()
     total_users = db.session.query(User).count()
@@ -2576,6 +2611,12 @@ def admin_tips():
     if not session.get('admin_logged_in') or session.get('user_type') != 'admin':
         flash('Please log in as admin to access this page.', 'warning')
         return redirect(url_for('login'))
+    
+    # Load admin profile image from db if not in session
+    if 'admin_profile_image' not in session:
+        admin = Admin.query.first()
+        if admin and admin.profile_image:
+            session['admin_profile_image'] = admin.profile_image
 
     tips = Tip.query.order_by(Tip.created_at.desc()).all()
     return render_template('admin/tips.html', tips=tips)
@@ -2634,6 +2675,12 @@ def admin_view_sales():
     if not session.get('admin_logged_in') or session.get('user_type') != 'admin':
         flash('Please log in as admin to access this page.', 'warning')
         return redirect(url_for('login'))
+    
+    # Load admin profile image from db if not in session
+    if 'admin_profile_image' not in session:
+        admin = Admin.query.first()
+        if admin and admin.profile_image:
+            session['admin_profile_image'] = admin.profile_image
 
     # Get all orders with their items, products, and shops
     orders = Order.query.order_by(Order.timestamp.desc()).all()
@@ -2722,6 +2769,12 @@ def admin_payment_settings():
     if not session.get('admin_logged_in') or session.get('user_type') != 'admin':
         flash('Please log in as admin to access this page.', 'warning')
         return redirect(url_for('login'))
+    
+    # Load admin profile image from db if not in session
+    if 'admin_profile_image' not in session:
+        admin = Admin.query.first()
+        if admin and admin.profile_image:
+            session['admin_profile_image'] = admin.profile_image
     
     # Get current commission settings (or create default if none exist)
     settings = CommissionSettings.query.first()
@@ -2820,6 +2873,12 @@ def admin_commission_payments():
     if not session.get('admin_logged_in') or session.get('user_type') != 'admin':
         flash('Please log in as admin to access this page.', 'warning')
         return redirect(url_for('login'))
+    
+    # Load admin profile image from db if not in session
+    if 'admin_profile_image' not in session:
+        admin = Admin.query.first()
+        if admin and admin.profile_image:
+            session['admin_profile_image'] = admin.profile_image
     
     # Get all commission payment submissions
     payments = db.session.query(CommissionPayment, Shop).join(

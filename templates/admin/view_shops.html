@@ -233,7 +233,11 @@
                         {% for shop in shops %}
                             <div class="product-row">
                                 <div class="thumb">
-                                    <img src="/static/images/profile-circle.png" alt="shop">
+                                    {% if shop.profile_image %}
+                                        <img src="{{ shop.profile_image }}" alt="shop">
+                                    {% else %}
+                                        <img src="/static/images/profile-circle.png" alt="shop">
+                                    {% endif %}
                                 </div>
                                 <div class="product-info">
                                     <div class="shop-name">{{ shop.shop_name }}</div>
