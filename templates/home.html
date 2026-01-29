@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F0F0F0;
+            color: #333;
+        }
+
+        /* Removed unused navbar, nav-top, nav-bottom, nav-pages styles */
+
+        .main {
+            height: 85vh;
+            background: url("{{ url_for('static', filename='images/bg.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            color: white;
+            padding-top: 120px;
+        }
+
+        .main h1 {
+            font-size: 3em;
+        }
+
+        /* Improve readability of headings against the background image */
+        .main h1,
+        .main h2,
+        .category-container h2 {
+            /* Stronger dark blur shadow for high contrast plus a subtle highlight */
+            text-shadow: 0 8px 24px rgba(0,0,0,0.85), 0 2px 0 rgba(255,255,255,0.04);
+            -webkit-font-smoothing: antialiased;
+            /* Slightly bolder weight to help legibility on busy backgrounds */
+            font-weight: 600;
+        }
+
+        .category-container {
+            width: 90%;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .categories {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .categories .category {
+            background-color: white;
+            color: black;
+            width: 250px;
+            height: 250px;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Subtle elevation so the card stands out from the busy background */
+            box-shadow: 0 8px 22px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.08);
+            transition: transform 220ms ease, box-shadow 220ms ease, color 220ms ease;
+            will-change: transform, box-shadow;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .category-image {
+            width: 100%;
+            height: 100%;
+            background-color: #E1EFD8;
+            border-radius: 15px;
+            margin-bottom: 5px;
+            /* Image gets its own subtle shadow to separate it from the white card */
+            box-shadow: inset 0 -6px 18px rgba(0,0,0,0.06), 0 6px 18px rgba(0,0,0,0.12);
+            transition: transform 300ms ease, filter 300ms ease, box-shadow 300ms ease;
+            transform-origin: center;
+        }
+
+        .crops-image {
+            background-image: url("{{ url_for('static', filename='images/crops.jpg') }}");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .livestock-image {
+            background-image: url("{{ url_for('static', filename='images/livestock.jpg') }}");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .poultry-image {
+            /* reuse existing egg image as poultry representative */
+            background-image: url("{{ url_for('static', filename='images/product-images/egg-large.jpg') }}");
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Fisheries category removed */
+
+        .others-image {
+            background-image: url("{{ url_for('static', filename='images/others.jpg') }}");
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Hover / focus effects for better affordance */
+        .categories .category:hover {
+            transform: translateY(-10px) scale(1.04);
+            box-shadow: 0 20px 48px rgba(0,0,0,0.32), 0 6px 18px rgba(0,0,0,0.12);
+            color: #1a7a11;
+        }
+
+        .categories .category:focus-visible {
+            outline: 3px solid rgba(26,122,17,0.12);
+            outline-offset: 4px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.28), 0 4px 12px rgba(0,0,0,0.10);
+        }
+
+        .categories .category:focus-visible {
+            outline: 3px solid rgba(26,122,17,0.18);
+            outline-offset: 3px;
+        }
+
+        .categories .category:hover .category-image {
+            transform: scale(1.06);
+            filter: brightness(0.95) saturate(1.05);
+        }
+    </style>
+</head>
+<body>
+    
+    {% include "partials/navbar.html" %}
+
+    <div class="main">
+        <div style="text-align: center;">
+            <h1>LET'S SHOP TO FARMHUB</h1>
+            <h2>Support Our Local Farmers</h2>
+        </div>
+        <div class="category-container">
+            <div style="width: 1080px;">
+                <h2>Explore Categories</h2>
+            </div>
+            <div class="categories">
+                <a class="category" href="{{ url_for('all_products') }}?type=Crops" style="text-decoration:none;">
+                    <div class="category-image crops-image"></div>
+                    Crops
+                </a>
+                <a class="category" href="{{ url_for('all_products') }}?type=livestock" style="text-decoration:none;">
+                    <div class="category-image livestock-image"></div>
+                    Livestocks
+                </a>
+                <a class="category" href="{{ url_for('all_products') }}?type=Poultry" style="text-decoration:none;">
+                    <div class="category-image poultry-image"></div>
+                    Poultry
+                </a>
+                <!-- Fisheries category removed -->
+                <a class="category" href="{{ url_for('all_products') }}?type=Others" style="text-decoration:none;">
+                    <div class="category-image others-image"></div>
+                    Others
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

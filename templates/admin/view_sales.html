@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Sales - Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F0F0F0;
+            color: #333;
+            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main {
+            height: 85%;
+            background-color: #fbeed5;
+            padding: 25px 50px;
+            overflow-y: auto;
+            display: flex;
+        }
+
+        .parent {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-rows: 1fr;
+            gap: 10px 10px;
+            width: 100%;
+            max-width: 98vw;
+            margin: 0 auto;
+        }
+
+        .div2 {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px 20px 10px 20px;
+            box-shadow: 0 2px 8px #f0ad4e44;
+            min-width: 0;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Summary Cards */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #6bb13a 0%, #5a9631 100%);
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(107, 177, 58, 0.2);
+        }
+
+        .summary-card.alt {
+            background: linear-gradient(135deg, #f0ad4e 0%, #d99a3c 100%);
+        }
+
+        .summary-card.alt2 {
+            background: linear-gradient(135deg, #5bc0de 0%, #46b8da 100%);
+        }
+
+        .summary-card-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .summary-card-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .summary-card-subtext {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* Shop Sales Section */
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2f0d9;
+        }
+
+        .shop-sales-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .shop-card {
+            background: #f9f9f9;
+            border: 1px solid #e6e6e6;
+            border-radius: 10px;
+            padding: 18px;
+            transition: all 0.3s;
+        }
+
+        .shop-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .shop-card-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .shop-card-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .shop-card-stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .shop-card-stat-label {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .shop-card-stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #6bb13a;
+        }
+
+        /* Sales Table */
+        .sales-table-wrapper {
+            overflow-x: auto;
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .sales-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .sales-table thead {
+            background: #6bb13a;
+            color: white;
+        }
+
+        .sales-table th {
+            padding: 14px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .sales-table tbody tr {
+            border-bottom: 1px solid #e6e6e6;
+            transition: background 0.2s;
+        }
+
+        .sales-table tbody tr:hover {
+            background: #f0f8ee;
+        }
+
+        .sales-table td {
+            padding: 12px;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-confirmed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-delivered {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .amount {
+            font-weight: 600;
+            color: #6bb13a;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 16px;
+        }
+
+        @media (max-width: 1100px) {
+            .parent {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto;
+            }
+            .div2 {
+                grid-column: 1 / 2 !important;
+                grid-row: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    {% include 'partials/admin_navbar.html' %}
+
+    <div class="main">
+        <div class="parent">
+
+            {% include 'partials/admin_sidebar.html' %}
+            
+            <div class="div2">
+                <div class="page-header">
+                    <h1>Sales Overview</h1>
+                    <p>View all sales transactions and revenue statistics</p>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <div class="summary-card-label">Total Product Sales</div>
+                        <div class="summary-card-value">₱{{ '%.2f'|format(total_sales or 0) }}</div>
+                        <div class="summary-card-subtext">Total revenue from products</div>
+                    </div>
+
+                    <div class="summary-card alt">
+                        <div class="summary-card-label">Total Shipping Fees</div>
+                        <div class="summary-card-value">₱{{ '%.2f'|format(total_fees or 0) }}</div>
+                        <div class="summary-card-subtext">Total delivery charges collected</div>
+                    </div>
+
+                    <div class="summary-card alt2">
+                        <div class="summary-card-label">Total Orders</div>
+                        <div class="summary-card-value">{{ total_orders or 0 }}</div>
+                        <div class="summary-card-subtext">All time order count</div>
+                    </div>
+                </div>
+
+                <!-- Sales by Shop -->
+                {% if shop_sales_list %}
+                <div class="section-title">Sales by Shop</div>
+                <div class="shop-sales-grid">
+                    {% for shop in shop_sales_list %}
+                    <div class="shop-card">
+                        <div class="shop-card-name">{{ shop.shop_name }}</div>
+                        <div class="shop-card-stats">
+                            <div class="shop-card-stat">
+                                <div class="shop-card-stat-label">Total Sales</div>
+                                <div class="shop-card-stat-value">₱{{ '%.2f'|format(shop.total_sales or 0) }}</div>
+                            </div>
+                            <div class="shop-card-stat">
+                                <div class="shop-card-stat-label">Orders</div>
+                                <div class="shop-card-stat-value">{{ shop.order_count or 0 }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Recent Sales Table -->
+                <div class="section-title">All Sales Transactions</div>
+                <div class="sales-table-wrapper">
+                    {% if sales_data %}
+                    <table class="sales-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Buyer</th>
+                                <th>Shop</th>
+                                <th>Product Total</th>
+                                <th>Shipping Fee</th>
+                                <th>Grand Total</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for sale in sales_data %}
+                            <tr>
+                                <td>#{{ sale.order_id }}</td>
+                                <td>{{ sale.timestamp.strftime('%b %d, %Y') if sale.timestamp else 'N/A' }}</td>
+                                <td>{{ sale.buyer_name }}</td>
+                                <td>{{ sale.shop_name }}</td>
+                                <td class="amount">₱{{ '%.2f'|format(sale.product_total or 0) }}</td>
+                                <td>₱{{ '%.2f'|format(sale.shipping_fee or 0) }}</td>
+                                <td class="amount">₱{{ '%.2f'|format(sale.grand_total or 0) }}</td>
+                                <td>{{ sale.payment_method or 'N/A' }}</td>
+                                <td>
+                                    <span class="status-badge status-{{ sale.status or 'pending' }}">
+                                        {{ (sale.status or 'pending').capitalize() }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="no-data">
+                        <p>No sales data available yet.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

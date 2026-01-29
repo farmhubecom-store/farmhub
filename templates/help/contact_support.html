@@ -1,0 +1,173 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}Contact Support{% endblock %}
+{% block breadcrumb %}How to Contact Customer Support{% endblock %}
+{% block help_title %}🛡️ How to Contact Customer Support{% endblock %}
+
+{% block content %}
+<p>Need help? FarmHub's customer support team is here to assist you. Here's how to reach us and what to expect.</p>
+
+<h2>Before Contacting Support</h2>
+
+<p>You might find quick answers by:</p>
+<ul>
+    <li><strong>Browsing the Help Center:</strong> Check our help articles for common questions</li>
+    <li><strong>Reading the FAQ:</strong> Many common questions are answered there</li>
+    <li><strong>Contacting the seller:</strong> For order-specific issues, message the seller first</li>
+</ul>
+
+<h2>How to Get Support</h2>
+
+<h3>Option 1: Message the Seller (For Order Issues)</h3>
+
+<p>For issues with specific orders:</p>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Go to your Order History.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Find the relevant order.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Use the Messages feature to contact the seller directly.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Most issues can be resolved directly with the seller.
+</div>
+
+<div class="tip-box">
+Sellers are usually the fastest way to resolve order-specific issues like wrong items, delays, or quality concerns.
+</div>
+
+<h3>Option 2: Help Center</h3>
+
+<p>Our Help Center (where you are now!) provides:</p>
+<ul>
+    <li>Step-by-step guides</li>
+    <li>Answers to common questions</li>
+    <li>Policy information</li>
+    <li>Troubleshooting tips</li>
+</ul>
+
+<h3>Option 3: In-App Notifications</h3>
+
+<p>Check your notifications for:</p>
+<ul>
+    <li>System announcements</li>
+    <li>Updates about your account</li>
+    <li>Important notices</li>
+</ul>
+
+<h2>What to Include When Contacting Support</h2>
+
+<p>Help us help you faster by including:</p>
+
+<ul>
+    <li><strong>Your account email:</strong> So we can find your account</li>
+    <li><strong>Order ID:</strong> If the issue is about an order</li>
+    <li><strong>Detailed description:</strong> What happened and when</li>
+    <li><strong>Screenshots:</strong> Visual evidence helps</li>
+    <li><strong>What you've tried:</strong> Steps you've already taken</li>
+    <li><strong>Desired outcome:</strong> What resolution would help</li>
+</ul>
+
+<h2>Types of Issues We Can Help With</h2>
+
+<h3>Account Issues</h3>
+<ul>
+    <li>Login problems</li>
+    <li>Password recovery issues</li>
+    <li>Account security concerns</li>
+    <li>Profile update problems</li>
+</ul>
+
+<h3>Order Issues (After Seller Contact)</h3>
+<ul>
+    <li>Disputes with sellers</li>
+    <li>Unresponsive sellers</li>
+    <li>Refund complications</li>
+    <li>Delivery problems</li>
+</ul>
+
+<h3>Platform Issues</h3>
+<ul>
+    <li>Technical errors</li>
+    <li>Payment processing problems</li>
+    <li>Bug reports</li>
+    <li>Feature questions</li>
+</ul>
+
+<h3>Policy Questions</h3>
+<ul>
+    <li>Refund policies</li>
+    <li>Commission information</li>
+    <li>Terms of service</li>
+    <li>Privacy concerns</li>
+</ul>
+
+<h2>Response Time</h2>
+
+<p>We aim to respond to all inquiries within:</p>
+
+<table style="width:100%; border-collapse: collapse; margin: 15px 0;">
+    <tr style="background: #e8f5e9;">
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Issue Type</th>
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Response Time</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #ddd;">Urgent (account security)</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">Within 24 hours</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #ddd;">Order disputes</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">1-2 business days</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #ddd;">General inquiries</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">2-3 business days</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #ddd;">Feature requests</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">3-5 business days</td>
+    </tr>
+</table>
+
+<div class="info-box">
+Response times may vary during holidays or peak periods. Thank you for your patience!
+</div>
+
+<h2>Tips for Faster Resolution</h2>
+
+<ol>
+    <li><strong>Be specific:</strong> Clearly describe your issue</li>
+    <li><strong>Provide details:</strong> Include order IDs, dates, and names</li>
+    <li><strong>Share evidence:</strong> Screenshots and photos help</li>
+    <li><strong>Check spam:</strong> Look for our response in your spam folder</li>
+    <li><strong>Follow up politely:</strong> If you haven't heard back after the expected time</li>
+</ol>
+
+<h2>What Support Cannot Help With</h2>
+
+<ul>
+    <li>Price negotiations with sellers</li>
+    <li>Changing other users' behavior</li>
+    <li>Issues outside FarmHub's platform</li>
+    <li>Requests violating our terms of service</li>
+</ul>
+
+<div class="warning-box">
+Please be respectful when contacting support. Abusive or threatening communication will not be tolerated.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='faq') }}">Frequently Asked Questions</a></li>
+        <li><a href="{{ url_for('help_article', article='refund_policy') }}">Refund Policy</a></li>
+        <li><a href="{{ url_for('help_article', article='privacy_security') }}">Data Privacy & Security Policy</a></li>
+    </ul>
+</div>
+{% endblock %}

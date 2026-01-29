@@ -1,0 +1,96 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Log In and Log Out{% endblock %}
+{% block breadcrumb %}How to Log In and Log Out{% endblock %}
+{% block help_title %}🛒 How to Log In and Log Out{% endblock %}
+
+{% block content %}
+<p>Access your FarmHub account securely by following these simple steps for logging in and out.</p>
+
+<h2>How to Log In</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Go to the FarmHub homepage and click on the <strong>"Login"</strong> button in the navigation bar.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Enter your registered email address in the <strong>Email</strong> field.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Enter your password in the <strong>Password</strong> field.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Click the <strong>"Login"</strong> button to access your account.
+</div>
+
+<div class="tip-box">
+If you have both a buyer and seller account, make sure you're logging into the correct one. The system will direct you to the appropriate dashboard.
+</div>
+
+<h2>How to Log Out</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Look for your profile icon or name in the top right corner of the navigation bar.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Click on it to reveal the dropdown menu.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Select <strong>"Logout"</strong> from the menu.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> You'll be logged out and redirected to the homepage.
+</div>
+
+<div class="warning-box">
+Always log out when using a shared or public computer to protect your account and personal information.
+</div>
+
+<h2>Troubleshooting Login Issues</h2>
+
+<h3>Forgot Your Password?</h3>
+<p>If you can't remember your password:</p>
+<ol>
+    <li>Click the <strong>"Forgot Password?"</strong> link on the login page</li>
+    <li>Enter your email address</li>
+    <li>Answer your security question</li>
+    <li>Create a new password</li>
+</ol>
+
+<h3>Account Not Found?</h3>
+<p>If you see an "account not found" error:</p>
+<ul>
+    <li>Double-check your email address for typos</li>
+    <li>Make sure you're using the email you registered with</li>
+    <li>If you're a seller, ensure you're logging into the shop login (not user login)</li>
+</ul>
+
+<h3>Incorrect Password?</h3>
+<p>If your password isn't working:</p>
+<ul>
+    <li>Check if Caps Lock is on</li>
+    <li>Make sure there are no extra spaces</li>
+    <li>Try using the "Forgot Password" feature to reset it</li>
+</ul>
+
+<div class="info-box">
+For security, your account may be temporarily locked after multiple failed login attempts. Wait a few minutes before trying again.
+</div>
+
+<h2>Staying Logged In</h2>
+<p>Your session will remain active while you browse FarmHub. However, for security purposes, you may be automatically logged out after a period of inactivity.</p>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='create_account') }}">How to Create an Account</a></li>
+        <li><a href="{{ url_for('help_article', article='reset_password') }}">How to Reset Your Password</a></li>
+        <li><a href="{{ url_for('help_article', article='update_profile') }}">How to Update Your Profile Information</a></li>
+    </ul>
+</div>
+{% endblock %}

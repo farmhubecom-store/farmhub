@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F0F0F0;
+            color: #333;
+            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            display: flex;
+            flex-direction: column;
+            height: 15vh;            
+            overflow: hidden;
+        }
+
+        .nav-top {
+            background-color: #E1EFD8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 105px;
+            height: 60%;
+            min-height: 0;
+        }
+
+        .nav-top img {
+            height: 100%;
+        }
+
+        .nav-pages a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.5);
+            margin: 5px;
+        }
+
+        .nav-bottom {
+            background-color: #67A93B;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            height: 40%;
+            min-height: 0;
+        }
+
+        .nav-bottom a {
+            color: white;
+            text-decoration: none;
+            padding: 8px;
+            font-size: 1.2em;
+            margin: 0 10px;
+        }
+
+        .nav-bottom a.active {
+            background-color: #558336;
+            color: #B5B5B4;
+            border-radius: 25px;
+        }
+
+        .main {
+            flex: 1 1 auto;
+            min-height: 0;
+            background-color: #E2F0D9;
+            padding: 25px 50px;
+            overflow-y: auto;
+            display: flex;
+        }
+        /* Button styles (copied from viewProduct.html to keep modal design consistent) */
+        .btn {
+            transition: all 180ms ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+
+        .btn-primary {
+            background-color: #548235;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 20px;
+            font-size: 1rem;
+        }
+
+        .btn-primary:hover {
+            background-color: #436327;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67,99,39,0.18);
+        }
+
+        .btn-secondary {
+            background-color: #2f8f2f;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 20px;
+            font-size: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: #247324;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(36,115,36,0.18);
+        }
+
+        .btn-shop {
+            width: 150px;
+            background-color: #548235;
+            color: white;
+            padding: 15px 30px;
+            margin-bottom: 10px;
+            border-radius: 20px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+        }
+
+        .btn-shop:hover {
+            background-color: #436327;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67,99,39,0.18);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    {% include 'partials/navbar.html' %}
+
+    <div class="main" style="display: flex;">
+       <div style="width: 100%;display: flex;flex-direction: column;align-items: center;justify-content: center;">
+            <div style="padding: 20px;width: 100%;height: 50%;background-color: white;margin-bottom: 10px;display: flex;flex-direction: column;justify-content: space-between;">
+                <h2>Shipping Address</h2>
+                <div id="addressDisplay" style="height: 40%;display: flex;flex-direction: column;justify-content: space-between;">
+                    <div style="display: flex;align-items: center;justify-content: space-between;">
+                        <p>{{ user.first_name if user else session.get('user_first_name', '') }} {{ user.last_name if user else session.get('user_last_name', '') }} | {{ user.phone if user else '' }}</p>
+                        <a href="/users/account/edit" style="color: #129921;">Change</a>
+                    </div>
+                    <div style="width:100%;height:60px;white-space:pre-wrap;">{{ (user.address_house ~ ' ' ~ user.address_street ~ '\n' ~ user.address_city).strip() if user else '' }}</div>
+                </div>
+            </div>
+            <div style="padding: 20px;width: 100%;height: 100%;background-color: white;display: flex;flex-direction: column;justify-content: space-between;">
+                <h2>Payment Method</h2>
+                <div style="display: flex;align-items: center;justify-content: space-evenly;">
+                    <label style="display:flex;align-items:center;justify-content:center;padding:20px 10px;background-color:#67A93A;border-radius:15px;color:white; width: 220px;">
+                        <input class="payment-method" type="radio" name="paymentMethod" value="Cash on Delivery" checked style="margin-right:8px;">Cash on Delivery
+                    </label>
+                </div>
+                <p><a style="text-decoration: none;color: #129921;">FARM HUB</a> Shop safe, pay safe.</p>
+            </div>
+       </div>
+       <div style="width: 100%;background-color: white;margin-left: 10px;padding: 20px;display: flex;flex-direction: column;justify-content: space-between;">
+        <h2>Your Order</h2>
+        <div style="width:100%;background-color: #E7E6E6;height: 40%;padding: 10px;border-radius: 15px;">
+            <form method="post" action="/place_order" id="placeOrderForm" onsubmit="submitPlaceOrderAjax(event)">
+            <table style="width:100%; border-collapse: collapse;">
+                <thead style="background-color: #70AD47;">
+                    <tr>
+                        <th style="border: 1px solid #ccc; padding: 8px;">Product Name</th>
+                        <th style="border: 1px solid #ccc; padding: 8px;">Quantity</th>
+                        <th style="border: 1px solid #ccc; padding: 8px;">Price</th>
+                        <th style="border: 1px solid #ccc; padding: 8px;">Total Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for it in cart_items %}
+                    <tr>
+                        <td style="border: 1px solid #ccc; padding: 8px;">{{ it.name }}</td>
+                        <td style="border: 1px solid #ccc; padding: 8px;">{{ it.quantity }}({{ it.unit }})</td>
+                        <td style="border: 1px solid #ccc; padding: 8px;">{{ '%.2f'|format(it.price) }}</td>
+                        <td style="border: 1px solid #ccc; padding: 8px;">{{ '%.2f'|format(it.subtotal) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!-- hidden address input so POST receives the user's saved address -->
+            <input type="hidden" name="address" value="{{ (user.address_house ~ ' ' ~ user.address_street ~ ' ' ~ user.address_city).strip() if user else '' }}">
+            <input type="hidden" name="shipping_fee" id="shipping_fee_input" value="{{ est_shipping_fee if est_shipping_fee is defined else 0 }}">
+            <input type="hidden" name="total_kg" id="total_kg_input" value="{{ total_kg if total_kg is defined else 0 }}">
+            <input type="hidden" id="base_total_input" value="{{ '%.2f'|format(total) }}">
+        </div>
+        
+        <div style="display: flex;align-items: center;justify-content: space-between;">
+            <p>Shipping Options</p>
+            <div style="width: 200px;display: flex;align-items: center;justify-content: space-between;">
+                <label>
+                    <input type="radio" name="shippingOption" value="delivery" checked>
+                    Delivery
+                </label>
+                <label>
+                    <input type="radio" name="shippingOption" value="pickup">
+                    Pick-up
+                </label>
+            </div>
+        </div>
+        <div style="display: flex;align-items: center;justify-content: space-between;">
+            <h3>Shipping Cost</h3>
+            <h3 id="shippingCostDisplay">₱{{ '%.2f'|format(est_shipping_fee) if est_shipping_fee is defined else '0.00' }}</h3>
+        </div>
+        <div style="display: flex;align-items: center;justify-content: space-between;">
+            <h3>Total</h3>
+            <h3 id="totalDisplay">₱{{ '%.2f'|format(est_total_with_shipping) if est_total_with_shipping is defined else '%.2f'|format(total) }}</h3>
+        </div>
+        <div style="margin-top:12px;display:flex;justify-content:flex-end;">
+            <button type="submit" style="background-color: #70AD47; color: white; border: none; padding: 15px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">Place Order</button>
+        </div>
+            </form>
+       </div>
+    </div>
+    <!-- Order success modal -->
+    <div id="orderSuccessModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="orderSuccessTitle" aria-modal="true">
+        <div class="modal-content">
+            <h3 id="orderSuccessTitle">Order placed</h3>
+            <p id="orderSuccessMessage">Your order has been placed successfully.</p>
+            <div style="display: flex; justify-content: center; gap: 10px; margin-top: 15px;">
+                <button id="orderSuccessOk" class="btn btn-primary" style="padding: 10px 18px;">Ok</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    // Modal helpers for order success
+    function showOrderModal(){
+        const modal = document.getElementById('orderSuccessModal');
+        if(!modal) return;
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideOrderModal(){
+        const modal = document.getElementById('orderSuccessModal');
+        if(!modal) return;
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+    }
+
+    async function submitPlaceOrderAjax(e){
+        // If JS is enabled, prevent normal submit and use fetch
+        e && e.preventDefault();
+        const form = document.getElementById('placeOrderForm');
+        if(!form) return;
+        const action = form.action;
+        const formData = new FormData(form);
+    // ensure shipping fee and total_kg are included and up-to-date
+    const shippingFeeInput = document.getElementById('shipping_fee_input');
+    const totalKgInput = document.getElementById('total_kg_input');
+    if(shippingFeeInput) formData.set('shipping_fee', shippingFeeInput.value || '0');
+    if(totalKgInput) formData.set('total_kg', totalKgInput.value || '0');
+
+        try{
+            const resp = await fetch(action, {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin'
+            });
+
+            if(resp.ok){
+                showOrderModal();
+            } else {
+                let msg = 'Failed to place order.';
+                try{ msg = await resp.text(); } catch(_){}
+                alert(msg);
+            }
+        } catch(err){
+            console.error(err);
+            alert('An error occurred while placing order.');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+        const ok = document.getElementById('orderSuccessOk');
+        if(ok) ok.addEventListener('click', function(){
+            hideOrderModal();
+            // Redirect to home page
+            window.location.href = '/';
+        });
+        // Hide modal initially
+        hideOrderModal();
+        // update shipping display when option changes
+        const shipOptions = document.getElementsByName('shippingOption');
+        function updateShippingUI(){
+            const shippingCostEl = document.getElementById('shippingCostDisplay');
+            const totalEl = document.getElementById('totalDisplay');
+            const shippingFeeInput = document.getElementById('shipping_fee_input');
+            const totalKgInput = document.getElementById('total_kg_input');
+            let estFee = parseFloat(shippingFeeInput && shippingFeeInput.value) || 0;
+            // read base total from hidden input to avoid template syntax inside JS
+            let baseTotal = parseFloat(document.getElementById('base_total_input').value) || 0;
+            // if delivery selected, show fee; otherwise zero
+            let deliverySelected = false;
+            for(let i=0;i<shipOptions.length;i++){ if(shipOptions[i].checked && shipOptions[i].value === 'delivery') deliverySelected = true; }
+            let displayFee = deliverySelected ? estFee : 0;
+            if(shippingCostEl) shippingCostEl.innerText = '₱' + displayFee.toFixed(2);
+            if(totalEl) totalEl.innerText = '₱' + (baseTotal + displayFee).toFixed(2);
+        }
+        for(let i=0;i<shipOptions.length;i++){ shipOptions[i].addEventListener('change', updateShippingUI); }
+        updateShippingUI();
+    });
+</script>
+
+<style>
+    /* Modal overlay centered */
+    .modal-overlay{
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0,0,0,0.45);
+        z-index: 9999;
+        padding: 20px;
+    }
+
+    .modal-content{
+        background: #fff;
+        color: #222;
+        padding: 20px 24px;
+        border-radius: 12px;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        text-align: center;
+    }
+
+    .modal-content h3{
+        margin-bottom: 8px;
+    }
+
+    .modal-content p{
+        margin-bottom: 0;
+        color: #444;
+    }
+</style>
+</html>

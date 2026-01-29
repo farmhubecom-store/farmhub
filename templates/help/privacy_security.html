@@ -1,0 +1,168 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}Privacy & Security{% endblock %}
+{% block breadcrumb %}Data Privacy & Security Policy{% endblock %}
+{% block help_title %}🛡️ Data Privacy & Security Policy{% endblock %}
+
+{% block content %}
+<p>FarmHub is committed to protecting your personal information and maintaining your privacy. This page explains how we collect, use, and protect your data.</p>
+
+<h2>Information We Collect</h2>
+
+<h3>Account Information</h3>
+<p>When you register, we collect:</p>
+<ul>
+    <li>Full name</li>
+    <li>Email address</li>
+    <li>Phone number</li>
+    <li>Physical address</li>
+    <li>Password (stored securely)</li>
+    <li>Security question and answer</li>
+</ul>
+
+<h3>Transaction Information</h3>
+<p>When you use FarmHub, we collect:</p>
+<ul>
+    <li>Order history</li>
+    <li>Payment information</li>
+    <li>Delivery addresses</li>
+    <li>Messages between you and sellers/buyers</li>
+</ul>
+
+<h3>Usage Information</h3>
+<p>We may collect:</p>
+<ul>
+    <li>Pages you visit</li>
+    <li>Products you view</li>
+    <li>Search queries</li>
+    <li>Device information</li>
+</ul>
+
+<h2>How We Use Your Information</h2>
+
+<p>Your information is used to:</p>
+<ul>
+    <li><strong>Provide services:</strong> Process orders and deliveries</li>
+    <li><strong>Communication:</strong> Send order updates and notifications</li>
+    <li><strong>Security:</strong> Protect against fraud and unauthorized access</li>
+    <li><strong>Improvement:</strong> Enhance our platform and services</li>
+    <li><strong>Support:</strong> Assist with inquiries and issues</li>
+</ul>
+
+<div class="info-box">
+We do not sell your personal information to third parties. Your data is used only to provide and improve our services.
+</div>
+
+<h2>Information Sharing</h2>
+
+<p>We share information only when necessary:</p>
+
+<h3>With Sellers/Buyers</h3>
+<ul>
+    <li>Delivery address for order fulfillment</li>
+    <li>Contact information for order communication</li>
+    <li>Order details for processing</li>
+</ul>
+
+<h3>With Service Providers</h3>
+<ul>
+    <li>Payment processors (for transactions)</li>
+    <li>Hosting services (for platform operation)</li>
+</ul>
+
+<h3>Legal Requirements</h3>
+<ul>
+    <li>When required by law</li>
+    <li>To protect our rights or safety</li>
+    <li>To prevent fraud or security threats</li>
+</ul>
+
+<h2>Data Security</h2>
+
+<p>We protect your data through:</p>
+<ul>
+    <li><strong>Secure connections:</strong> HTTPS encryption for data transmission</li>
+    <li><strong>Password protection:</strong> Your password is stored securely</li>
+    <li><strong>Access controls:</strong> Limited staff access to personal data</li>
+    <li><strong>Regular updates:</strong> Security patches and updates</li>
+</ul>
+
+<div class="warning-box">
+Never share your password with anyone. FarmHub staff will never ask for your password.
+</div>
+
+<h2>Your Privacy Rights</h2>
+
+<p>You have the right to:</p>
+
+<h3>Access Your Data</h3>
+<ul>
+    <li>View your account information anytime</li>
+    <li>See your order history</li>
+    <li>Review your messages</li>
+</ul>
+
+<h3>Update Your Data</h3>
+<ul>
+    <li>Edit your profile information</li>
+    <li>Change your password</li>
+    <li>Update your address</li>
+</ul>
+
+<h3>Delete Your Data</h3>
+<ul>
+    <li>Request account deletion</li>
+    <li>Note: Some data may be retained for legal/business purposes</li>
+</ul>
+
+<h2>Account Security Tips</h2>
+
+<ol>
+    <li><strong>Strong password:</strong> Use a unique, complex password</li>
+    <li><strong>Keep it private:</strong> Don't share your login credentials</li>
+    <li><strong>Log out:</strong> Always log out on shared devices</li>
+    <li><strong>Update regularly:</strong> Change your password periodically</li>
+    <li><strong>Watch for phishing:</strong> We won't ask for your password via email</li>
+</ol>
+
+<h2>Cookies</h2>
+
+<p>FarmHub uses cookies to:</p>
+<ul>
+    <li>Keep you logged in</li>
+    <li>Remember your preferences</li>
+    <li>Improve your experience</li>
+</ul>
+
+<p>You can manage cookies through your browser settings.</p>
+
+<h2>Children's Privacy</h2>
+
+<p>FarmHub is intended for users 18 years and older. We do not knowingly collect information from children under 18.</p>
+
+<h2>Policy Updates</h2>
+
+<p>We may update this policy from time to time. Significant changes will be communicated through:</p>
+<ul>
+    <li>Email notifications</li>
+    <li>Platform announcements</li>
+    <li>Updated policy date</li>
+</ul>
+
+<div class="tip-box">
+Review this policy periodically to stay informed about how we protect your data.
+</div>
+
+<h2>Contact Us</h2>
+
+<p>For privacy-related questions or concerns, please contact us through our customer support channels.</p>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='product_quality') }}">How We Ensure Product Quality</a></li>
+        <li><a href="{{ url_for('help_article', article='contact_support') }}">How to Contact Customer Support</a></li>
+        <li><a href="{{ url_for('help_article', article='faq') }}">Frequently Asked Questions</a></li>
+    </ul>
+</div>
+{% endblock %}

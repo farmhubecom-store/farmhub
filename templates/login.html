@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Reset and base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url("{{ url_for('static', filename='images/bg.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            /* keep base font-size normal but increase modal typography below */
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Larger typography and spacing inside the modal for easier reading
+           Increase modal width slightly for desktop while preserving small-screen fallback */
+        .register-modal {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 28px; /* more breathing room */
+            border-radius: 10px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.08rem; /* larger base font inside modal */
+            max-width: 380px;
+            width: auto;
+        }
+
+        .register-modal h2 {
+            font-size: 1.75rem; /* noticeably larger heading */
+            margin-bottom: 10px;
+            color: #2f4f2f;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            /* make the form stretch to the modal content width so inputs align with alerts */
+            width: 100%;
+            gap: 10px; /* consistent vertical spacing between fields */
+            max-width: 92vw; /* ensure it never overflows on small screens */
+        }
+
+        label {
+            font-size: 0.95rem; /* clearer label text */
+            margin-top: 6px;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            /* remove extra horizontal margins and make inputs fill modal width */
+            margin: 0;
+            padding: 14px; /* taller inputs for readability */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1.05rem; /* larger input text */
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            margin: 0;
+            padding: 12px 14px;
+            background-color: #64A03B;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .forgot-link {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        .forgot-link a {
+            color: #64A03B;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        /* Slight image tweak so it remains balanced with larger text */
+        .register-modal img {
+            width: 170px;
+            margin-bottom: 10px;
+        }
+
+        /* Small screens: keep things readable without changing the modal width setting
+           (this ensures we don't expand layout dimensions but allow content to wrap/read)
+        */
+        @media (max-width: 480px) {
+            /* On small screens, fall back to more compact sizing so the modal doesn't overflow */
+            .register-modal {
+                padding: 18px;
+                font-size: 1rem;
+            }
+            .login-form { width: 300px; }
+            .register-modal img { width: 140px; }
+            input[type="email"], input[type="password"], input[type="submit"] { padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="register-modal">
+            <h2>Login to FARMHUB</h2>
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" style="width: 150px;">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                <div style="width:100%; margin-bottom:12px;">
+                                    {% for category, msg in messages %}
+                                        {% if category == 'danger' %}
+                                            <div style="padding:10px; border-radius:6px; margin-bottom:6px; color: #fff; background-color:#d9534f;">{{ msg }}</div>
+                                        {% elif category == 'success' %}
+                                            <div style="padding:10px; border-radius:6px; margin-bottom:6px; color: #fff; background-color:#5cb85c;">{{ msg }}</div>
+                                        {% elif category == 'warning' %}
+                                            <div style="padding:10px; border-radius:6px; margin-bottom:6px; color: #fff; background-color:#f0ad4e;">{{ msg }}</div>
+                                        {% else %}
+                                            <div style="padding:10px; border-radius:6px; margin-bottom:6px; color: #fff; background-color:#5bc0de;">{{ msg }}</div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+            <form class="login-form" method="POST" action="{{ url_for('login') }}">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <div class="forgot-link">
+                    <a href="{{ url_for('forgot_password') }}" style="color: #64A03B; text-decoration: none;">Forgot Password?</a>
+                </div>
+                <input type="submit" value="Login">
+                <p style="text-align: center;margin-top: 10px;">Already have a buyer account? <a href="{{ url_for('register') }}" style="color: #64A03B; text-decoration: none;">Register Now</a></p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

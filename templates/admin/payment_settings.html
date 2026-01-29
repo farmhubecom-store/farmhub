@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Settings - Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F0F0F0;
+            color: #333;
+            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main {
+            height: 85%;
+            background-color: #fbeed5;
+            padding: 25px 50px;
+            overflow-y: auto;
+            display: flex;
+        }
+
+        .parent {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-rows: 1fr;
+            gap: 10px 10px;
+            width: 100%;
+            max-width: 98vw;
+            margin: 0 auto;
+        }
+
+        .div2 {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 2px 8px #f0ad4e44;
+            min-width: 0;
+            overflow-y: auto;
+        }
+
+        .page-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #6bb13a;
+            padding-bottom: 10px;
+        }
+
+        .page-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1em;
+        }
+
+        .settings-card {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .settings-card h3 {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #6bb13a;
+            padding-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #6bb13a;
+            box-shadow: 0 0 0 3px rgba(107, 177, 58, 0.1);
+        }
+
+        .form-help {
+            font-size: 0.85em;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .btn-primary {
+            background: #6bb13a;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn-primary:hover {
+            background: #5a9631;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .info-section {
+            background: #e8f5e9;
+            border-left: 4px solid #6bb13a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .info-section h4 {
+            color: #2e7d32;
+            margin-bottom: 8px;
+        }
+
+        .info-section p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #6bb13a;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+
+        .shops-list {
+            max-height: 300px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .shop-item {
+            padding: 10px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .shop-item:last-child {
+            border-bottom: none;
+        }
+
+        .shop-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .shop-income {
+            color: #6bb13a;
+            font-weight: 600;
+        }
+
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+
+    {% include 'partials/admin_navbar.html' %}
+
+    <div class="main">
+        <div class="parent">
+
+            {% include 'partials/admin_sidebar.html' %}
+
+            <div class="div2">
+                <h1 class="page-title">💳 Payment Settings</h1>
+                <p class="page-subtitle">Configure commission rates and payment thresholds for sellers</p>
+
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <!-- Information Section -->
+                <div class="info-section">
+                    <h4>ℹ️ How Commission Works</h4>
+                    <p>
+                        When a seller reaches the threshold amount in total income, a commission will be automatically 
+                        applied to their future sales. This commission can be configured as either a percentage of the 
+                        sale price or a fixed amount per transaction.
+                    </p>
+                </div>
+
+                <!-- Commission Settings Form -->
+                <div class="settings-card">
+                    <h3>Commission Configuration</h3>
+                    <form action="{{ url_for('admin_update_payment_settings') }}" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="threshold_amount">Income Threshold (₱)</label>
+                            <input type="number" 
+                                   id="threshold_amount" 
+                                   name="threshold_amount" 
+                                   step="0.01" 
+                                   min="0"
+                                   value="{{ settings.threshold_amount }}" 
+                                   required>
+                            <div class="form-help">Sellers will be charged commission after reaching this total income amount.</div>
+        </div>
+
+                        <div class="form-group">
+                            <label for="commission_type">Commission Type</label>
+                            <select id="commission_type" name="commission_type" required>
+                                <option value="percentage" {% if settings.commission_type == 'percentage' %}selected{% endif %}>Percentage</option>
+                                <option value="fixed" {% if settings.commission_type == 'fixed' %}selected{% endif %}>Fixed Amount</option>
+                            </select>
+                            <div class="form-help">Choose whether commission is calculated as a percentage or fixed amount.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="commission_rate">Commission Rate</label>
+                            <input type="number" 
+                                   id="commission_rate" 
+                                   name="commission_rate" 
+                                   step="0.01" 
+                                   min="0"
+                                   max="100"
+                                   value="{{ settings.commission_rate }}" 
+                                   required>
+                            <div class="form-help" id="rate-help">
+                                For percentage: Enter value between 0-100 (e.g., 5 for 5%).<br>
+                                For fixed: Enter fixed amount in ₱ (e.g., 50 for ₱50 per transaction).
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="qr_code_image">Payment QR Code</label>
+                            {% if settings.qr_code_image %}
+                                <div style="margin-bottom: 10px;">
+                                    <strong>Current QR Code:</strong><br>
+                                    <img src="{{ settings.qr_code_image }}" alt="Current QR Code" style="max-width: 200px; border: 1px solid #ddd; border-radius: 8px; margin-top: 10px;">
+                                </div>
+                            {% endif %}
+                            <input type="file" 
+                                   id="qr_code_image" 
+                                   name="qr_code_image" 
+                                   accept="image/*">
+                            <div class="form-help">Upload a QR code image for sellers to use when paying commission. Recommended: GCash or PayMaya QR code.</div>
+                        </div>
+
+                        <button type="submit" class="btn-primary">💾 Save Settings</button>
+                    </form>
+                </div>
+
+                <!-- Statistics Section -->
+                <div class="settings-card">
+                    <h3>📊 Commission Statistics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-number">{{ shops_with_commission|length }}</div>
+                            <div class="stat-label">Shops Paying Commission</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">{{ total_shops }}</div>
+                            <div class="stat-label">Total Shops</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">
+                                {% if settings.commission_type == 'percentage' %}
+                                    {{ settings.commission_rate }}%
+                                {% else %}
+                                    ₱{{ '%.2f'|format(settings.commission_rate) }}
+                                {% endif %}
+                            </div>
+                            <div class="stat-label">Current Commission Rate</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shops with Commission -->
+                {% if shops_with_commission and shops_with_commission|length > 0 %}
+                <div class="settings-card">
+                    <h3>🏪 Shops Currently Paying Commission</h3>
+                    <div class="shops-list">
+                        {% for shop in shops_with_commission %}
+                        <div class="shop-item">
+                            <div>
+                                <div class="shop-name">{{ shop.shop_name }}</div>
+                                <div style="font-size: 0.85em; color: #666;">{{ shop.email }}</div>
+                            </div>
+                            <div class="shop-income">₱{{ '%.2f'|format(shop.total_income) }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update help text when commission type changes
+        document.getElementById('commission_type').addEventListener('change', function() {
+            const rateHelp = document.getElementById('rate-help');
+            if (this.value === 'percentage') {
+                rateHelp.innerHTML = 'For percentage: Enter value between 0-100 (e.g., 5 for 5%).';
+            } else {
+                rateHelp.innerHTML = 'For fixed: Enter fixed amount in ₱ (e.g., 50 for ₱50 per transaction).';
+            }
+        });
+    </script>
+</body>
+</html>

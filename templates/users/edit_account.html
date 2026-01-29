@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .chat-selected {
+            background: #fbeed5;
+        }
+        .chat-unselected {
+            background: #fff;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F0F0F0;
+            color: #333;
+            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main {
+            height: 85%;
+            background-color: #E2F0D9;
+            padding: 25px 50px;
+            overflow-y: auto;
+            display: flex;
+        }
+
+        .parent {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-rows: 1fr 260px;
+            gap: 10px 10px;
+            width: 100%;
+            max-width: 98vw;
+            margin: 0 auto;
+        }
+
+
+        .div2 {
+            grid-column: 2 / 3;
+            grid-row: 1 / 3;
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px 20px 10px 20px;
+            box-shadow: 0 2px 8px #f0ad4e44;
+            min-width: 0;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 1100px) {
+            .parent {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            .div1, .div2, .div3 {
+                grid-column: 1 / 2 !important;
+                grid-row: auto !important;
+            }
+        }
+
+                                    /* form container */
+                            .edit-shop-form { display:flex; gap:24px; flex-wrap:wrap; }
+                            .edit-shop-col { flex:1; min-width:300px; display:flex; flex-direction:column; }
+                            label { font-size:0.9rem; margin-top:8px; color:#444; }
+                            input[type="text"], input[type="email"], input[type="password"], select, textarea {
+                                margin-top:6px; margin-bottom: 10px; padding:10px; border:1px solid #d8d8d8; border-radius:6px; font-size:0.95rem;
+                                box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+                            }
+                            textarea { min-height:120px; }
+                            .btn-save { background:#f0ad4e; color:#fff; border:none; padding:10px 18px; border-radius:6px; cursor:pointer; font-weight:600; }
+                            .btn-save:hover { opacity:0.95; }
+                            .form-card {padding:18px; border-radius:10px; }
+                            .header-row { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+    </style>
+</head>
+<body>
+
+    {% include 'partials/navbar.html' %}
+
+    <div class="main">
+        <div class="parent">
+
+            {% include 'partials/user_sidebar.html' %}
+
+            <div class="div2">
+                <div style="display: flex; height: 100%;">
+                    <div style="width:100%;">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% set account_messages = [] %}
+                            {% for category, msg in messages %}
+                                {% if category in ['account_success', 'account_error'] %}
+                                    {% set _ = account_messages.append((category, msg)) %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if account_messages %}
+                                <div style="width:100%; margin-bottom:12px;">
+                                    {% for category, msg in account_messages %}
+                                        {% if category == 'account_error' %}
+                                            <div style="padding:10px; border-radius:6px; margin-bottom:6px; color: #fff; background-color:#d9534f;">{{ msg }}</div>
+                                        {% elif category == 'account_success' %}
+                                            <div style="padding:10px; border-radius:6px; margin-bottom:6px; color: #fff; background-color:#5cb85c;">{{ msg }}</div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+
+                        <div class="form-card">
+                        <form method="POST" action="{{ url_for('user_account') }}" class="edit-shop-form">
+                            <div class="edit-shop-col">
+                                <label for="first_name">First Name</label>
+                                <input type="text" name="first_name" value="{{ user.first_name or '' }}" required>
+                                <label for="last_name">Last Name</label>
+                                <input type="text" name="last_name" value="{{ user.last_name or '' }}">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" value="{{ user.email }}" style="margin-bottom: 12px;" required>
+
+                                <label for="address_house">House / Barangay</label>
+                                <input type="text" name="address_house" value="{{ user.address_house or '' }}">
+                                <label for="address_street">Street</label>
+                                <input type="text" name="address_street" value="{{ user.address_street or '' }}">
+                                <label for="address_city">City/Municipality</label>
+                                <div style="display: flex;justify-content: center;align-items: center; gap:8px;">
+                                    <select name="address_city" style="flex:1;" required>
+                                        <option value="" disabled {% if not user.address_city %}selected{% endif %}>Select City/Municipality</option>
+                                        <option value="Mambusao" {% if user.address_city == 'Mambusao' %}selected{% endif %}>Mambusao</option>
+                                        <option value="Sapian" {% if user.address_city == 'Sapian' %}selected{% endif %}>Sapian</option>
+                                        <option value="Sigma" {% if user.address_city == 'Sigma' %}selected{% endif %}>Sigma</option>
+                                        <option value="Jamindan" {% if user.address_city == 'Jamindan' %}selected{% endif %}>Jamindan</option>
+                                        <option value="Cuartero" {% if user.address_city == 'Cuartero' %}selected{% endif %}>Cuartero</option>
+                                        <option value="Ivisan" {% if user.address_city == 'Ivisan' %}selected{% endif %}>Ivisan</option>
+                                        <option value="Dao" {% if user.address_city == 'Dao' %}selected{% endif %}>Dao</option>
+                                        <option value="Dumalag" {% if user.address_city == 'Dumalag' %}selected{% endif %}>Dumalag</option>
+                                        <option value="Dumarao" {% if user.address_city == 'Dumarao' %}selected{% endif %}>Dumarao</option>
+                                        <option value="Tapaz" {% if user.address_city == 'Tapaz' %}selected{% endif %}>Tapaz</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="edit-shop-col">
+                                <label for="password">Password (leave blank to keep current)</label>
+                                <input type="password" name="password">
+                                <label for="re_password">Re-enter Password</label>
+                                <input type="password" name="re_password">
+                                <div style="display:flex; justify-content:flex-end; margin-top:12px;">
+                                    <input type="submit" value="Save Account" class="btn-save">
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

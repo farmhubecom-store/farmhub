@@ -1,0 +1,138 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Update Your Delivery Address{% endblock %}
+{% block breadcrumb %}How to Update Your Delivery Address{% endblock %}
+{% block help_title %}🚚 How to Update Your Delivery Address{% endblock %}
+
+{% block content %}
+<p>Keep your delivery address current to ensure your farm products reach you without any issues. Here's how to update your address.</p>
+
+<h2>Updating Your Default Address</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Log in to your FarmHub account.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Click on your profile icon or name in the navigation bar.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Select <strong>"Edit Account"</strong> from the dropdown menu.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Find the address section and update the following fields:
+    <ul>
+        <li><strong>House/Building Number:</strong> Your house number or building name</li>
+        <li><strong>Street:</strong> Street name and any additional location details</li>
+        <li><strong>City/Municipality:</strong> Your city or municipality</li>
+        <li><strong>District/Barangay:</strong> Your district or barangay</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> Click <strong>"Save Changes"</strong> or <strong>"Update"</strong> to save your new address.
+</div>
+
+<div class="tip-box">
+Be as specific as possible with your address. Include landmarks or special instructions to help delivery persons find you easily.
+</div>
+
+<h2>Changing Address During Checkout</h2>
+
+<p>You can also modify your delivery address when placing an order:</p>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Proceed to checkout with items in your cart.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Review the delivery address shown on the checkout page.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> If you need to change it, look for an <strong>"Edit"</strong> or <strong>"Change Address"</strong> option.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Enter the new address details.
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> Continue with your order.
+</div>
+
+<h2>Address Tips</h2>
+
+<h3>Include These Details:</h3>
+<ul>
+    <li>Complete house/unit/building number</li>
+    <li>Street name</li>
+    <li>Subdivision or village name (if applicable)</li>
+    <li>Barangay</li>
+    <li>City/Municipality</li>
+    <li>Province</li>
+    <li>Landmarks (e.g., "near the market", "beside the church")</li>
+</ul>
+
+<h3>Delivery Instructions:</h3>
+<p>Consider adding helpful notes like:</p>
+<ul>
+    <li>"Leave with security guard if not home"</li>
+    <li>"Gate code: 1234"</li>
+    <li>"Call upon arrival"</li>
+    <li>"Look for the blue gate"</li>
+</ul>
+
+<div class="warning-box">
+Make sure your address is accurate before placing an order. Once an order is confirmed, changing the delivery address may not be possible or may cause delays.
+</div>
+
+<h2>Can I Change Address After Ordering?</h2>
+
+<p>Changing your address after placing an order depends on the order status:</p>
+
+<h3>Order is still "Pending"</h3>
+<ul>
+    <li>Contact the seller immediately through messages</li>
+    <li>Request an address change before they confirm</li>
+    <li>The seller may be able to accommodate your request</li>
+</ul>
+
+<h3>Order is already "Confirmed" or "On the Way"</h3>
+<ul>
+    <li>Contact the seller or delivery person immediately</li>
+    <li>Changes may not be possible at this stage</li>
+    <li>Additional fees may apply for rerouting</li>
+</ul>
+
+<div class="info-box">
+To avoid delivery issues, always double-check your address before confirming your order.
+</div>
+
+<h2>Common Address Problems</h2>
+
+<h3>Address Not Found?</h3>
+<ul>
+    <li>Check for typos in your address</li>
+    <li>Add more landmarks or details</li>
+    <li>Include your phone number for the driver to call</li>
+</ul>
+
+<h3>Delivery to Wrong Location?</h3>
+<ul>
+    <li>Update your address immediately</li>
+    <li>Contact the seller to report the issue</li>
+    <li>Verify your address is complete and accurate</li>
+</ul>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='update_profile') }}">How to Update Your Profile Information</a></li>
+        <li><a href="{{ url_for('help_article', article='how_delivery_works') }}">How Delivery Works</a></li>
+        <li><a href="{{ url_for('help_article', article='track_delivery') }}">How to Track Delivery Progress</a></li>
+    </ul>
+</div>
+{% endblock %}

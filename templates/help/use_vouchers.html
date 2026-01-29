@@ -1,0 +1,118 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Use Discount Codes{% endblock %}
+{% block breadcrumb %}How to Use Discount Codes or Vouchers{% endblock %}
+{% block help_title %}🛍️ How to Use Discount Codes or Vouchers{% endblock %}
+
+{% block content %}
+<p>Save money on your FarmHub orders by using discount codes and vouchers. Here's everything you need to know about applying discounts.</p>
+
+<h2>Where to Get Discount Codes</h2>
+
+<p>FarmHub discount codes may be available from:</p>
+<ul>
+    <li><strong>Promotional campaigns:</strong> Special events and seasonal sales</li>
+    <li><strong>New user promotions:</strong> Welcome discounts for first-time buyers</li>
+    <li><strong>Shop promotions:</strong> Individual sellers may offer discounts</li>
+    <li><strong>Social media:</strong> Follow FarmHub for exclusive codes</li>
+    <li><strong>Email newsletters:</strong> Subscribe to receive special offers</li>
+</ul>
+
+<h2>How to Apply a Discount Code</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Add items to your cart and proceed to checkout.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Look for a <strong>"Discount Code"</strong>, <strong>"Promo Code"</strong>, or <strong>"Voucher"</strong> field on the checkout page.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Enter your discount code exactly as provided (codes are usually case-sensitive).
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Click <strong>"Apply"</strong> or <strong>"Use"</strong> to apply the discount.
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> Verify that the discount has been applied to your order total.
+</div>
+
+<div class="step-box">
+    <strong>Step 6:</strong> Complete your order with the discounted price.
+</div>
+
+<div class="tip-box">
+Copy and paste discount codes to avoid typos. Even one wrong character will prevent the code from working.
+</div>
+
+<h2>Types of Discounts</h2>
+
+<h3>Percentage Discounts</h3>
+<p>Example: "10% off your order"</p>
+<ul>
+    <li>Discount is calculated as a percentage of your subtotal</li>
+    <li>May have a maximum discount amount</li>
+</ul>
+
+<h3>Fixed Amount Discounts</h3>
+<p>Example: "₱50 off"</p>
+<ul>
+    <li>A specific amount is deducted from your total</li>
+    <li>May require a minimum order amount</li>
+</ul>
+
+<h3>Free Shipping</h3>
+<p>Example: "Free delivery"</p>
+<ul>
+    <li>Shipping fee is waived</li>
+    <li>May apply only to certain delivery options</li>
+</ul>
+
+<h2>Common Voucher Terms</h2>
+
+<ul>
+    <li><strong>Minimum purchase:</strong> Some codes require a minimum order amount</li>
+    <li><strong>Expiration date:</strong> Codes may only be valid for a limited time</li>
+    <li><strong>Single use:</strong> Most codes can only be used once</li>
+    <li><strong>Product restrictions:</strong> Some codes may only apply to certain products</li>
+    <li><strong>New users only:</strong> Some promotions are for first-time buyers only</li>
+</ul>
+
+<div class="warning-box">
+Most discount codes cannot be combined with other offers. Only one code can typically be applied per order.
+</div>
+
+<h2>Troubleshooting Discount Codes</h2>
+
+<h3>Code Not Working?</h3>
+<ul>
+    <li><strong>Check expiration:</strong> The code may have expired</li>
+    <li><strong>Verify spelling:</strong> Make sure you entered it correctly</li>
+    <li><strong>Check requirements:</strong> You may not meet minimum purchase requirements</li>
+    <li><strong>Already used:</strong> Single-use codes can't be reused</li>
+    <li><strong>Account restrictions:</strong> Some codes are for specific users</li>
+</ul>
+
+<h3>Discount Not Showing?</h3>
+<ul>
+    <li>Refresh the checkout page</li>
+    <li>Remove and re-add the code</li>
+    <li>Check if the code applies to your selected items</li>
+</ul>
+
+<div class="info-box">
+If you have a valid code that isn't working, contact customer support with the code details and your order information.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='place_order') }}">How to Place an Order</a></li>
+        <li><a href="{{ url_for('help_article', article='add_to_cart') }}">How to Add Products to Your Cart</a></li>
+        <li><a href="{{ url_for('help_article', article='contact_support') }}">How to Contact Customer Support</a></li>
+    </ul>
+</div>
+{% endblock %}

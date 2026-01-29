@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url("{{ url_for('static', filename='images/bg.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-modal {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .register-form {
+            display: flex;
+        }
+
+        .field-left, .field-right {
+            display: flex;
+            flex-direction: column;
+            margin: 0 10px;
+            width: 100%;
+        }
+
+        label {
+            font-size: small;
+        }
+
+        input, select {
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; flex-direction: column; align-items: center; position: absolute; left: 40px; top: 40px;">
+            <a href="{{ url_for('register') }}" style="margin-bottom: 10px;">
+                <button style="width: 180px; padding: 10px; background-color: #64A03B; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">User Registration</button>
+            </a>
+            <a href="{{ url_for('register_shop') }}">
+                <button style="width: 180px; padding: 10px; background-color: #f0ad4e; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Shop Registration</button>
+            </a>
+        </div>
+        <div class="register-modal">
+            <h2>Sign up to FARMHUB</h2>
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" style="width: 150px;">
+            <p style="margin-bottom: 20px;">Please enter your details below.</p>
+                                    {% with messages = get_flashed_messages(with_categories=true) %}
+                                        {% if messages %}
+                                            <div style="width:100%; margin-bottom:12px;">
+                                                {% for category, msg in messages %}
+                                                    {% if category == 'danger' %}
+                                                        <div style="padding:10px; border-radius:6px; margin-bottom:6px; color: #fff; background-color:#d9534f;">{{ msg }}</div>
+                                                    {% elif category == 'success' %}
+                                                        <div style="padding:10px; border-radius:6px; margin-bottom:6px; color: #fff; background-color:#5cb85c;">{{ msg }}</div>
+                                                    {% elif category == 'warning' %}
+                                                        <div style="padding:10px; border-radius:6px; margin-bottom:6px; color: #fff; background-color:#f0ad4e;">{{ msg }}</div>
+                                                    {% else %}
+                                                        <div style="padding:10px; border-radius:6px; margin-bottom:6px; color: #fff; background-color:#5bc0de;">{{ msg }}</div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    {% endwith %}
+            <form class="register-form" method="POST" action="{{ url_for('register') }}">
+                <div class="field-left">
+                    <label for="fname">First Name</label>
+                    <input type="text" name="fname" required>
+                    <label for="lname">Last Name</label>
+                    <input type="text" name="lname" required>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" style="margin-bottom: 20px;" required>
+                    <label for="address">Address</label>
+                    <input type="text" name="address_house" placeholder="House No">
+                    <input type="text" name="address_street" placeholder="Street">
+                    <div style="display: flex;justify-content: center;align-items: center;">
+                        <select style="width: 100%;" name="address_city" required>
+                            <option value="" disabled selected>Select City/Municipality</option>
+                            <option value="Mambusao">Mambusao</option>
+                            <option value="Sapian">Sapian</option>
+                            <option value="Sigma">Sigma</option>
+                            <option value="Jamindan">Jamindan</option>
+                            <option value="Cuartero">Cuartero</option>
+                            <option value="Ivisan">Ivisan</option>
+                            <option value="Dao">Dao</option>
+                            <option value="Dumalag">Dumalag</option>
+                            <option value="Dumarao">Dumarao</option>
+                            <option value="Tapaz">Tapaz</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field-right">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" name="phone">
+                    <label for="password_hint">Password Hint Question</label>
+                    <select name="password_hint_question" required style="margin: 5px 0; padding: 10px;">
+                        <option value="" disabled selected>Select a security question</option>
+                        <option value="What is your pet's name?">What is your pet's name?</option>
+                        <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                        <option value="What is your favorite color?">What is your favorite color?</option>
+                        <option value="What city were you born in?">What city were you born in?</option>
+                        <option value="What is your favorite food?">What is your favorite food?</option>
+                        <option value="What is your childhood nickname?">What is your childhood nickname?</option>
+                        <option value="What is the name of your first school?">What is the name of your first school?</option>
+                    </select>
+                    <label for="password_hint_answer">Answer</label>
+                    <input type="text" name="password_hint_answer" placeholder="Your answer" required>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" required>
+                    <label for="re_password">Re-enter Password</label>
+                    <input type="password" name="re_password" required>
+                    <input type="submit" value="Register" style="background-color: #64A03B; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer;">
+                    <p style="text-align: center;margin-top: 10px;">Already have an account? <a href="{{ url_for('login') }}" style="color: #64A03B; text-decoration: none;">Login Now</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Register as a Seller{% endblock %}
+{% block breadcrumb %}How to Register as a Farmer/Seller{% endblock %}
+{% block help_title %}🤝 How to Register as a Farmer/Seller{% endblock %}
+
+{% block content %}
+<p>Ready to sell your farm products on FarmHub? Register as a seller and connect with customers looking for fresh, local produce. Here's how to get started.</p>
+
+<h2>Benefits of Selling on FarmHub</h2>
+
+<ul>
+    <li><strong>Direct sales:</strong> Sell directly to consumers without middlemen</li>
+    <li><strong>Wider reach:</strong> Access customers beyond your local area</li>
+    <li><strong>Easy management:</strong> Simple tools to manage products and orders</li>
+    <li><strong>Build relationships:</strong> Connect with loyal customers</li>
+    <li><strong>Track performance:</strong> View sales reports and analytics</li>
+</ul>
+
+<h2>Registration Requirements</h2>
+
+<p>Before you register, prepare the following:</p>
+<ul>
+    <li>Valid email address</li>
+    <li>Shop/farm name</li>
+    <li>Description of your farm/products</li>
+    <li>Contact information</li>
+    <li>Business address</li>
+    <li>Profile photo (optional but recommended)</li>
+</ul>
+
+<h2>Step-by-Step Registration</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Go to the FarmHub homepage.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Click <strong>"Register"</strong> and select <strong>"Shop Registration"</strong> (orange button).
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Fill in your shop information:
+    <ul>
+        <li><strong>Shop Name:</strong> Your farm or business name</li>
+        <li><strong>Description:</strong> Describe your farm and what you sell</li>
+        <li><strong>Owner Name:</strong> Your full name</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Enter your contact details:
+    <ul>
+        <li><strong>Email:</strong> For account access and notifications</li>
+        <li><strong>Phone:</strong> For customer inquiries</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> Add your address:
+    <ul>
+        <li>House/Building number</li>
+        <li>Street</li>
+        <li>City/Municipality</li>
+        <li>District/Barangay</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 6:</strong> Create a secure password and set up your security question.
+</div>
+
+<div class="step-box">
+    <strong>Step 7:</strong> Click <strong>"Register Shop"</strong> to create your account.
+</div>
+
+<div class="step-box">
+    <strong>Step 8:</strong> Log in with your email and password to access your seller dashboard!
+</div>
+
+<div class="tip-box">
+Write a compelling shop description that highlights what makes your farm special - organic practices, family-owned history, specialty products, etc.
+</div>
+
+<h2>After Registration</h2>
+
+<p>Once registered, you can:</p>
+
+<ol>
+    <li><strong>Set up your shop profile:</strong> Add a profile image and complete your information</li>
+    <li><strong>Add products:</strong> List your farm products with images and pricing</li>
+    <li><strong>Start selling:</strong> Customers can now discover and order from you</li>
+</ol>
+
+<h2>Shop Profile Best Practices</h2>
+
+<h3>Shop Name</h3>
+<ul>
+    <li>Keep it memorable and easy to spell</li>
+    <li>Include location if relevant (e.g., "Bulacan Fresh Farm")</li>
+    <li>Reflect what you sell</li>
+</ul>
+
+<h3>Shop Description</h3>
+<ul>
+    <li>Tell your story - how did you start farming?</li>
+    <li>Highlight your farming practices (organic, sustainable, etc.)</li>
+    <li>Mention your specialty products</li>
+    <li>Include your years of experience</li>
+</ul>
+
+<h3>Profile Image</h3>
+<ul>
+    <li>Use a clear, professional photo</li>
+    <li>Consider using your farm logo</li>
+    <li>Show your farm or fresh products</li>
+</ul>
+
+<div class="warning-box">
+Your shop email must be unique and not already registered as a user account or another shop.
+</div>
+
+<h2>Commission Information</h2>
+
+<p>FarmHub may charge a small commission on sales. This helps:</p>
+<ul>
+    <li>Maintain the platform</li>
+    <li>Provide customer support</li>
+    <li>Improve features for sellers and buyers</li>
+</ul>
+
+<div class="info-box">
+Learn more about commission rates and payments in the "How Commission Works" help article.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='list_products') }}">How to List Your Products for Sale</a></li>
+        <li><a href="{{ url_for('help_article', article='manage_inventory') }}">How to Manage Inventory & Stock</a></li>
+        <li><a href="{{ url_for('help_article', article='how_commission_works') }}">How Commission Works</a></li>
+    </ul>
+</div>
+{% endblock %}

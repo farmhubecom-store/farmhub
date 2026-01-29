@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F0F0F0;
+            color: #333;
+        }
+
+        .main {
+            height: 65vh;
+            background-color: #E2F0D9;
+            padding: 50px 100px;
+            overflow-y: auto;
+        }
+
+        .main h1 {
+            font-size: 3em;
+        }
+
+        .product-desc {
+            width: 100%;
+            height: 90%;
+            margin: 0 10px;
+            background-color: white;
+            padding: 20px;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .product-images {
+            width: 100%;
+            height: 90%;
+            margin: 0 10px;
+            background-color: white;
+            padding: 20px;
+            color: black;
+        }
+
+        .product-desc .product-buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .product-buttons button {
+            background-color: #548235;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            padding: 15px 30px;
+            border-radius: 20px;
+        }
+
+        .product-images img {
+            width: 100%;
+        }
+
+        .delivery-details {
+            color: black;
+            width: 100%;
+            height: 90%;
+            margin: 0 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .seller-information {
+            width: 100%;
+            height: 50%;
+            padding: 10px;
+            background-color: #F8F8F8;
+        }
+
+        .delivery-address {
+            width: 100%;
+            height: 50%;
+            padding: 10px;
+            background-color: #F8F8F8;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-bottom: 50px;
+        }
+
+        .footer {
+            height: 20vh;
+            background-color: #6DB040;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer img {
+            height: 100%;
+        }
+
+        .footer .footer-navigation {
+            display: flex;
+            margin-right: 50px;
+        }
+
+        .footer-navigation a {
+            font-size: 1.5rem;
+            padding: 0 30px;
+            color: white;
+        }
+
+        .category-container {
+            width: 90%;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .categories {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .categories .category {
+            background-color: white;
+            color: black;
+            width: 250px;
+            height: 250px;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .category-image {
+            width: 100%;
+            height: 100%;
+            background-color: #E1EFD8;
+            border-radius: 15px;
+            margin-bottom: 5px;
+        }
+
+        .shop-rating {
+            display: flex;
+            align-items: center;
+        }
+
+        .shop-rating p:first-child {
+            color: #FFD700; /* Yellow color for stars */
+        }
+
+        .spinner {
+            display: inline-flex;
+            border: 1px solid #000;
+            border-radius: 4px;
+            overflow: hidden;
+            font-family: sans-serif;
+            height: 24px;
+        }
+
+        .spinner button {
+            width: 24px;
+            border: none;
+            background: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .spinner input {
+            width: 30px;
+            text-align: center;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .spinner button:active {
+            background: #eee;
+        }
+
+        .products-om-cart {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch; /* allow children to take full width */
+            justify-content: flex-start;
+            background: white;
+            color: black;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            padding: 10px;
+            margin: 15px 0;
+            width: 100%; /* ensure child table can stretch to full width */
+        }
+        .products-om-cart table {
+            width: 100%;
+            table-layout: fixed; /* force columns to fill available width */
+            border-collapse: collapse;
+        }
+        /* ensure the empty-state colspan cell behaves like a real table cell */
+        .products-om-cart tbody td[colspan] {
+            display: table-cell;
+            width: 100%;
+            padding: 30px 15px; /* give some vertical spacing */
+            box-sizing: border-box;
+        }
+        .products-om-cart thead {
+            background: #E1EFD8;
+        }
+        .products-om-cart th {
+            padding: 15px;
+        }
+        .products-om-cart th:nth-child(1) {
+            text-align: left;
+        }
+        .products-om-cart th:nth-child(2),
+        .products-om-cart th:nth-child(4) {
+            text-align: center;
+        }
+        .products-om-cart th:nth-child(3) {
+            text-align: right;
+        }
+        .products-om-cart tbody tr {
+            background-color: #E7E6E6;
+        }
+        .products-om-cart td {
+            padding: 15px;
+        }
+        .products-om-cart td:nth-child(1) {
+            display: flex;
+            align-items: center;
+        }
+        .products-om-cart img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            margin-right: 10px;
+        }
+        .products-om-cart h2 {
+            text-align: center;
+            margin: 16px 0 0 0;
+            width: 100%;
+        }
+        .products-om-cart .remove-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+        .checkout-btn {
+            font-size: 1rem;
+            padding: 10px 50px;
+            border: none;
+            background-color: #548235;
+            color: white;
+            border-radius: 20px;
+            display: inline-block;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform .12s ease, background-color .12s ease, box-shadow .12s ease;
+        }
+        .checkout-btn:hover {
+            background-color: #43642a;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+        .checkout-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+        }
+        .checkout-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(84,130,53,0.18);
+        }
+    </style>
+</head>
+<body>
+
+    {% include 'partials/navbar.html' %}
+
+    <div class="main">
+        <h1>Cart</h1>
+        
+        <!-- Stock warning banner -->
+        {% set has_stock_issues = cart_items|selectattr('is_out_of_stock')|list|length > 0 or cart_items|selectattr('exceeds_stock')|list|length > 0 %}
+        {% if has_stock_issues %}
+        <div style="background-color: #fff3cd; border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; color: #856404;">
+            <strong>⚠ Stock Alert:</strong> Some items in your cart have stock issues. Please review and update quantities before checkout.
+        </div>
+        {% endif %}
+        
+        <div class="products-om-cart">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if cart_items and cart_items|length > 0 %}
+                        {% for item in cart_items %}
+                            <tr {% if item.is_out_of_stock or item.exceeds_stock %}style="background-color: #ffe6e6;"{% endif %}>
+                                <td>
+                                    <img src="{{ item.image or url_for('static', filename='images/product-images/kalabasa.jpg') }}" alt="{{ item.name }}">
+                                    <div>
+                                        <p>{{ item.name }}</p>
+                                        <p style="color: rgb(112, 112, 112);">{{ item.shop_name }}</p>
+                                        {% if item.is_out_of_stock %}
+                                            <p style="color: #dc3545; font-weight: bold; font-size: 0.9em;">
+                                                ⚠ OUT OF STOCK
+                                            </p>
+                                        {% elif item.exceeds_stock %}
+                                            <p style="color: #ff6b00; font-weight: bold; font-size: 0.9em;">
+                                                ⚠ Only {{ item.available }} available (you have {{ item.quantity }} in cart)
+                                            </p>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td>
+                                    <form action="{{ url_for('update_cart_item') }}" method="post" style="display:inline-block;">
+                                        <input type="hidden" name="cart_id" value="{{ item.cart_id }}">
+                                        <div class="spinner">
+                                            <button type="button" onclick="changeQty('{{ item.cart_id|default(0, true) }}', -1)">-</button>
+                                            <input type="text" id="qty-{{ item.cart_id|default(0, true) }}" name="quantity" value="{{ item.quantity|default(1, true) }}" readonly>
+                                            <button type="button" onclick="changeQty('{{ item.cart_id|default(0, true) }}', 1)">+</button>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td style="text-align:right;">{{ '%.2f'|format(item.subtotal) }}</td>
+                                <td style="text-align:center;">
+                                    <form action="{{ url_for('remove_cart_item') }}" method="post">
+                                        <input type="hidden" name="cart_id" value="{{ item.cart_id }}">
+                                        <button class="remove-btn">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td style="text-align:center;" colspan="4">Your cart is empty.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            <br>
+            <h2>Total: {{ '%.2f'|format(total) }}</h2>
+        </div>
+        <div style="margin: 20px 0;width: 100%;display: flex;align-items: center;justify-content: center;">
+            <a href="/place_order" class="checkout-btn" style="display:inline-block;text-decoration:none;text-align:center;line-height:normal;">Checkout</a>
+        </div>
+    </div>
+    <div class="footer">
+        <img src="assets/images/logo.png"/>
+        <div class="footer-navigation">
+            <a>HOME</a>
+            <a>CONTACT US</a>
+            <a>ABOUT</a>
+            <a>TERMS AND CONDITION</a>
+        </div>
+    </div>
+</body>
+<script>
+    function changeQty(cartId, delta) {
+        const input = document.getElementById('qty-' + cartId);
+        if (!input) return;
+        let val = parseInt(input.value || '1', 10);
+        val = Math.max(0, val + delta);
+        input.value = val;
+        // submit the containing form to persist change
+        const form = input.closest('form');
+        if (form) {
+            // create a temporary hidden input to ensure quantity is posted when using readonly text input
+            let hidden = form.querySelector('input[name="quantity"][type="hidden"]');
+            if (!hidden) {
+                hidden = document.createElement('input');
+                hidden.type = 'hidden';
+                hidden.name = 'quantity';
+                form.appendChild(hidden);
+            }
+            hidden.value = val;
+            form.submit();
+        }
+    }
+</script>
+</html>

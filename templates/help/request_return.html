@@ -1,0 +1,145 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Request a Return{% endblock %}
+{% block breadcrumb %}How to Request a Return{% endblock %}
+{% block help_title %}🔄 How to Request a Return{% endblock %}
+
+{% block content %}
+<p>Received something that isn't quite right? FarmHub wants you to be satisfied with your purchases. Here's how to request a return or report an issue.</p>
+
+<h2>When Can You Request a Return?</h2>
+
+<p>You may be eligible for a return if:</p>
+<ul>
+    <li><strong>Wrong product delivered:</strong> You received something different from what you ordered</li>
+    <li><strong>Damaged items:</strong> Products arrived damaged or spoiled</li>
+    <li><strong>Quality issues:</strong> Products don't meet the described quality</li>
+    <li><strong>Missing items:</strong> Part of your order is missing</li>
+    <li><strong>Incorrect quantity:</strong> You received less than you ordered</li>
+</ul>
+
+<h2>How to Report an Issue</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> <strong>Act quickly!</strong> Report issues as soon as you receive your order, ideally within 24 hours.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Take photos of the issue:
+    <ul>
+        <li>Photos of damaged/wrong products</li>
+        <li>Photos of packaging if relevant</li>
+        <li>Photo of your order receipt/details</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Go to your <strong>Order History</strong>.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Find the affected order and click to view details.
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> Contact the seller through the <strong>Messages</strong> feature.
+</div>
+
+<div class="step-box">
+    <strong>Step 6:</strong> Explain the issue clearly:
+    <ul>
+        <li>What was wrong?</li>
+        <li>What did you expect?</li>
+        <li>What resolution would you like?</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 7:</strong> Share your photos as evidence.
+</div>
+
+<div class="step-box">
+    <strong>Step 8:</strong> Wait for the seller's response and work together on a resolution.
+</div>
+
+<div class="tip-box">
+Be polite and specific when reporting issues. Farmers on FarmHub are generally understanding and want to make things right.
+</div>
+
+<h2>What to Include in Your Report</h2>
+
+<ul>
+    <li><strong>Order ID:</strong> Your unique order number</li>
+    <li><strong>Product name:</strong> Which item has the issue</li>
+    <li><strong>Description:</strong> What's wrong with the product</li>
+    <li><strong>Photos:</strong> Visual evidence of the problem</li>
+    <li><strong>Desired outcome:</strong> What would resolve the issue for you</li>
+</ul>
+
+<h2>Possible Resolutions</h2>
+
+<p>Depending on the situation, resolutions may include:</p>
+
+<h3>Replacement</h3>
+<ul>
+    <li>Seller sends the correct/fresh product</li>
+    <li>Usually at no additional cost</li>
+    <li>May require returning the wrong item</li>
+</ul>
+
+<h3>Partial Refund</h3>
+<ul>
+    <li>For quality issues that are minor</li>
+    <li>You keep the product at a reduced price</li>
+</ul>
+
+<h3>Full Refund</h3>
+<ul>
+    <li>For serious issues or non-delivery</li>
+    <li>Product may need to be returned</li>
+</ul>
+
+<h3>Store Credit</h3>
+<ul>
+    <li>Credit for future purchases</li>
+    <li>Good for maintaining relationship with seller</li>
+</ul>
+
+<div class="warning-box">
+Fresh farm products are perishable. Report issues immediately! Delayed reports may be harder to verify and resolve.
+</div>
+
+<h2>Returns for Farm Products</h2>
+
+<p>Because farm products are perishable, returns work differently than regular retail:</p>
+
+<ul>
+    <li><strong>No "change of mind" returns:</strong> You can't return because you simply don't want it anymore</li>
+    <li><strong>Freshness matters:</strong> Products that were fine on delivery but spoiled due to your storage aren't eligible</li>
+    <li><strong>Documentation is key:</strong> Photos taken at delivery time are most convincing</li>
+    <li><strong>Physical returns may not be required:</strong> For perishable items, sellers may not want them back</li>
+</ul>
+
+<h2>Tips for a Smooth Resolution</h2>
+
+<ol>
+    <li><strong>Inspect on delivery:</strong> Check products when you receive them</li>
+    <li><strong>Document immediately:</strong> Take photos right away if there's an issue</li>
+    <li><strong>Contact seller first:</strong> Most issues can be resolved directly</li>
+    <li><strong>Be reasonable:</strong> Work with the seller on a fair solution</li>
+    <li><strong>Keep communication on platform:</strong> Messages serve as records</li>
+</ol>
+
+<div class="info-box">
+If you cannot resolve the issue with the seller, you can contact FarmHub customer support for assistance.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='refund_policy') }}">Refund Policy</a></li>
+        <li><a href="{{ url_for('help_article', article='wrong_damaged_item') }}">What to Do if You Receive the Wrong or Damaged Item</a></li>
+        <li><a href="{{ url_for('help_article', article='contact_support') }}">How to Contact Customer Support</a></li>
+    </ul>
+</div>
+{% endblock %}

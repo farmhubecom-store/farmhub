@@ -1,0 +1,158 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}Wrong or Damaged Items{% endblock %}
+{% block breadcrumb %}What to Do if You Receive the Wrong or Damaged Item{% endblock %}
+{% block help_title %}🔄 What to Do if You Receive the Wrong or Damaged Item{% endblock %}
+
+{% block content %}
+<p>Discovered something wrong with your order? Don't worry - here's exactly what to do to resolve the issue quickly and get the resolution you deserve.</p>
+
+<h2>⚡ Act Immediately</h2>
+
+<div class="warning-box">
+Time is critical with farm products! Report issues as soon as you discover them - ideally within hours, definitely within 24 hours of delivery.
+</div>
+
+<h2>Step 1: Document the Issue</h2>
+
+<p>Before doing anything else, take photos:</p>
+
+<h3>For Wrong Items:</h3>
+<ul>
+    <li>Photo of what you received</li>
+    <li>Photo showing packaging/labels</li>
+    <li>Screenshot of what you ordered</li>
+</ul>
+
+<h3>For Damaged Items:</h3>
+<ul>
+    <li>Photos of the damage (multiple angles)</li>
+    <li>Photo of the packaging condition</li>
+    <li>Photo showing extent of damage</li>
+    <li>Close-up photos of affected areas</li>
+</ul>
+
+<h3>For Spoiled/Rotten Products:</h3>
+<ul>
+    <li>Photos showing the spoilage</li>
+    <li>Photos of discoloration, mold, or decay</li>
+    <li>Compare with any good items if partial spoilage</li>
+</ul>
+
+<div class="tip-box">
+Take photos BEFORE disposing of or altering any items. These serve as your evidence.
+</div>
+
+<h2>Step 2: Contact the Seller</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Log in to your FarmHub account.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Go to <strong>Messages</strong> and find the seller's conversation (or start a new one).
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Send a clear message including:
+    <ul>
+        <li>Your Order ID</li>
+        <li>What the problem is</li>
+        <li>Photos of the issue</li>
+        <li>What you'd like as resolution</li>
+    </ul>
+</div>
+
+<h3>Sample Message for Wrong Item:</h3>
+<div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0; font-style: italic;">
+"Hi, I received my order #123 today. Unfortunately, I ordered Lakatan Bananas but received Saba Bananas instead. I've attached photos showing what I received. Could you please send the correct product or arrange a refund? Thank you."
+</div>
+
+<h3>Sample Message for Damaged Item:</h3>
+<div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0; font-style: italic;">
+"Hello, my order #456 arrived today but the tomatoes were badly bruised and some are already spoiled. I've attached photos of the damage. Please advise on how we can resolve this. Thank you."
+</div>
+
+<h2>Step 3: Wait for Seller Response</h2>
+
+<p>Give the seller reasonable time to respond:</p>
+<ul>
+    <li>Most sellers respond within 24 hours</li>
+    <li>Be patient but persistent</li>
+    <li>If no response in 48 hours, send a follow-up</li>
+</ul>
+
+<h2>Step 4: Discuss Resolution</h2>
+
+<p>Work with the seller on a fair resolution:</p>
+
+<h3>Common Resolutions:</h3>
+
+<div class="step-box">
+    <strong>🔄 Replacement:</strong> Seller sends the correct or fresh product
+</div>
+
+<div class="step-box">
+    <strong>💰 Full Refund:</strong> You get all your money back
+</div>
+
+<div class="step-box">
+    <strong>💵 Partial Refund:</strong> You keep the item at a reduced price
+</div>
+
+<div class="step-box">
+    <strong>🏪 Store Credit:</strong> Credit for future purchases
+</div>
+
+<h2>What NOT to Do</h2>
+
+<ul>
+    <li>❌ Don't dispose of items before documenting</li>
+    <li>❌ Don't wait too long to report</li>
+    <li>❌ Don't be rude or threatening to the seller</li>
+    <li>❌ Don't exaggerate the issue</li>
+    <li>❌ Don't demand unreasonable compensation</li>
+</ul>
+
+<h2>If Seller Is Unresponsive</h2>
+
+<p>If the seller doesn't respond or refuses to help:</p>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Wait at least 48 hours after your initial message.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Send a polite follow-up message.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> If still no response, contact FarmHub customer support.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Provide all documentation: order details, photos, message history.
+</div>
+
+<h2>Preventing Future Issues</h2>
+
+<ul>
+    <li><strong>Check reviews:</strong> Buy from highly-rated sellers</li>
+    <li><strong>Inspect on delivery:</strong> Check products before the delivery person leaves</li>
+    <li><strong>Read descriptions:</strong> Make sure you understand what you're ordering</li>
+    <li><strong>Communicate:</strong> Ask questions before ordering if unsure</li>
+</ul>
+
+<div class="info-box">
+Most sellers on FarmHub are honest farmers who want happy customers. Issues are usually resolved amicably when handled properly.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='request_return') }}">How to Request a Return</a></li>
+        <li><a href="{{ url_for('help_article', article='refund_policy') }}">Refund Policy</a></li>
+        <li><a href="{{ url_for('help_article', article='contact_support') }}">How to Contact Customer Support</a></li>
+    </ul>
+</div>
+{% endblock %}

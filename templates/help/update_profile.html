@@ -1,0 +1,122 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Update Your Profile{% endblock %}
+{% block breadcrumb %}How to Update Your Profile Information{% endblock %}
+{% block help_title %}🛒 How to Update Your Profile Information{% endblock %}
+
+{% block content %}
+<p>Keep your FarmHub profile up-to-date to ensure smooth ordering and delivery. Here's how to update your personal information.</p>
+
+<h2>For Buyers (User Accounts)</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Log in to your FarmHub account.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Click on your profile icon or name in the navigation bar.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Select <strong>"Edit Account"</strong> or <strong>"My Account"</strong> from the dropdown menu.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Update any of the following information:
+    <ul>
+        <li>First Name and Last Name</li>
+        <li>Email Address</li>
+        <li>Phone Number</li>
+        <li>Address (House/Building, Street, City, District)</li>
+        <li>Profile Picture</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> Click <strong>"Save Changes"</strong> or <strong>"Update"</strong> to apply your changes.
+</div>
+
+<h2>For Sellers (Shop Accounts)</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Log in to your shop account.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Navigate to the seller dashboard using the sidebar menu.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Click on <strong>"Account"</strong> or <strong>"Edit Shop"</strong> in the sidebar.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Update your shop information:
+    <ul>
+        <li>Shop Name</li>
+        <li>Shop Description</li>
+        <li>Owner Name</li>
+        <li>Contact Email</li>
+        <li>Phone Number</li>
+        <li>Shop Address</li>
+        <li>Profile Image</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> Click <strong>"Save"</strong> to update your shop profile.
+</div>
+
+<h2>Uploading a Profile Picture</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> In your account settings, find the profile image section.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Click <strong>"Choose File"</strong> or <strong>"Upload"</strong>.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Select an image from your device. Supported formats: JPG, PNG, GIF.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Save your changes to apply the new profile picture.
+</div>
+
+<div class="tip-box">
+Use a clear, professional photo for your profile. For shops, consider using your logo or a picture of your farm/products.
+</div>
+
+<h2>Changing Your Password</h2>
+
+<ol>
+    <li>Go to your account settings</li>
+    <li>Find the password section</li>
+    <li>Enter your new password</li>
+    <li>Confirm the new password by typing it again</li>
+    <li>Save your changes</li>
+</ol>
+
+<div class="warning-box">
+When changing your email, make sure the new email is not already registered. You'll need to use the new email for future logins.
+</div>
+
+<h2>Why Keep Your Profile Updated?</h2>
+<ul>
+    <li><strong>Accurate Deliveries:</strong> Your address is used for order deliveries</li>
+    <li><strong>Communication:</strong> Sellers may need to contact you about your orders</li>
+    <li><strong>Account Recovery:</strong> Your email is needed to reset your password</li>
+    <li><strong>Trust:</strong> Complete profiles help build trust in the marketplace</li>
+</ul>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='create_account') }}">How to Create an Account</a></li>
+        <li><a href="{{ url_for('help_article', article='reset_password') }}">How to Reset Your Password</a></li>
+        <li><a href="{{ url_for('help_article', article='update_delivery_address') }}">How to Update Your Delivery Address</a></li>
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Filter by Category{% endblock %}
+{% block breadcrumb %}How to Filter by Category{% endblock %}
+{% block help_title %}🌾 How to Filter by Category{% endblock %}
+
+{% block content %}
+<p>FarmHub organizes products into categories to help you find exactly what you need. Learn how to use category filters to narrow down your search.</p>
+
+<h2>Available Product Categories</h2>
+
+<p>FarmHub offers products in the following main categories:</p>
+
+<ul>
+    <li><strong>🍎 Fruits:</strong> Fresh fruits like mangoes, bananas, apples, citrus, and more</li>
+    <li><strong>🥬 Vegetables:</strong> Fresh vegetables including leafy greens, root vegetables, and herbs</li>
+    <li><strong>🐄 Livestock:</strong> Meat products from cattle, pigs, goats, and other animals</li>
+    <li><strong>🐔 Poultry:</strong> Chicken, duck, eggs, and other poultry products</li>
+    <li><strong>🐟 Seafood:</strong> Fresh fish and other seafood products</li>
+    <li><strong>🌾 Grains:</strong> Rice, corn, and other grain products</li>
+    <li><strong>🥛 Dairy:</strong> Milk, cheese, and dairy products</li>
+    <li><strong>🍯 Others:</strong> Specialty items and other farm products</li>
+</ul>
+
+<h2>How to Filter by Category</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Go to the <strong>"All Products"</strong> page or shop page.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Look for the category filter buttons or dropdown menu, usually at the top of the product list.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Click on the category you want to view (e.g., "Fruits", "Vegetables", "Poultry").
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> The product list will update to show only products in that category.
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> To see all products again, click <strong>"All"</strong> or clear the filter.
+</div>
+
+<h2>Filtering Within a Shop</h2>
+
+<p>When viewing a specific farmer's shop:</p>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Visit the shop page by clicking on a shop name.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Use the category filter to see only specific types of products that shop offers.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> This helps when a shop has many products and you're looking for something specific.
+</div>
+
+<div class="tip-box">
+If you're looking for a specific product, combine category filtering with the search function for best results.
+</div>
+
+<h2>Tips for Finding Products</h2>
+
+<ul>
+    <li><strong>Start broad, then narrow:</strong> First browse a category, then look for specific items</li>
+    <li><strong>Check multiple categories:</strong> Some products might appear in different categories</li>
+    <li><strong>Look at "All" first:</strong> If you're not sure which category, browse all products</li>
+    <li><strong>Check shop specialties:</strong> Some farms specialize in certain categories</li>
+</ul>
+
+<div class="info-box">
+Product categories are set by the farmers when they list their items. If you can't find a product, try using the search bar or contact the seller directly.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='search_products') }}">How to Search for Farm Products</a></li>
+        <li><a href="{{ url_for('help_article', article='view_product_details') }}">How to View Product Details</a></li>
+        <li><a href="{{ url_for('help_article', article='add_to_cart') }}">How to Add Products to Your Cart</a></li>
+    </ul>
+</div>
+{% endblock %}

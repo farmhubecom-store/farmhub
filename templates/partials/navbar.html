@@ -1,0 +1,334 @@
+    <style>
+
+            .navbar {
+                display: flex;
+                flex-direction: column;
+                height: 15vh;            
+                overflow: visible; /* allow search suggestions to overflow */
+            }
+
+            .nav-top {
+                background-color: #E1EFD8;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 105px;
+                height: 60%;
+                min-height: 0;
+            }
+
+            .nav-top img {
+                height: 100%;
+            }
+
+            .nav-top .nav-search {
+                width: 100%; /* fill wrapper width for consistent sizing */
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 15px;
+            }
+
+            /* Base styles for nav page buttons */
+            .nav-pages .logged_in {
+                color: white;
+                text-decoration: none;
+                padding: 10px;
+                border-radius: 50%;
+                box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.5);
+                margin: 5px;
+            }
+
+            .nav-pages .not-loggedIn {
+                color: white;
+                text-decoration: none;
+                padding: 10px;
+                border-radius: 15px;
+                background-color: #67A93B;
+                box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.5);
+                margin: 5px;
+            }
+
+            .nav-bottom {
+                background-color: #67A93B;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 5px;
+                height: 40%;
+                min-height: 0;
+            }
+
+            .nav-bottom a {
+                color: white;
+                text-decoration: none;
+                padding: 8px;
+                font-size: 1.2em;
+                margin: 0 10px;
+            }
+
+            .nav-bottom a.active {
+                background-color: #558336;
+                color: #B5B5B4;
+                border-radius: 25px;
+            }
+
+            .shop-nav-bottom {
+                background-color: #f0ad4e;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 5px;
+                height: 40%;
+                min-height: 0;
+            }
+
+            .shop-nav-bottom a {
+                color: white;
+                text-decoration: none;
+                padding: 8px;
+                font-size: 1.2em;
+                margin: 0 10px;
+            }
+
+            .shop-nav-bottom a.active {
+                background-color: #af7119;
+                color: #B5B5B4;
+                border-radius: 25px;
+            }
+
+            /* Hover / interaction improvements */
+            .nav-pages .logged_in,
+            .nav-pages .not-loggedIn,
+            .nav-bottom a,
+            .shop-nav-bottom a {
+                transition: background-color .15s ease, color .15s ease,
+                            transform .12s ease, box-shadow .15s ease, opacity .12s ease;
+                cursor: pointer;
+                will-change: transform, opacity, box-shadow;
+            }
+
+            /* Slight lift and shadow on hover */
+            .nav-pages .logged_in:hover,
+            .nav-pages .not-loggedIn:hover,
+            .nav-bottom a:hover,
+            .shop-nav-bottom a:hover {
+                transform: translateY(-3px);
+                opacity: 0.95;
+                box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+            }
+
+            /* Make not-loggedIn button a bit darker on hover */
+            .nav-pages .not-loggedIn:hover {
+                filter: brightness(0.9);
+            }
+
+            /* Active link hover stays consistent but still lifts */
+            .nav-bottom a.active:hover,
+            .shop-nav-bottom a.active:hover {
+                transform: translateY(-2px);
+            }
+
+            /* Search wrapper and dropdown */
+            .nav-search-wrapper { position: relative; width: 40%; }
+            .nav-search-suggestions {
+                position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+                background: #fff; border: 1px solid #ddd; border-radius: 10px;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.12); z-index: 1000; overflow: hidden;
+                max-height: 60vh; overflow-y: auto;
+            }
+            .nav-suggest-item { padding: 10px 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+            .nav-suggest-item:hover { background: #f7faf5; }
+            .nav-suggest-type { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: .04em; }
+            .nav-suggest-label { color: #111827; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .nav-suggest-viewall { padding: 10px 12px; border-top: 1px solid #eee; background: #fafafa; color: #1f2937; font-weight: 600; }
+            .nav-suggest-empty { padding: 10px 12px; color: #6b7280; }
+            .nav-suggest-thumb { width: 36px; height: 36px; border-radius: 8px; object-fit: cover; border: 1px solid #eee; }
+            .nav-suggest-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; border: 1px solid #eee; }
+            .nav-suggest-avatar-lg { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1px solid #eee; }
+            .nav-suggest-main { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+            .nav-suggest-text { display: flex; flex-direction: column; min-width: 0; }
+            .nav-suggest-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+        </style>
+<div class="navbar">
+    <div class="nav-top">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+    {% if request.path == '/allProducts' or request.path.startswith('/shops') or request.path.startswith('/search') %}
+    <div class="nav-search-wrapper">
+        <input type="text" class="nav-search" placeholder=" 🔍 Search for products, shops, tips..." autocomplete="off">
+        <div class="nav-search-suggestions" style="display:none;"></div>
+    </div>
+    {% endif %}
+        {% if not session.get('user_id') and not session.get('shop_id') %}
+        <div class="nav-pages">
+            <a class="not-loggedIn" href="{{ url_for('register') }}">Register</a>
+            <a class="not-loggedIn" href="{{ url_for('login') }}">Login</a>
+        </div>
+    </div>
+    <div class="nav-bottom">
+        {% elif session.get('user_id') and not session.get('shop_id') %}
+        <!-- User logged in -->
+        <div class="nav-pages">
+            <a class="logged_in" style="background-color: transparent;" href="{{ url_for('notifications') }}">🔔</a>
+            <a class="logged_in" style="background-color: #129921;" href="{{ url_for('cart') }}">🛒</a>
+            <a class="logged_in" style="background-color: #FFF;" href="{{ url_for('user_order_history') }}">👤</a>
+        </div>
+    </div>
+    <div class="nav-bottom">
+        {% elif session.get('shop_id') and not session.get('user_id') %}
+        <!-- Shop logged in -->
+        <div class="nav-pages">
+            <a class="logged_in" style="background-color: transparent;" href="{{ url_for('notifications') }}">🔔</a>
+            <a class="logged_in" style="background-color: #FFF;" href="{{ url_for('seller_dashboard') }}">👤</a>
+        </div>
+    </div>
+    <div class="shop-nav-bottom">
+        {% endif %}
+        <a href="{{ url_for('home') }}" class="{% if request.path == '/' %}active{% endif %}">HOME</a>
+        <a href="{{ url_for('all_products') }}" class="{% if request.path == '/allProducts' %}active{% endif %}">PRODUCTS</a>
+        <a href="{{ url_for('shops') }}" class="{% if request.path == '/shops' %}active{% endif %}">SHOPS</a>
+    <a href="{{ url_for('public_tips') }}" class="{% if request.path == '/tips' %}active{% endif %}">TIPS</a>
+        <a href="{{ url_for('help') }}" class="{% if request.path == '/help' %}active{% endif %}">HELP</a>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const input = document.querySelector('.nav-search');
+        const wrapper = document.querySelector('.nav-search-wrapper');
+        const suggestionsBox = document.querySelector('.nav-search-suggestions');
+        if (!input || !wrapper || !suggestionsBox) return;
+
+        // base styles are defined in the <style> above
+
+        // scope routing by current path
+        const path = window.location.pathname || '';
+            const resultsUrlBase = "{{ url_for('unified_search') }}";
+            const scope = 'all';
+
+        let debounceTimer = null;
+        const debounce = (fn, delay=160) => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(fn, delay);
+        };
+
+        const hideSuggestions = () => {
+            suggestionsBox.style.display = 'none';
+            suggestionsBox.innerHTML = '';
+        };
+
+        const buildItem = (item) => {
+            const div = document.createElement('div');
+            div.className = 'nav-suggest-item';
+
+            // Left media: product thumb for products, shop avatar for shops
+            const media = document.createElement('img');
+            if (item.type === 'product') {
+                media.className = 'nav-suggest-thumb';
+                media.src = item.image || '';
+            } else {
+                // shop suggestions: show larger circular avatar to match product thumb size
+                media.className = 'nav-suggest-avatar-lg';
+                media.src = item.image || '';
+            }
+
+            const main = document.createElement('div');
+            main.className = 'nav-suggest-main';
+            const textWrap = document.createElement('div');
+            textWrap.className = 'nav-suggest-text';
+            const row = document.createElement('div');
+            row.className = 'nav-suggest-row';
+            const type = document.createElement('span');
+            type.className = 'nav-suggest-type';
+            type.textContent = item.type === 'shop' ? 'Shop' : 'Product';
+            const label = document.createElement('span');
+            label.className = 'nav-suggest-label';
+            label.textContent = item.label || '';
+            row.appendChild(type);
+            row.appendChild(label);
+            textWrap.appendChild(row);
+            main.appendChild(textWrap);
+
+            // Right mini avatar: shop avatar for product items
+            let right = null;
+            if (item.type === 'product') {
+                right = document.createElement('img');
+                right.className = 'nav-suggest-avatar';
+                right.src = item.shop_image || '';
+            }
+
+            div.appendChild(media);
+            div.appendChild(main);
+            if (right) div.appendChild(right);
+
+            div.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                window.location.href = item.url;
+            });
+            return div;
+        };
+
+        const renderSuggestions = (q, items) => {
+            suggestionsBox.innerHTML = '';
+            if (!items || items.length === 0) {
+                const empty = document.createElement('div');
+                empty.className = 'nav-suggest-empty';
+                empty.textContent = 'No matches';
+                suggestionsBox.appendChild(empty);
+            } else {
+                items.forEach(it => suggestionsBox.appendChild(buildItem(it)));
+            }
+            // view all
+            const viewAll = document.createElement('div');
+            viewAll.className = 'nav-suggest-item nav-suggest-viewall';
+            viewAll.textContent = `See all results for "${q}"`;
+            viewAll.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                const url = resultsUrlBase + '?q=' + encodeURIComponent(q);
+                window.location.href = url;
+            });
+            suggestionsBox.appendChild(viewAll);
+            suggestionsBox.style.display = 'block';
+        };
+
+        const fetchSuggestions = async (q) => {
+            try {
+                const res = await fetch(`/api/suggest?scope=${encodeURIComponent(scope)}&q=${encodeURIComponent(q)}`);
+                if (!res.ok) throw new Error('Network');
+                return await res.json();
+            } catch (e) {
+                return [];
+            }
+        };
+
+        input.addEventListener('input', () => {
+            const q = input.value.trim();
+            if (!q) { hideSuggestions(); return; }
+            debounce(async () => {
+                const items = await fetchSuggestions(q);
+                renderSuggestions(q, items);
+            });
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const q = input.value.trim();
+                if (q) {
+                    e.preventDefault();
+                    window.location.href = resultsUrlBase + '?q=' + encodeURIComponent(q);
+                }
+            }
+        });
+
+        input.addEventListener('blur', () => {
+            // delay hiding to allow click
+            setTimeout(hideSuggestions, 120);
+        });
+        input.addEventListener('focus', () => {
+            if (input.value.trim()) {
+                // trigger to show existing suggestions when refocusing
+                const evt = new Event('input');
+                input.dispatchEvent(evt);
+            }
+        });
+    })();
+</script>

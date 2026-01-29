@@ -1,0 +1,163 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to View Sales & Earnings{% endblock %}
+{% block breadcrumb %}How to View Your Sales & Earnings{% endblock %}
+{% block help_title %}🤝 How to View Your Sales & Earnings{% endblock %}
+
+{% block content %}
+<p>Track your business performance on FarmHub. Learn how to view your sales data, earnings reports, and understand your income from selling farm products.</p>
+
+<h2>Accessing Your Dashboard</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Log in to your seller account.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> You'll be taken to your <strong>Seller Dashboard</strong>.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> View your income and sales statistics at a glance.
+</div>
+
+<h2>Dashboard Income Overview</h2>
+
+<p>Your dashboard displays income statistics for different time periods:</p>
+
+<h3>💰 Income Today</h3>
+<ul>
+    <li>Total earnings from delivered orders today</li>
+    <li>Helps track daily performance</li>
+    <li>Updates in real-time as orders are delivered</li>
+</ul>
+
+<h3>📅 Income This Month</h3>
+<ul>
+    <li>Total earnings for the current month</li>
+    <li>Useful for monthly planning and goals</li>
+    <li>Resets at the start of each month</li>
+</ul>
+
+<h3>📆 Income This Year</h3>
+<ul>
+    <li>Total earnings for the current year</li>
+    <li>Track your annual business growth</li>
+    <li>Useful for financial planning</li>
+</ul>
+
+<div class="tip-box">
+These figures only include completed (delivered) orders. Pending or cancelled orders are not counted.
+</div>
+
+<h2>Recent Sales</h2>
+
+<p>The dashboard shows your most recent sales:</p>
+<ul>
+    <li><strong>Product Name:</strong> What was sold</li>
+    <li><strong>Quantity:</strong> How many units</li>
+    <li><strong>Price:</strong> Sale price per unit</li>
+    <li><strong>Subtotal:</strong> Total for that item</li>
+    <li><strong>Date Sold:</strong> When the order was delivered</li>
+</ul>
+
+<h2>Order History</h2>
+
+<p>For detailed sales information:</p>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Click <strong>"Order History"</strong> in the sidebar.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> View all orders received by your shop.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> See details including:
+    <ul>
+        <li>Order ID and date</li>
+        <li>Buyer information</li>
+        <li>Items ordered with quantities</li>
+        <li>Order total and shipping</li>
+        <li>Payment method</li>
+        <li>Order status</li>
+    </ul>
+</div>
+
+<h2>Understanding Order Status Impact</h2>
+
+<table style="width:100%; border-collapse: collapse; margin: 15px 0;">
+    <tr style="background: #e8f5e9;">
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Status</th>
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Counts as Income?</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #ddd;">Pending</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">❌ No</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #ddd;">Confirmed</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">❌ No</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #ddd;">On the Way</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">❌ No</td>
+    </tr>
+    <tr style="background: #c8e6c9;">
+        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Delivered</strong></td>
+        <td style="padding: 10px; border: 1px solid #ddd;"><strong>✅ Yes</strong></td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #ddd;">Cancelled</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">❌ No</td>
+    </tr>
+</table>
+
+<div class="info-box">
+Only orders marked as "Delivered" are counted in your income totals. Make sure to update order status when you complete deliveries.
+</div>
+
+<h2>Processing Orders</h2>
+
+<p>To increase your earnings, process orders efficiently:</p>
+
+<ol>
+    <li><strong>Confirm orders promptly:</strong> Review and confirm new orders quickly</li>
+    <li><strong>Set realistic delivery dates:</strong> Customers appreciate accurate timing</li>
+    <li><strong>Deliver on time:</strong> Meet the promised delivery date</li>
+    <li><strong>Mark as delivered:</strong> Update status when orders are completed</li>
+</ol>
+
+<h2>Earnings Tips</h2>
+
+<h3>Increase Sales</h3>
+<ul>
+    <li>Keep products in stock</li>
+    <li>Use attractive product photos</li>
+    <li>Offer competitive prices</li>
+    <li>Respond to customer messages quickly</li>
+    <li>Provide excellent service for good reviews</li>
+</ul>
+
+<h3>Track Performance</h3>
+<ul>
+    <li>Check dashboard daily</li>
+    <li>Note which products sell best</li>
+    <li>Identify slow-moving items</li>
+    <li>Adjust pricing and inventory accordingly</li>
+</ul>
+
+<div class="warning-box">
+Remember that commission may be deducted from your earnings once you reach certain thresholds. Check the commission section for details.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='how_commission_works') }}">How Commission Works</a></li>
+        <li><a href="{{ url_for('help_article', article='manage_inventory') }}">How to Manage Inventory & Stock</a></li>
+        <li><a href="{{ url_for('help_article', article='list_products') }}">How to List Your Products for Sale</a></li>
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Place an Order{% endblock %}
+{% block breadcrumb %}How to Place an Order{% endblock %}
+{% block help_title %}🛍️ How to Place an Order{% endblock %}
+
+{% block content %}
+<p>Ready to buy? Follow this guide to complete your purchase on FarmHub and get fresh farm products delivered to you.</p>
+
+<h2>Before You Start</h2>
+
+<p>Make sure you have:</p>
+<ul>
+    <li>Items added to your cart</li>
+    <li>A complete delivery address in your profile</li>
+    <li>Decided on your payment method</li>
+</ul>
+
+<h2>Step-by-Step Ordering Process</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Click on the <strong>cart icon</strong> to view your cart.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Review all items in your cart. Check quantities and prices are correct.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Select the items you want to order using the checkboxes (if applicable).
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Click <strong>"Proceed to Checkout"</strong> or <strong>"Place Order"</strong> button.
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> Review your <strong>delivery address</strong>. Update it if needed.
+</div>
+
+<div class="step-box">
+    <strong>Step 6:</strong> Select your preferred <strong>shipping/delivery option</strong>:
+    <ul>
+        <li><strong>Delivery:</strong> Products delivered to your address</li>
+        <li><strong>Pickup:</strong> You pick up from the seller's location</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 7:</strong> Choose your <strong>payment method</strong>:
+    <ul>
+        <li><strong>Cash on Delivery (COD):</strong> Pay when you receive your order</li>
+        <li><strong>GCash:</strong> Pay via GCash mobile wallet</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 8:</strong> Review the <strong>order summary</strong>:
+    <ul>
+        <li>Items and quantities</li>
+        <li>Subtotal</li>
+        <li>Shipping fee (if applicable)</li>
+        <li>Total amount</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 9:</strong> Click <strong>"Confirm Order"</strong> or <strong>"Place Order"</strong>.
+</div>
+
+<div class="step-box">
+    <strong>Step 10:</strong> You'll see an order confirmation with your order number. Save this for reference!
+</div>
+
+<div class="tip-box">
+Double-check your delivery address before confirming. Once an order is placed, changing the address may not be possible.
+</div>
+
+<h2>Understanding Shipping Fees</h2>
+
+<p>Shipping fees depend on:</p>
+<ul>
+    <li>Your delivery location</li>
+    <li>The seller's location</li>
+    <li>The delivery option you choose</li>
+</ul>
+
+<div class="info-box">
+Pickup orders typically have no shipping fee. Consider this option if you're near the seller to save on delivery costs.
+</div>
+
+<h2>After Placing Your Order</h2>
+
+<ol>
+    <li><strong>Order Confirmation:</strong> You'll receive a notification confirming your order</li>
+    <li><strong>Seller Processing:</strong> The seller will review and confirm your order</li>
+    <li><strong>Delivery Date:</strong> The seller will set an expected delivery date</li>
+    <li><strong>Preparation:</strong> Your order will be prepared for delivery</li>
+    <li><strong>On the Way:</strong> Order is out for delivery</li>
+    <li><strong>Delivered:</strong> You receive your fresh farm products!</li>
+</ol>
+
+<h2>Order Notifications</h2>
+
+<p>You'll receive notifications for:</p>
+<ul>
+    <li>Order confirmation</li>
+    <li>When the seller confirms your order</li>
+    <li>Expected delivery date</li>
+    <li>Delivery updates</li>
+</ul>
+
+<div class="warning-box">
+Make sure your contact information is up-to-date so the seller can reach you about your order if needed.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='track_order') }}">How to Track Your Order</a></li>
+        <li><a href="{{ url_for('help_article', article='delivery_options') }}">How to Choose Delivery or Pickup Options</a></li>
+        <li><a href="{{ url_for('help_article', article='use_vouchers') }}">How to Use Discount Codes or Vouchers</a></li>
+    </ul>
+</div>
+{% endblock %}

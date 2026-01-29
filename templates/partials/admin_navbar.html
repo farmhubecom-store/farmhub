@@ -1,0 +1,91 @@
+    <style>
+
+        .navbar {
+            display: flex;
+            flex-direction: column;
+            height: 15vh;            
+            overflow: hidden;
+        }
+
+        .nav-top {
+            background-color: #E1EFD8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 105px;
+            height: 60%;
+            min-height: 0;
+        }
+
+        .nav-top img {
+            height: 100%;
+        }
+
+        .nav-top .nav-search {
+            width: 40%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+        }
+
+        .nav-pages .logged_in {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.5);
+            margin: 5px;
+        }
+
+        .nav-pages .not-loggedIn {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 15px;
+            background-color: #67A93B;
+            box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.5);
+            margin: 5px;
+        }
+
+        /* Bottom nav removed - keep only top nav styles */
+        .nav-top {
+            background-color: #E1EFD8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 105px;
+            height: 100%;
+            min-height: 0;
+        }
+
+        .nav-top .nav-links {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .nav-top .nav-links a {
+            color: #333;
+            text-decoration: none;
+            padding: 8px 12px;
+            font-size: 1em;
+        }
+
+        .nav-top .nav-links a.active {
+            background-color: #67A93B;
+            color: white;
+            border-radius: 20px;
+        }
+    </style>
+<div class="navbar">
+    <div class="nav-top">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+        {% if request.path == '/allProducts' %}
+        <input type="text" class="nav-search" placeholder=" 🔍 Search for products, shops, tips...">
+        {% endif %}
+
+        <div class="nav-pages">
+            <h3>Farm Hub - Admin Panel</h3>
+        </div>
+    </div>
+</div>

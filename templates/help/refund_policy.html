@@ -1,0 +1,157 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}Refund Policy{% endblock %}
+{% block breadcrumb %}Refund Policy{% endblock %}
+{% block help_title %}🔄 Refund Policy{% endblock %}
+
+{% block content %}
+<p>Understanding FarmHub's refund policy helps you know your rights and what to expect when issues arise. Here's our complete refund policy for farm product purchases.</p>
+
+<h2>Refund Eligibility</h2>
+
+<p>You may be eligible for a refund if:</p>
+
+<h3>✅ Eligible for Refund</h3>
+<ul>
+    <li><strong>Non-delivery:</strong> Order was never delivered</li>
+    <li><strong>Wrong product:</strong> You received something different from what you ordered</li>
+    <li><strong>Damaged products:</strong> Items arrived damaged, spoiled, or unsafe to consume</li>
+    <li><strong>Significant quality issues:</strong> Products substantially differ from description</li>
+    <li><strong>Short quantity:</strong> You received less than the quantity you paid for</li>
+    <li><strong>Order cancelled by seller:</strong> Seller cancelled after payment</li>
+</ul>
+
+<h3>❌ Not Eligible for Refund</h3>
+<ul>
+    <li><strong>Change of mind:</strong> You no longer want the product</li>
+    <li><strong>Buyer-caused damage:</strong> Damage occurred after delivery due to your handling</li>
+    <li><strong>Improper storage:</strong> Products spoiled due to your storage conditions</li>
+    <li><strong>Minor variations:</strong> Small natural variations in farm products</li>
+    <li><strong>Late reporting:</strong> Issues reported too long after delivery</li>
+    <li><strong>No evidence:</strong> Claims without photographic proof</li>
+</ul>
+
+<div class="info-box">
+Farm products naturally vary in appearance. Minor differences in size, color, or shape don't qualify for refunds.
+</div>
+
+<h2>Refund Timeline</h2>
+
+<table style="width:100%; border-collapse: collapse; margin: 15px 0;">
+    <tr style="background: #e8f5e9;">
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Stage</th>
+        <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Timeline</th>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #ddd;">Report issue</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">Within 24 hours of delivery (recommended)</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #ddd;">Seller response</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">1-2 business days</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #ddd;">Resolution decision</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">1-3 business days</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #ddd;">Refund processing</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">3-7 business days (depends on payment method)</td>
+    </tr>
+</table>
+
+<h2>How Refunds Are Processed</h2>
+
+<h3>For Cash on Delivery (COD)</h3>
+<p>If you paid with COD and are eligible for a refund:</p>
+<ul>
+    <li>Seller may arrange a bank transfer or GCash refund</li>
+    <li>You may receive store credit</li>
+    <li>Seller may deliver replacement products</li>
+</ul>
+
+<h3>For Digital Payments (GCash)</h3>
+<p>If you paid via GCash:</p>
+<ul>
+    <li>Refund to your GCash account</li>
+    <li>Processing time: 3-7 business days</li>
+</ul>
+
+<h2>Refund Process</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Report the issue to the seller with photos and details.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Seller reviews your claim.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> If approved, seller initiates the refund.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Refund is processed to your original payment method.
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> You receive confirmation when refund is complete.
+</div>
+
+<h2>Partial vs Full Refunds</h2>
+
+<h3>Full Refund</h3>
+<p>You receive your entire payment back when:</p>
+<ul>
+    <li>Order was never delivered</li>
+    <li>Entire order was wrong or damaged</li>
+    <li>Products are completely unusable</li>
+</ul>
+
+<h3>Partial Refund</h3>
+<p>You receive part of your payment when:</p>
+<ul>
+    <li>Only some items in the order had issues</li>
+    <li>Products are partially usable</li>
+    <li>Quality was lower than expected but still acceptable</li>
+</ul>
+
+<div class="tip-box">
+Partial refunds are often a fair compromise when the issue isn't severe enough for a full refund but still warrants compensation.
+</div>
+
+<h2>Dispute Resolution</h2>
+
+<p>If you and the seller can't agree:</p>
+
+<ol>
+    <li><strong>Try to negotiate:</strong> Work with the seller on a fair solution</li>
+    <li><strong>Contact FarmHub Support:</strong> We can mediate disputes</li>
+    <li><strong>Provide evidence:</strong> Photos, messages, and order details help</li>
+    <li><strong>Accept the decision:</strong> FarmHub's decision is final</li>
+</ol>
+
+<div class="warning-box">
+False or fraudulent refund claims are taken seriously. Accounts found making dishonest claims may be suspended.
+</div>
+
+<h2>Best Practices</h2>
+
+<ul>
+    <li><strong>Inspect immediately:</strong> Check products right when they arrive</li>
+    <li><strong>Document everything:</strong> Take photos before opening packaging</li>
+    <li><strong>Report promptly:</strong> Don't wait to report issues</li>
+    <li><strong>Be honest:</strong> Only request refunds for legitimate issues</li>
+    <li><strong>Communicate clearly:</strong> Explain the problem with specifics</li>
+</ul>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='request_return') }}">How to Request a Return</a></li>
+        <li><a href="{{ url_for('help_article', article='wrong_damaged_item') }}">What to Do if You Receive the Wrong or Damaged Item</a></li>
+        <li><a href="{{ url_for('help_article', article='contact_support') }}">How to Contact Customer Support</a></li>
+    </ul>
+</div>
+{% endblock %}

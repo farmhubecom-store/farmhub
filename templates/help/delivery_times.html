@@ -1,0 +1,149 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}Estimated Delivery Times{% endblock %}
+{% block breadcrumb %}Estimated Delivery Times{% endblock %}
+{% block help_title %}🚚 Estimated Delivery Times{% endblock %}
+
+{% block content %}
+<p>Wondering when your fresh farm products will arrive? Here's what you need to know about delivery timing on FarmHub.</p>
+
+<h2>How Delivery Times Work</h2>
+
+<p>Unlike traditional e-commerce, FarmHub connects you directly with farmers. Delivery times are set by individual sellers based on:</p>
+<ul>
+    <li>Harvest schedules</li>
+    <li>Product availability</li>
+    <li>Delivery routes and schedules</li>
+    <li>Distance to your location</li>
+    <li>Order volume</li>
+</ul>
+
+<h2>Typical Delivery Timeline</h2>
+
+<div class="step-box">
+    <strong>Order Confirmation:</strong> Usually within 24 hours of placing your order
+</div>
+
+<div class="step-box">
+    <strong>Delivery Date Set:</strong> The seller sets an expected delivery date when confirming your order
+</div>
+
+<div class="step-box">
+    <strong>Typical Delivery:</strong> Most orders are delivered within 1-3 days after confirmation
+</div>
+
+<h2>Factors Affecting Delivery Time</h2>
+
+<h3>📍 Location</h3>
+<ul>
+    <li>Nearby locations typically get faster delivery</li>
+    <li>Remote areas may take longer</li>
+    <li>Some sellers have specific delivery days for certain areas</li>
+</ul>
+
+<h3>🌾 Product Type</h3>
+<ul>
+    <li><strong>Fresh produce:</strong> Often harvested and delivered quickly</li>
+    <li><strong>Live animals/poultry:</strong> May require special scheduling</li>
+    <li><strong>Processed goods:</strong> May have more flexible timing</li>
+</ul>
+
+<h3>📅 Order Timing</h3>
+<ul>
+    <li>Orders placed early in the week may arrive sooner</li>
+    <li>Weekend orders may be processed on Monday</li>
+    <li>Holiday periods may affect delivery schedules</li>
+</ul>
+
+<h3>🌤️ Weather Conditions</h3>
+<ul>
+    <li>Bad weather may delay deliveries</li>
+    <li>Farmers prioritize safety for delivery personnel</li>
+    <li>You'll be notified of weather-related delays</li>
+</ul>
+
+<div class="tip-box">
+If you need products by a specific date, place your order early and communicate your timeline with the seller.
+</div>
+
+<h2>Same-Day Delivery</h2>
+
+<p>Some sellers may offer same-day delivery for:</p>
+<ul>
+    <li>Orders placed early in the morning</li>
+    <li>Customers in nearby areas</li>
+    <li>Products that are already harvested and ready</li>
+</ul>
+
+<div class="info-box">
+Same-day delivery is not guaranteed. Check with the seller or order early to improve your chances.
+</div>
+
+<h2>Checking Estimated Delivery</h2>
+
+<p>To see your expected delivery date:</p>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Go to your Order History.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Find your order and check the status.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> The delivery date appears once the seller confirms your order.
+</div>
+
+<h2>Delivery Time for Pickup Orders</h2>
+
+<p>If you chose pickup:</p>
+<ul>
+    <li>The seller will notify you when your order is ready</li>
+    <li>Typically ready within 1-2 days</li>
+    <li>Pickup hours depend on the seller's schedule</li>
+    <li>Coordinate with the seller for a convenient pickup time</li>
+</ul>
+
+<h2>Delays and Issues</h2>
+
+<h3>What Causes Delays?</h3>
+<ul>
+    <li>Unexpected weather conditions</li>
+    <li>High order volumes during peak seasons</li>
+    <li>Product availability issues</li>
+    <li>Transportation problems</li>
+    <li>Address or contact issues</li>
+</ul>
+
+<h3>What To Do If Delayed</h3>
+<ol>
+    <li>Check your order status for updates</li>
+    <li>Wait for notification from the seller</li>
+    <li>Contact the seller through messages if no update</li>
+    <li>Be patient - fresh products are worth the wait!</li>
+</ol>
+
+<div class="warning-box">
+If your order is significantly delayed with no communication, contact customer support for assistance.
+</div>
+
+<h2>Planning Your Orders</h2>
+
+<p>Tips for getting products when you need them:</p>
+<ul>
+    <li><strong>Order ahead:</strong> Don't wait until the last minute</li>
+    <li><strong>Communicate:</strong> Let sellers know if you have time constraints</li>
+    <li><strong>Be flexible:</strong> Have backup plans for time-sensitive needs</li>
+    <li><strong>Regular orders:</strong> Build relationships with reliable sellers</li>
+</ul>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='track_delivery') }}">How to Track Delivery Progress</a></li>
+        <li><a href="{{ url_for('help_article', article='how_delivery_works') }}">How Delivery Works</a></li>
+        <li><a href="{{ url_for('help_article', article='delivery_options') }}">How to Choose Delivery or Pickup Options</a></li>
+    </ul>
+</div>
+{% endblock %}

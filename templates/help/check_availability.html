@@ -1,0 +1,99 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Check Product Availability{% endblock %}
+{% block breadcrumb %}How to Check Product Availability{% endblock %}
+{% block help_title %}🌾 How to Check Product Availability{% endblock %}
+
+{% block content %}
+<p>Before placing an order, it's important to check if products are available. Here's how to verify stock availability on FarmHub.</p>
+
+<h2>Checking Stock on Product Pages</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Navigate to the product you're interested in by clicking on it.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Look for the <strong>"Available"</strong> or <strong>"In Stock"</strong> information on the product page.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> The number shown indicates how many units are currently available for purchase.
+</div>
+
+<h2>Understanding Availability Indicators</h2>
+
+<h3>Available/In Stock</h3>
+<p>When a product shows "Available: X" or "In Stock":</p>
+<ul>
+    <li>The product can be ordered</li>
+    <li>The number indicates the maximum quantity you can order</li>
+    <li>Stock is reserved on a first-come, first-served basis</li>
+</ul>
+
+<h3>Out of Stock</h3>
+<p>When a product shows "Out of Stock" or "Available: 0":</p>
+<ul>
+    <li>The product cannot be ordered at this time</li>
+    <li>You cannot add it to your cart</li>
+    <li>Check back later as stock may be replenished</li>
+</ul>
+
+<h3>Low Stock</h3>
+<p>When stock is limited:</p>
+<ul>
+    <li>A warning may indicate "Only X left"</li>
+    <li>Order soon to avoid missing out</li>
+    <li>Consider ordering what you need before it runs out</li>
+</ul>
+
+<div class="tip-box">
+Fresh farm products may have limited availability depending on harvests and seasons. Popular items can sell out quickly!
+</div>
+
+<h2>What Affects Product Availability?</h2>
+
+<ul>
+    <li><strong>Seasonal Products:</strong> Some fruits and vegetables are only available during certain seasons</li>
+    <li><strong>Harvest Cycles:</strong> Availability depends on when farmers harvest their crops</li>
+    <li><strong>Demand:</strong> Popular products may sell out faster</li>
+    <li><strong>Weather:</strong> Weather conditions can affect crop yields</li>
+    <li><strong>Multiple Orders:</strong> Other customers may be ordering the same products</li>
+</ul>
+
+<h2>Tips for Getting Products You Want</h2>
+
+<ol>
+    <li><strong>Order early:</strong> Don't wait too long if you see something you want</li>
+    <li><strong>Check regularly:</strong> Stock is replenished as farmers harvest more</li>
+    <li><strong>Follow shops:</strong> Get to know which shops have your favorite products</li>
+    <li><strong>Message sellers:</strong> Ask about expected restocking dates</li>
+    <li><strong>Be flexible:</strong> Consider alternatives if your preferred product is unavailable</li>
+</ol>
+
+<div class="info-box">
+Stock numbers update in real-time, but there may be a brief delay. If you're ordering a popular item, complete your purchase quickly to secure your order.
+</div>
+
+<h2>What If a Product Becomes Unavailable?</h2>
+
+<p>If a product in your cart becomes unavailable before you checkout:</p>
+<ul>
+    <li>You'll be notified when trying to place the order</li>
+    <li>You may need to adjust quantities or remove the item</li>
+    <li>Check if the seller has similar alternatives</li>
+</ul>
+
+<div class="warning-box">
+Adding items to your cart doesn't reserve them. Complete your checkout to secure your order.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='view_product_details') }}">How to View Product Details</a></li>
+        <li><a href="{{ url_for('help_article', article='add_to_cart') }}">How to Add Products to Your Cart</a></li>
+        <li><a href="{{ url_for('help_article', article='place_order') }}">How to Place an Order</a></li>
+    </ul>
+</div>
+{% endblock %}

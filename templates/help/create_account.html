@@ -1,0 +1,94 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Create an Account{% endblock %}
+{% block breadcrumb %}How to Create an Account{% endblock %}
+{% block help_title %}🛒 How to Create an Account{% endblock %}
+
+{% block content %}
+<p>Welcome to FarmHub! Creating an account is quick and easy. Follow the steps below to get started and access fresh farm products from local farmers.</p>
+
+<h2>Step-by-Step Guide</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Go to the FarmHub homepage and click on the <strong>"Register"</strong> or <strong>"Sign Up"</strong> button in the navigation bar.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Choose your account type:
+    <ul>
+        <li><strong>User Registration</strong> - If you want to browse and buy farm products</li>
+        <li><strong>Shop Registration</strong> - If you're a farmer/seller who wants to sell products</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Fill in your personal information:
+    <ul>
+        <li>First Name and Last Name</li>
+        <li>Email Address (this will be your login)</li>
+        <li>Password (choose a strong password)</li>
+        <li>Confirm your password</li>
+        <li>Phone Number</li>
+        <li>Address details (House/Building, Street, City, District)</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Set up your security question and answer. This helps you recover your password if you forget it.
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> Click the <strong>"Sign Up"</strong> button to create your account.
+</div>
+
+<div class="step-box">
+    <strong>Step 6:</strong> You'll see a success message. You can now log in with your email and password!
+</div>
+
+<div class="tip-box">
+Use an email address you check regularly, as you'll receive order notifications and updates there.
+</div>
+
+<div class="warning-box">
+Make sure your email is unique and not already registered in the system. Each email can only be used for one account.
+</div>
+
+<h2>What Information Do I Need?</h2>
+<ul>
+    <li><strong>Email:</strong> A valid email address for account verification and notifications</li>
+    <li><strong>Password:</strong> A secure password you'll remember</li>
+    <li><strong>Personal Details:</strong> Your name and contact information</li>
+    <li><strong>Address:</strong> Your delivery address for orders</li>
+</ul>
+
+<h2>Account Types Explained</h2>
+
+<h3>Buyer Account (User Registration)</h3>
+<p>Perfect for customers who want to:</p>
+<ul>
+    <li>Browse and search for fresh farm products</li>
+    <li>Add products to cart and place orders</li>
+    <li>Track order status and delivery</li>
+    <li>Message sellers directly</li>
+    <li>Leave ratings and reviews</li>
+</ul>
+
+<h3>Seller Account (Shop Registration)</h3>
+<p>Ideal for farmers and sellers who want to:</p>
+<ul>
+    <li>Create a shop and list products for sale</li>
+    <li>Manage inventory and stock levels</li>
+    <li>Process and fulfill customer orders</li>
+    <li>View sales reports and earnings</li>
+    <li>Communicate with customers</li>
+</ul>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='login_logout') }}">How to Log In and Log Out</a></li>
+        <li><a href="{{ url_for('help_article', article='update_profile') }}">How to Update Your Profile Information</a></li>
+        <li><a href="{{ url_for('help_article', article='reset_password') }}">How to Reset Your Password</a></li>
+    </ul>
+</div>
+{% endblock %}

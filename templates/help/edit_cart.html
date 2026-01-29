@@ -1,0 +1,131 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Edit Your Cart{% endblock %}
+{% block breadcrumb %}How to Remove or Edit Items in Your Cart{% endblock %}
+{% block help_title %}🛍️ How to Remove or Edit Items in Your Cart{% endblock %}
+
+{% block content %}
+<p>Need to change your order? FarmHub makes it easy to modify your cart before checkout. Here's how to update quantities or remove items.</p>
+
+<h2>Accessing Your Cart</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Click on the <strong>cart icon</strong> in the navigation bar at the top of the page.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> You'll see all items currently in your cart.
+</div>
+
+<h2>Changing Item Quantities</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Find the item you want to modify in your cart.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Look for the quantity selector (usually +/- buttons or a number field).
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Click <strong>"+"</strong> to increase the quantity or <strong>"-"</strong> to decrease it.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> The subtotal and total will automatically update.
+</div>
+
+<div class="tip-box">
+You can only increase quantity up to the available stock. If you need more, check back later or contact the seller.
+</div>
+
+<h2>Removing Items from Cart</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Find the item you want to remove in your cart.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Click the <strong>"Remove"</strong> button or trash/delete icon next to the item.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Confirm the removal if prompted.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> The item will be removed and your total will update.
+</div>
+
+<h2>Selecting/Deselecting Items</h2>
+
+<p>If your cart has checkboxes for selection:</p>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Uncheck items you don't want to include in your current order.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Those items will remain in your cart but won't be included in checkout.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Use "Select All" or "Deselect All" for quick selection.
+</div>
+
+<h2>Emptying Your Entire Cart</h2>
+
+<p>To remove all items at once:</p>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Look for a <strong>"Clear Cart"</strong> or <strong>"Empty Cart"</strong> option.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Confirm when prompted (this action cannot be undone).
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Your cart will be emptied.
+</div>
+
+<div class="warning-box">
+Removing items from your cart is permanent. If you want to order them later, you'll need to add them again from the product page.
+</div>
+
+<h2>Common Cart Issues</h2>
+
+<h3>Item Not Updating?</h3>
+<ul>
+    <li>Refresh the page and try again</li>
+    <li>Make sure you're still logged in</li>
+    <li>Check your internet connection</li>
+</ul>
+
+<h3>Can't Increase Quantity?</h3>
+<ul>
+    <li>You may have reached the maximum available stock</li>
+    <li>The product may have limited stock remaining</li>
+    <li>Contact the seller to ask about more stock</li>
+</ul>
+
+<h3>Item Disappeared from Cart?</h3>
+<ul>
+    <li>The product may have become unavailable</li>
+    <li>The seller may have removed the listing</li>
+    <li>Check the product page to see if it's still available</li>
+</ul>
+
+<div class="info-box">
+It's a good practice to review your cart right before checkout to ensure all items and quantities are correct.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='add_to_cart') }}">How to Add Products to Your Cart</a></li>
+        <li><a href="{{ url_for('help_article', article='place_order') }}">How to Place an Order</a></li>
+        <li><a href="{{ url_for('help_article', article='check_availability') }}">How to Check Product Availability</a></li>
+    </ul>
+</div>
+{% endblock %}

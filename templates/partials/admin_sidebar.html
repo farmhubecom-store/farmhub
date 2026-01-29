@@ -1,0 +1,411 @@
+<style>
+    .div1 {
+        grid-column: 1 / 2;
+        grid-row: 1 / 3;
+        background: #fff;
+        border-radius: 20px;
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 2px 8px #e1efd8;
+        min-width: 0;
+        position: relative;
+    }
+    .logout-btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: #eaf6e3;
+        color: red;
+        border: 1px solid #b7d7a8;
+        border-radius: 8px;
+        padding: 10px 22px;
+        font-size: 18px;
+        font-weight: 500;
+        text-decoration: none;
+        z-index: 10;
+        box-shadow: 0 2px 8px #e1efd8;
+        transition: filter 0.2s;
+    }
+    .logout-btn:hover {
+        filter: brightness(0.95);
+        background: #ffeaea;
+    }
+    .user-avatar {
+        width: 170px;
+        height: 170px;
+        background: #e2f0d9;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        position: relative;
+        cursor: pointer;
+    }
+    .user-avatar img {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .upload-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(107, 177, 58, 0.8);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        color: white;
+        font-size: 12px;
+        text-align: center;
+        font-weight: 600;
+    }
+    .user-avatar:hover .upload-overlay {
+        opacity: 1;
+    }
+    .user-avatar:hover {
+        transform: scale(1.02);
+        transition: transform 0.2s ease;
+    }
+    .profile-upload-form {
+        display: none;
+    }
+    
+    /* Modal Styles */
+    .profile-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(2px);
+    }
+    
+    .profile-modal-content {
+        background-color: #fff;
+        margin: 10% auto;
+        padding: 30px;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 10px 30px rgba(107, 177, 58, 0.3);
+        text-align: center;
+        position: relative;
+    }
+    
+    .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 28px;
+        font-weight: bold;
+        color: #aaa;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+    
+    .modal-close:hover {
+        color: #333;
+    }
+    
+    .modal-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    
+    .image-preview-container {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        margin: 20px auto;
+        border: 4px solid #e2f0d9;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5f5f5;
+    }
+    
+    .image-preview {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    
+    .preview-placeholder {
+        color: #999;
+        font-size: 16px;
+        text-align: center;
+    }
+    
+    .file-input-wrapper {
+        margin: 20px 0;
+    }
+    
+    .file-input-button {
+        background: #6bb13a;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: background 0.3s;
+        margin-bottom: 10px;
+    }
+    
+    .file-input-button:hover {
+        background: #5a9631;
+    }
+    
+    .modal-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 25px;
+    }
+    
+    .modal-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s;
+        min-width: 100px;
+    }
+    
+    .modal-btn-save {
+        background: #6bb13a;
+        color: white;
+    }
+    
+    .modal-btn-save:hover {
+        background: #5a9631;
+        transform: translateY(-1px);
+    }
+    
+    .modal-btn-save:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+    }
+    
+    .modal-btn-cancel {
+        background: #f44336;
+        color: white;
+    }
+    
+    .modal-btn-cancel:hover {
+        background: #d32f2f;
+        transform: translateY(-1px);
+    }
+    .user-name {
+        margin-bottom: 5px;
+        font-size: 1.5em;
+        font-weight: bold;
+        text-align: center;
+        color: #222;
+    }
+    .user-email {
+        color: #888;
+        text-align: center;
+    }
+    .user-links {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin-top: 10px;
+    }
+    .user-link {
+        text-align: center;
+        width: 100%;
+        background: #eaf6e3;
+        color: #222;
+        border: 1px solid #b7d7a8;
+        border-radius: 0;
+        padding: 14px 0;
+        font-size: 20px;
+        font-weight: 400;
+        display: block;
+        text-decoration: none;
+    }
+    .user-link.active {
+        box-shadow: 0 0 0 2px #6bb13a33;
+        outline: none;
+        font-weight: 600;
+        filter: none;
+        background: #6bb13a;
+        color: #fff;
+        border: 1px solid #b7d7a8;
+    }
+    .user-link.dashboard {
+        border-radius: 6px 6px 0 0;
+    }
+    .user-link.edit-account {
+        border-radius: 0 0 6px 6px;
+    }
+    /* Optional: add hover effect */
+    .user-links a:hover {
+        filter: brightness(0.97);
+    }
+</style>
+
+<div class="div1">
+    <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    <div class="user-avatar" onclick="openAdminProfileModal();">
+        {% if session.get('admin_profile_image') %}
+            <img src="{{ session['admin_profile_image'] }}" alt="Admin Profile Picture" />
+        {% else %}
+            <img src="{{ url_for('static', filename='images/profile-circle.png') }}" alt="Default Profile" />
+        {% endif %}
+        <div class="upload-overlay">
+            <div>Click to<br>change photo</div>
+        </div>
+    </div>
+    
+    <!-- Admin Profile Picture Modal -->
+    <div id="adminProfileModal" class="profile-modal">
+        <div class="profile-modal-content">
+            <span class="modal-close" onclick="closeAdminProfileModal()">&times;</span>
+            <h2 class="modal-title">Change Admin Profile Picture</h2>
+            
+            <div class="image-preview-container">
+                <img id="adminImagePreview" class="image-preview" style="display: none;" />
+                <div id="adminPreviewPlaceholder" class="preview-placeholder">No image selected</div>
+            </div>
+            
+            <div class="file-input-wrapper">
+                <button type="button" class="file-input-button" onclick="document.getElementById('adminModalFileInput').click();">
+                    Choose Image
+                </button>
+                <input type="file" id="adminModalFileInput" accept="image/*" style="display: none;" onchange="previewAdminImage(this);" />
+                <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                    Supported formats: PNG, JPG, JPEG, GIF
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button type="button" class="modal-btn modal-btn-save" id="adminSaveBtn" onclick="saveAdminProfileImage();" disabled>
+                    Save Changes
+                </button>
+                <button type="button" class="modal-btn modal-btn-cancel" onclick="closeAdminProfileModal();">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hidden form for actual upload -->
+    <form id="hiddenAdminUploadForm" action="{{ url_for('upload_admin_profile_image') }}" method="post" enctype="multipart/form-data" style="display: none;">
+        <input type="file" id="hiddenAdminFileInput" name="profile_image" />
+    </form>
+    
+    <h2 class="user-name">admin</h2>
+    <p class="user-email">admin@gmail.com</p>
+    <div class="user-links">
+        <a href="{{ url_for('admin_dashboard') }}" class="user-link dashboard{% if request.path == '/admin/dashboard' %} active{% endif %}">Dashboard</a>
+        <a href="{{ url_for('admin_view_shops') }}" class="user-link{% if request.path == '/admin/view/shops' %} active{% endif %}">View Shops</a>
+        <a href="{{ url_for('admin_view_users') }}" class="user-link{% if request.path == '/admin/view/users' %} active{% endif %}">View Buyers</a>
+    <a href="{{ url_for('admin_tips') }}" class="user-link{% if request.path == '/admin/tips' %} active{% endif %}">Add Tips</a>
+        <a href="{{ url_for('admin_view_sales') }}" class="user-link{% if request.path == '/admin/sales' %} active{% endif %}">View Sales</a>
+        <a href="{{ url_for('admin_payment_settings') }}" class="user-link{% if request.path == '/admin/payment-settings' %} active{% endif %}">Payment Settings</a>
+        <a href="{{ url_for('admin_commission_payments') }}" class="user-link edit-account{% if request.path == '/admin/commission-payments' %} active{% endif %}">Commission Payments</a>
+        <!-- <a href="{{ url_for('logout') }}" style="text-align: center;width: 100%; background: #eaf6e3; color: red; border: 1px solid #b7d7a8; border-radius: 0 0 6px 6px; padding: 14px 0; font-size: 20px; font-weight: 400;">Logout</a> -->
+    </div>
+</div>
+
+<script>
+let selectedAdminFile = null;
+
+function openAdminProfileModal() {
+    document.getElementById('adminProfileModal').style.display = 'block';
+    resetAdminModal();
+}
+
+function closeAdminProfileModal() {
+    document.getElementById('adminProfileModal').style.display = 'none';
+    resetAdminModal();
+}
+
+function resetAdminModal() {
+    selectedAdminFile = null;
+    document.getElementById('adminImagePreview').style.display = 'none';
+    document.getElementById('adminPreviewPlaceholder').style.display = 'block';
+    document.getElementById('adminSaveBtn').disabled = true;
+    document.getElementById('adminModalFileInput').value = '';
+}
+
+function previewAdminImage(input) {
+    const file = input.files[0];
+    if (file) {
+        // Validate file type
+        const allowedTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
+        if (!allowedTypes.includes(file.type)) {
+            alert('Please select a valid image file (PNG, JPG, JPEG, or GIF).');
+            input.value = '';
+            return;
+        }
+        
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('File size must be less than 5MB.');
+            input.value = '';
+            return;
+        }
+        
+        selectedAdminFile = file;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('adminImagePreview');
+            const placeholder = document.getElementById('adminPreviewPlaceholder');
+            
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            placeholder.style.display = 'none';
+            document.getElementById('adminSaveBtn').disabled = false;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function saveAdminProfileImage() {
+    if (selectedAdminFile) {
+        const hiddenInput = document.getElementById('hiddenAdminFileInput');
+        const hiddenForm = document.getElementById('hiddenAdminUploadForm');
+        
+        // Create a new FileList with the selected file
+        const dt = new DataTransfer();
+        dt.items.add(selectedAdminFile);
+        hiddenInput.files = dt.files;
+        
+        // Submit the form
+        hiddenForm.submit();
+    }
+}
+
+// Close modal when clicking outside of it
+window.onclick = function(event) {
+    const adminModal = document.getElementById('adminProfileModal');
+    if (event.target === adminModal) {
+        closeAdminProfileModal();
+    }
+}
+</script>

@@ -1,0 +1,132 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Choose Delivery Options{% endblock %}
+{% block breadcrumb %}How to Choose Delivery or Pickup Options{% endblock %}
+{% block help_title %}🚚 How to Choose Delivery or Pickup Options{% endblock %}
+
+{% block content %}
+<p>FarmHub offers flexible delivery options to suit your needs. Choose between home delivery or convenient pickup from the farmer.</p>
+
+<h2>Available Options</h2>
+
+<h3>🏠 Home Delivery</h3>
+<p>Have your fresh farm products delivered right to your doorstep.</p>
+<ul>
+    <li><strong>Convenience:</strong> No need to travel</li>
+    <li><strong>Door-to-door:</strong> Products come to you</li>
+    <li><strong>Delivery fee:</strong> May apply based on location</li>
+</ul>
+
+<h3>📍 Pickup</h3>
+<p>Collect your order directly from the seller's location.</p>
+<ul>
+    <li><strong>No delivery fee:</strong> Usually free</li>
+    <li><strong>Direct from source:</strong> Get products straight from the farm</li>
+    <li><strong>Personal connection:</strong> Meet the farmer</li>
+</ul>
+
+<h2>How to Select Your Option</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Add items to your cart and proceed to checkout.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> On the checkout page, look for the <strong>"Shipping Option"</strong> or <strong>"Delivery Method"</strong> section.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Choose your preferred option:
+    <ul>
+        <li><strong>Delivery</strong> - Enter/confirm your delivery address</li>
+        <li><strong>Pickup</strong> - Note the seller's pickup location</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Review any associated fees (delivery fee will be shown if applicable).
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> Complete your order.
+</div>
+
+<h2>When to Choose Delivery</h2>
+
+<p>Home delivery is best when:</p>
+<ul>
+    <li>You're busy and can't travel to the farm</li>
+    <li>The seller is far from your location</li>
+    <li>You're ordering heavy or bulky items</li>
+    <li>Weather conditions make travel difficult</li>
+    <li>You don't have your own transportation</li>
+</ul>
+
+<h2>When to Choose Pickup</h2>
+
+<p>Pickup is a great choice when:</p>
+<ul>
+    <li>You want to save on delivery fees</li>
+    <li>You're close to the seller's location</li>
+    <li>You want to inspect products before taking them</li>
+    <li>You prefer a specific pickup time</li>
+    <li>You want to meet the farmer and see their operation</li>
+</ul>
+
+<div class="tip-box">
+If you're ordering from multiple sellers, pickup might be more practical for nearby farms to save on multiple delivery fees.
+</div>
+
+<h2>Pickup Instructions</h2>
+
+<p>If you choose pickup:</p>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Note the seller's address provided in the order confirmation.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Wait for the seller to confirm your order and provide pickup details.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Go to the pickup location at the agreed time.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Bring your order confirmation or ID for verification.
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> Collect your products and pay (if COD was selected).
+</div>
+
+<h2>Important Considerations</h2>
+
+<div class="warning-box">
+Not all sellers offer both options. Some may only offer delivery or only offer pickup. Check the available options during checkout.
+</div>
+
+<h3>Delivery Considerations</h3>
+<ul>
+    <li>Ensure your address is complete and accurate</li>
+    <li>Be available during the expected delivery time</li>
+    <li>Provide contact number for the delivery person</li>
+</ul>
+
+<h3>Pickup Considerations</h3>
+<ul>
+    <li>Confirm pickup hours with the seller</li>
+    <li>Bring appropriate bags or containers if needed</li>
+    <li>Arrive during business hours</li>
+</ul>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='how_delivery_works') }}">How Delivery Works</a></li>
+        <li><a href="{{ url_for('help_article', article='update_delivery_address') }}">How to Update Your Delivery Address</a></li>
+        <li><a href="{{ url_for('help_article', article='delivery_times') }}">Estimated Delivery Times</a></li>
+    </ul>
+</div>
+{% endblock %}

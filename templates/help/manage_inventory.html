@@ -1,0 +1,157 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Manage Inventory{% endblock %}
+{% block breadcrumb %}How to Manage Inventory & Stock{% endblock %}
+{% block help_title %}🤝 How to Manage Inventory & Stock{% endblock %}
+
+{% block content %}
+<p>Keep your inventory up-to-date to avoid overselling and disappointed customers. Learn how to manage your product stock effectively on FarmHub.</p>
+
+<h2>Why Inventory Management Matters</h2>
+
+<ul>
+    <li><strong>Customer satisfaction:</strong> Avoid accepting orders you can't fulfill</li>
+    <li><strong>Accurate listings:</strong> Show real-time availability</li>
+    <li><strong>Efficient operations:</strong> Know when to harvest or restock</li>
+    <li><strong>Build trust:</strong> Reliable stock info builds customer confidence</li>
+</ul>
+
+<h2>Viewing Your Inventory</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Log in to your seller account.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Navigate to <strong>"Products"</strong> in the sidebar.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> View all your products with their current stock levels.
+</div>
+
+<h2>Updating Stock Levels</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Find the product you want to update in your Products list.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Click <strong>"Edit"</strong> on the product.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Update the <strong>"Available"</strong> or <strong>"Stock"</strong> field with the new quantity.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Click <strong>"Save"</strong> to apply the changes.
+</div>
+
+<div class="tip-box">
+Update your stock immediately after harvesting new products or when existing stock is sold through other channels.
+</div>
+
+<h2>Stock Alerts</h2>
+
+<p>FarmHub helps you stay on top of inventory with automatic notifications:</p>
+
+<h3>⚠️ Low Stock Alert</h3>
+<ul>
+    <li>Triggered when stock drops to 5 or fewer units</li>
+    <li>Reminds you to harvest or restock</li>
+    <li>Helps prevent out-of-stock situations</li>
+</ul>
+
+<h3>🚫 Out of Stock Alert</h3>
+<ul>
+    <li>Triggered when stock reaches 0</li>
+    <li>Product can no longer be ordered</li>
+    <li>Urgent notification to replenish</li>
+</ul>
+
+<div class="info-box">
+Check your notifications regularly to stay aware of stock levels across all your products.
+</div>
+
+<h2>Best Practices for Inventory Management</h2>
+
+<h3>Daily Habits</h3>
+<ul>
+    <li>Check stock levels each morning</li>
+    <li>Update after each harvest</li>
+    <li>Adjust after processing orders</li>
+</ul>
+
+<h3>Planning Ahead</h3>
+<ul>
+    <li>Know your harvest schedules</li>
+    <li>Anticipate seasonal demand</li>
+    <li>Plan inventory for peak times (holidays, weekends)</li>
+</ul>
+
+<h3>Accurate Counts</h3>
+<ul>
+    <li>Physically count stock periodically</li>
+    <li>Reconcile system numbers with actual inventory</li>
+    <li>Account for spoilage or waste</li>
+</ul>
+
+<h2>Handling Out-of-Stock Situations</h2>
+
+<p>When a product runs out:</p>
+
+<ol>
+    <li><strong>Don't panic:</strong> It happens to every farmer</li>
+    <li><strong>Update immediately:</strong> Set stock to 0 so no new orders come in</li>
+    <li><strong>Communicate:</strong> If you have pending orders, contact affected customers</li>
+    <li><strong>Plan:</strong> Know when you'll have more available</li>
+    <li><strong>Restock:</strong> Update as soon as new product is ready</li>
+</ol>
+
+<h2>Automatic Stock Updates</h2>
+
+<p>FarmHub automatically updates your stock when:</p>
+<ul>
+    <li>An order is placed (stock decreases)</li>
+    <li>An order is cancelled (stock may be restored)</li>
+</ul>
+
+<div class="warning-box">
+Always keep your stock accurate. Overselling leads to cancelled orders and unhappy customers, which affects your shop's reputation.
+</div>
+
+<h2>Seasonal Inventory Tips</h2>
+
+<h3>Peak Season</h3>
+<ul>
+    <li>Increase stock levels to meet demand</li>
+    <li>Update listings more frequently</li>
+    <li>Consider multiple harvests per day</li>
+</ul>
+
+<h3>Off Season</h3>
+<ul>
+    <li>Set appropriate stock levels</li>
+    <li>Consider removing out-of-season items</li>
+    <li>Focus on products that are available year-round</li>
+</ul>
+
+<h2>Dashboard Overview</h2>
+
+<p>Your seller dashboard shows at a glance:</p>
+<ul>
+    <li><strong>Out of Stock Products:</strong> Count of products with 0 stock</li>
+    <li><strong>Low Stock Products:</strong> Count of products with stock ≤ 5</li>
+    <li><strong>Total Products:</strong> All your listed products</li>
+</ul>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='list_products') }}">How to List Your Products for Sale</a></li>
+        <li><a href="{{ url_for('help_article', article='view_sales') }}">How to View Your Sales & Earnings</a></li>
+        <li><a href="{{ url_for('help_article', article='register_seller') }}">How to Register as a Farmer/Seller</a></li>
+    </ul>
+</div>
+{% endblock %}

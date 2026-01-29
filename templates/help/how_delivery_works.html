@@ -1,0 +1,133 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How Delivery Works{% endblock %}
+{% block breadcrumb %}How Delivery Works{% endblock %}
+{% block help_title %}🚚 How Delivery Works{% endblock %}
+
+{% block content %}
+<p>FarmHub connects you directly with local farmers who handle the delivery of your fresh farm products. Here's everything you need to know about how delivery works.</p>
+
+<h2>The Delivery Process</h2>
+
+<div class="step-box">
+    <strong>Step 1 - Order Placed:</strong> You place an order for farm products.
+</div>
+
+<div class="step-box">
+    <strong>Step 2 - Seller Confirmation:</strong> The farmer/seller confirms your order and sets a delivery date.
+</div>
+
+<div class="step-box">
+    <strong>Step 3 - Preparation:</strong> The seller prepares and packages your fresh products.
+</div>
+
+<div class="step-box">
+    <strong>Step 4 - Dispatch:</strong> Your order is dispatched for delivery.
+</div>
+
+<div class="step-box">
+    <strong>Step 5 - Delivery:</strong> The products are delivered to your specified address.
+</div>
+
+<div class="step-box">
+    <strong>Step 6 - Confirmation:</strong> Order is marked as delivered once you receive it.
+</div>
+
+<h2>Delivery Options</h2>
+
+<h3>Home Delivery</h3>
+<p>Products are brought directly to your doorstep.</p>
+<ul>
+    <li>Convenient for busy customers</li>
+    <li>Delivery fee may apply based on location</li>
+    <li>Products delivered fresh from the farm</li>
+</ul>
+
+<h3>Pickup</h3>
+<p>You pick up your order from the seller's location.</p>
+<ul>
+    <li>Often free of charge</li>
+    <li>Great if you're near the farm</li>
+    <li>Meet the farmer who grew your food</li>
+</ul>
+
+<div class="tip-box">
+If delivery fees are high, consider the pickup option to save money, especially for large orders.
+</div>
+
+<h2>Delivery Areas</h2>
+
+<p>Delivery availability depends on:</p>
+<ul>
+    <li><strong>Seller location:</strong> Each farmer has their own delivery range</li>
+    <li><strong>Your address:</strong> Must be within the seller's delivery area</li>
+    <li><strong>Distance:</strong> Longer distances may have higher fees or limited availability</li>
+</ul>
+
+<div class="info-box">
+Check the seller's shop page or contact them directly to confirm they deliver to your area.
+</div>
+
+<h2>Delivery Fees</h2>
+
+<p>Delivery fees are determined by:</p>
+<ul>
+    <li>Distance from the seller to your address</li>
+    <li>The seller's delivery pricing policy</li>
+    <li>Order size and weight</li>
+</ul>
+
+<p>Common fee structures:</p>
+<ul>
+    <li><strong>Flat rate:</strong> Same fee regardless of order size</li>
+    <li><strong>Distance-based:</strong> Fee increases with distance</li>
+    <li><strong>Free delivery:</strong> Some sellers offer free delivery above a minimum order</li>
+</ul>
+
+<h2>Freshness Guarantee</h2>
+
+<p>FarmHub farmers take pride in delivering fresh products:</p>
+<ul>
+    <li>Products are harvested close to delivery time</li>
+    <li>Proper packaging maintains freshness</li>
+    <li>Direct farm-to-table reduces handling time</li>
+</ul>
+
+<div class="warning-box">
+Inspect your products upon delivery. Report any quality issues immediately to the seller.
+</div>
+
+<h2>What to Expect on Delivery Day</h2>
+
+<ol>
+    <li>Be available at your delivery address during the expected time</li>
+    <li>Have payment ready if you chose Cash on Delivery</li>
+    <li>Inspect products before accepting delivery</li>
+    <li>Sign or confirm receipt if required</li>
+</ol>
+
+<h2>Delivery Issues</h2>
+
+<h3>What if I'm not home?</h3>
+<ul>
+    <li>Leave instructions for where to leave the package</li>
+    <li>Ask someone to receive the delivery on your behalf</li>
+    <li>Contact the seller to reschedule</li>
+</ul>
+
+<h3>What if delivery is late?</h3>
+<ul>
+    <li>Check your order status in Order History</li>
+    <li>Contact the seller through messages</li>
+    <li>Weather or traffic may cause delays</li>
+</ul>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='delivery_options') }}">How to Choose Delivery or Pickup Options</a></li>
+        <li><a href="{{ url_for('help_article', article='update_delivery_address') }}">How to Update Your Delivery Address</a></li>
+        <li><a href="{{ url_for('help_article', article='track_delivery') }}">How to Track Delivery Progress</a></li>
+    </ul>
+</div>
+{% endblock %}

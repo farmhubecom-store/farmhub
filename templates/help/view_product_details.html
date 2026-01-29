@@ -1,0 +1,121 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to View Product Details{% endblock %}
+{% block breadcrumb %}How to View Product Details{% endblock %}
+{% block help_title %}🌾 How to View Product Details{% endblock %}
+
+{% block content %}
+<p>Before making a purchase, it's important to review all the details about a product. Here's how to view complete product information on FarmHub.</p>
+
+<h2>Accessing Product Details</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Browse products through search, category filter, or by visiting a shop.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Click on any product card or product image to open the detailed view.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> The product detail page will display all available information about the item.
+</div>
+
+<h2>What Information Is Available?</h2>
+
+<h3>Basic Product Information</h3>
+<ul>
+    <li><strong>Product Name:</strong> The name of the farm product</li>
+    <li><strong>Product Image:</strong> Clear photo(s) of the item</li>
+    <li><strong>Price:</strong> Cost per unit (e.g., ₱50.00/kg)</li>
+    <li><strong>Unit Type:</strong> How the product is sold (per kilogram, per piece, per bundle, etc.)</li>
+    <li><strong>Category:</strong> Product type (Fruits, Vegetables, Poultry, etc.)</li>
+</ul>
+
+<h3>Availability Information</h3>
+<ul>
+    <li><strong>Available Stock:</strong> How many units are currently available</li>
+    <li><strong>Sold Count:</strong> How many units have been sold</li>
+    <li><strong>Status:</strong> Whether the product is in stock or out of stock</li>
+</ul>
+
+<h3>Seller Information</h3>
+<ul>
+    <li><strong>Shop Name:</strong> The farmer/seller's shop name</li>
+    <li><strong>Shop Rating:</strong> Average customer rating for the shop</li>
+    <li><strong>Shop Location:</strong> Where the farm/seller is located</li>
+</ul>
+
+<h3>Customer Reviews</h3>
+<ul>
+    <li><strong>Product Rating:</strong> Average star rating from customers</li>
+    <li><strong>Number of Reviews:</strong> How many customers have rated the product</li>
+    <li><strong>Review Comments:</strong> What customers say about the product</li>
+    <li><strong>Review Images:</strong> Photos uploaded by customers with their reviews</li>
+</ul>
+
+<h2>Understanding Product Units</h2>
+
+<p>Products on FarmHub are sold in different units:</p>
+
+<ul>
+    <li><strong>Per Kilogram (kg):</strong> Price is for 1 kilogram of the product</li>
+    <li><strong>Per Piece (pc):</strong> Price is for one individual item</li>
+    <li><strong>Per Bundle:</strong> Price is for a bundled set of items</li>
+    <li><strong>Per Pack:</strong> Price is for a packaged amount</li>
+    <li><strong>Per Tray:</strong> Common for eggs and similar products</li>
+</ul>
+
+<div class="tip-box">
+Always check the unit type before ordering. A low price might be per gram instead of per kilogram!
+</div>
+
+<h2>Reading Customer Reviews</h2>
+
+<p>Customer reviews help you make informed decisions:</p>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Scroll down on the product page to find the reviews section.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Look at the overall star rating (1-5 stars).
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Read individual comments from customers who bought the product.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Check review images if available to see what customers received.
+</div>
+
+<div class="info-box">
+Reviews are from verified buyers who have actually purchased and received the product.
+</div>
+
+<h2>Contacting the Seller</h2>
+
+<p>If you have questions about a product:</p>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Click on the shop name to visit the seller's page.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Use the <strong>"Message"</strong> feature to contact the seller directly.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Ask your questions and wait for the seller to respond.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='check_availability') }}">How to Check Product Availability</a></li>
+        <li><a href="{{ url_for('help_article', article='add_to_cart') }}">How to Add Products to Your Cart</a></li>
+        <li><a href="{{ url_for('help_article', article='search_products') }}">How to Search for Farm Products</a></li>
+    </ul>
+</div>
+{% endblock %}

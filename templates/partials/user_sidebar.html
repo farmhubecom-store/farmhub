@@ -1,0 +1,414 @@
+<style>
+    .div1 {
+        grid-column: 1 / 2;
+        grid-row: 1 / 3;
+        background: #fff;
+        border-radius: 20px;
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 2px 8px #e1efd8;
+        min-width: 0;
+        position: relative;
+    }
+    .logout-btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: #eaf6e3;
+        color: red;
+        border: 1px solid #b7d7a8;
+        border-radius: 8px;
+        padding: 10px 22px;
+        font-size: 18px;
+        font-weight: 500;
+        text-decoration: none;
+        z-index: 10;
+        box-shadow: 0 2px 8px #e1efd8;
+        transition: filter 0.2s;
+    }
+    .logout-btn:hover {
+        filter: brightness(0.95);
+        background: #ffeaea;
+    }
+    .user-avatar {
+        width: 170px;
+        height: 170px;
+        background: #e2f0d9;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        position: relative;
+        cursor: pointer;
+    }
+    .user-avatar img {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .upload-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(107, 177, 58, 0.8);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        color: white;
+        font-size: 12px;
+        text-align: center;
+        font-weight: 600;
+    }
+    .user-avatar:hover .upload-overlay {
+        opacity: 1;
+    }
+    .user-avatar:hover {
+        transform: scale(1.02);
+        transition: transform 0.2s ease;
+    }
+    .profile-upload-form {
+        display: none;
+    }
+    
+    /* Modal Styles */
+    .profile-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(2px);
+    }
+    
+    .profile-modal-content {
+        background-color: #fff;
+        margin: 10% auto;
+        padding: 30px;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 10px 30px rgba(107, 177, 58, 0.3);
+        text-align: center;
+        position: relative;
+    }
+    
+    .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 28px;
+        font-weight: bold;
+        color: #aaa;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+    
+    .modal-close:hover {
+        color: #333;
+    }
+    
+    .modal-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    
+    .image-preview-container {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        margin: 20px auto;
+        border: 4px solid #e2f0d9;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5f5f5;
+    }
+    
+    .image-preview {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    
+    .preview-placeholder {
+        color: #999;
+        font-size: 16px;
+        text-align: center;
+    }
+    
+    .file-input-wrapper {
+        margin: 20px 0;
+    }
+    
+    .file-input-button {
+        background: #6bb13a;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: background 0.3s;
+        margin-bottom: 10px;
+    }
+    
+    .file-input-button:hover {
+        background: #5a9631;
+    }
+    
+    .modal-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 25px;
+    }
+    
+    .modal-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s;
+        min-width: 100px;
+    }
+    
+    .modal-btn-save {
+        background: #6bb13a;
+        color: white;
+    }
+    
+    .modal-btn-save:hover {
+        background: #5a9631;
+        transform: translateY(-1px);
+    }
+    
+    .modal-btn-save:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+    }
+    
+    .modal-btn-cancel {
+        background: #f44336;
+        color: white;
+    }
+    
+    .modal-btn-cancel:hover {
+        background: #d32f2f;
+        transform: translateY(-1px);
+    }
+    .user-name {
+        margin-bottom: 5px;
+        font-size: 1.5em;
+        font-weight: bold;
+        text-align: center;
+        color: #222;
+    }
+    .user-email {
+        color: #888;
+        text-align: center;
+    }
+    .user-links {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin-top: 10px;
+    }
+    .user-link {
+        text-align: center;
+        width: 100%;
+        background: #eaf6e3;
+        color: #222;
+        border: 1px solid #b7d7a8;
+        border-radius: 0;
+        padding: 14px 0;
+        font-size: 20px;
+        font-weight: 400;
+        display: block;
+        text-decoration: none;
+    }
+    .user-link.active {
+        box-shadow: 0 0 0 2px #6bb13a33;
+        outline: none;
+        font-weight: 600;
+        filter: none;
+        background: #6bb13a;
+        color: #fff;
+        border: 1px solid #b7d7a8;
+    }
+    .user-link.dashboard {
+        border-radius: 6px 6px 0 0;
+    }
+    .user-link.edit-account {
+        border-radius: 0 0 6px 6px;
+    }
+    /* Optional: add hover effect */
+    .user-links a:hover {
+        filter: brightness(0.97);
+    }
+</style>
+
+<div class="div1">
+    <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    <div class="user-avatar" onclick="openProfileModal();">
+        {% if session.get('user_profile_image') %}
+            {% if session['user_profile_image'].startswith('/') %}
+                <img src="{{ session['user_profile_image'] }}" alt="Profile Picture" style="width:130px;height:130px;border-radius:50%;object-fit:cover;" />
+            {% else %}
+                <img src="{{ url_for('static', filename='images/profiles/' ~ session['user_profile_image']) }}" alt="Profile Picture" style="width:130px;height:130px;border-radius:50%;object-fit:cover;" />
+            {% endif %}
+        {% else %}
+            <!-- default circular profile image -->
+            <img src="{{ url_for('static', filename='images/profile-circle.png') }}" alt="Default Profile" style="width:130px;height:130px;border-radius:50%;object-fit:cover;" />
+        {% endif %}
+        <div class="upload-overlay">
+            <div>Click to<br>change photo</div>
+        </div>
+    </div>
+    
+    <!-- Profile Picture Modal -->
+    <div id="profileModal" class="profile-modal">
+        <div class="profile-modal-content">
+            <span class="modal-close" onclick="closeProfileModal()">&times;</span>
+            <h2 class="modal-title">Change Profile Picture</h2>
+            
+            <div class="image-preview-container">
+                <img id="imagePreview" class="image-preview" style="display: none;" />
+                <div id="previewPlaceholder" class="preview-placeholder">No image selected</div>
+            </div>
+            
+            <div class="file-input-wrapper">
+                <button type="button" class="file-input-button" onclick="document.getElementById('modalFileInput').click();">
+                    Choose Image
+                </button>
+                <input type="file" id="modalFileInput" accept="image/*" style="display: none;" onchange="previewImage(this);" />
+                <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                    Supported formats: PNG, JPG, JPEG, GIF
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button type="button" class="modal-btn modal-btn-save" id="saveBtn" onclick="saveProfileImage();" disabled>
+                    Save Changes
+                </button>
+                <button type="button" class="modal-btn modal-btn-cancel" onclick="closeProfileModal();">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hidden form for actual upload -->
+    <form id="hiddenUploadForm" action="{{ url_for('upload_user_profile_image') }}" method="post" enctype="multipart/form-data" style="display: none;">
+        <input type="file" id="hiddenFileInput" name="profile_image" />
+    </form>
+    
+    <h2 class="user-name">{{ session['user_first_name'] }} {{ session['user_last_name'] }}</h2>
+    <p class="user-email">{{ session['user_email'] }}</p>
+    <div class="user-links">
+        <!-- <a href="/users/profile" class="user-link dashboard{% if request.path == '/users/profile' %} active{% endif %}">Dashboard</a> -->
+        <a href="/users/orderHistory" class="user-link{% if request.path == '/users/orderHistory' %} active{% endif %}">Order History</a>
+        <a href="/users/messages" class="user-link{% if request.path == '/users/messages' %} active{% endif %}">Messages</a>
+        <a href="/users/ratings" class="user-link{% if request.path == '/users/ratings' %} active{% endif %}">My Rating</a>
+        <a href="{{ url_for('user_account_edit') }}" class="user-link edit-account{% if request.path == '/users/account/edit' %} active{% endif %}">Edit Account</a>
+        <!-- <a href="{{ url_for('logout') }}" style="text-align: center;width: 100%; background: #eaf6e3; color: red; border: 1px solid #b7d7a8; border-radius: 0 0 6px 6px; padding: 14px 0; font-size: 20px; font-weight: 400;">Logout</a> -->
+    </div>
+</div>
+
+<script>
+let selectedFile = null;
+
+function openProfileModal() {
+    document.getElementById('profileModal').style.display = 'block';
+    resetModal();
+}
+
+function closeProfileModal() {
+    document.getElementById('profileModal').style.display = 'none';
+    resetModal();
+}
+
+function resetModal() {
+    selectedFile = null;
+    document.getElementById('imagePreview').style.display = 'none';
+    document.getElementById('previewPlaceholder').style.display = 'block';
+    document.getElementById('saveBtn').disabled = true;
+    document.getElementById('modalFileInput').value = '';
+}
+
+function previewImage(input) {
+    const file = input.files[0];
+    if (file) {
+        // Validate file type
+        const allowedTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
+        if (!allowedTypes.includes(file.type)) {
+            alert('Please select a valid image file (PNG, JPG, JPEG, or GIF).');
+            input.value = '';
+            return;
+        }
+        
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('File size must be less than 5MB.');
+            input.value = '';
+            return;
+        }
+        
+        selectedFile = file;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('imagePreview');
+            const placeholder = document.getElementById('previewPlaceholder');
+            
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            placeholder.style.display = 'none';
+            document.getElementById('saveBtn').disabled = false;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function saveProfileImage() {
+    if (selectedFile) {
+        const hiddenInput = document.getElementById('hiddenFileInput');
+        const hiddenForm = document.getElementById('hiddenUploadForm');
+        
+        // Create a new FileList with the selected file
+        const dt = new DataTransfer();
+        dt.items.add(selectedFile);
+        hiddenInput.files = dt.files;
+        
+        // Submit the form
+        hiddenForm.submit();
+    }
+}
+
+// Close modal when clicking outside of it
+window.onclick = function(event) {
+    const modal = document.getElementById('profileModal');
+    if (event.target === modal) {
+        closeProfileModal();
+    }
+}
+</script>

@@ -1,0 +1,135 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Track Delivery Progress{% endblock %}
+{% block breadcrumb %}How to Track Delivery Progress{% endblock %}
+{% block help_title %}🚚 How to Track Delivery Progress{% endblock %}
+
+{% block content %}
+<p>Know exactly where your order is and when to expect it. FarmHub provides order tracking to keep you informed every step of the way.</p>
+
+<h2>Accessing Order Tracking</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Log in to your FarmHub account.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Go to <strong>"Order History"</strong> from your profile menu.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Find the order you want to track.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Click on the order or the <strong>"Track"</strong> button to see detailed tracking information.
+</div>
+
+<h2>Understanding the Tracking Timeline</h2>
+
+<p>Your order progresses through these stages:</p>
+
+<div class="step-box">
+    <strong>📋 Order Placed</strong><br>
+    You've successfully submitted your order. The seller has been notified.
+</div>
+
+<div class="step-box">
+    <strong>✅ Order Confirmed</strong><br>
+    The seller has accepted your order and is preparing it. An expected delivery date is set.
+</div>
+
+<div class="step-box">
+    <strong>📦 Being Prepared</strong><br>
+    Your products are being harvested, picked, and packaged for delivery.
+</div>
+
+<div class="step-box">
+    <strong>🚚 Out for Delivery</strong><br>
+    Your order has left the farm and is on its way to you!
+</div>
+
+<div class="step-box">
+    <strong>🎉 Delivered</strong><br>
+    Your order has arrived! Enjoy your fresh farm products.
+</div>
+
+<h2>Tracking Information Available</h2>
+
+<p>When tracking your order, you can see:</p>
+<ul>
+    <li><strong>Order Status:</strong> Current stage of your order</li>
+    <li><strong>Order Date:</strong> When you placed the order</li>
+    <li><strong>Confirmation Date:</strong> When the seller confirmed</li>
+    <li><strong>Expected Delivery:</strong> Estimated arrival date</li>
+    <li><strong>Seller Location:</strong> Where your order is coming from</li>
+    <li><strong>Your Delivery Address:</strong> Where it's being delivered</li>
+    <li><strong>Seller Contact:</strong> How to reach the seller</li>
+</ul>
+
+<div class="tip-box">
+If your order shows "Out for Delivery," stay available at your delivery address. Keep your phone nearby in case the delivery person needs to contact you.
+</div>
+
+<h2>Delivery Day Tracking</h2>
+
+<p>On the day of delivery:</p>
+
+<ol>
+    <li>Check your order status in the morning</li>
+    <li>Ensure you're available at the delivery address</li>
+    <li>Keep your phone charged and with you</li>
+    <li>Watch for notifications from FarmHub</li>
+    <li>Be ready to receive and inspect your products</li>
+</ol>
+
+<h2>Notifications</h2>
+
+<p>FarmHub sends notifications at key moments:</p>
+<ul>
+    <li>✅ When your order is confirmed</li>
+    <li>📅 When a delivery date is set</li>
+    <li>🚚 When your order is out for delivery</li>
+    <li>📦 When your order is delivered</li>
+</ul>
+
+<div class="info-box">
+Check the notification bell icon in the navigation bar to see all your order updates.
+</div>
+
+<h2>What If Tracking Shows Issues?</h2>
+
+<h3>Status Not Updating?</h3>
+<ul>
+    <li>Refresh the page</li>
+    <li>Check back in a few hours</li>
+    <li>Contact the seller if it's been over 24 hours with no update</li>
+</ul>
+
+<h3>Delivery Date Changed?</h3>
+<ul>
+    <li>Sellers may update delivery dates based on availability</li>
+    <li>You'll be notified of any changes</li>
+    <li>Contact the seller if you have concerns</li>
+</ul>
+
+<h3>Marked Delivered But Not Received?</h3>
+<ul>
+    <li>Check with family members or neighbors</li>
+    <li>Contact the seller immediately</li>
+    <li>Report to customer support if unresolved</li>
+</ul>
+
+<div class="warning-box">
+If there's a discrepancy between the tracking status and what you've actually received, contact the seller right away.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='track_order') }}">How to Track Your Order</a></li>
+        <li><a href="{{ url_for('help_article', article='delivery_times') }}">Estimated Delivery Times</a></li>
+        <li><a href="{{ url_for('help_article', article='contact_support') }}">How to Contact Customer Support</a></li>
+    </ul>
+</div>
+{% endblock %}

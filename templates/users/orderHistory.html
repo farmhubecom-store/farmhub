@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F0F0F0;
+            color: #333;
+            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main {
+            height: 85%;
+            background-color: #E2F0D9;
+            padding: 25px 50px;
+            overflow-y: auto;
+            display: flex;
+        }
+
+        .parent {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-rows: 1fr 260px;
+            gap: 10px 10px;
+            width: 100%;
+            max-width: 98vw;
+            margin: 0 auto;
+            height: 100%;
+        }
+
+        .div1 {
+            grid-column: 1 / 2;
+            grid-row: 1 / 3;
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 2px 8px #e1efd8;
+            min-width: 0;
+            min-height: 0;
+        }
+        .div2 {
+            grid-column: 2 / 3;
+            grid-row: 1 / 3;
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px 20px 10px 20px;
+            box-shadow: 0 2px 8px #e1efd8;
+            min-width: 0;
+            min-height: 0; /* allow the grid item to shrink so overflow works */
+            overflow-y: auto; /* make inner content scrollable */
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 1100px) {
+            .parent {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            .div1, .div2, .div3 {
+                grid-column: 1 / 2 !important;
+                grid-row: auto !important;
+            }
+        }
+        /* Order status styles */
+        .order-item { background: #fff; transition: background-color .2s ease; }
+        .status-pending { background: #fff8e1; border-left: 6px solid #ffc107; }
+        .status-confirmed { background: #e9f5ff; border-left: 6px solid #0d6efd; }
+        .status-delivered { background: #e9fdef; border-left: 6px solid #28a745; }
+        .status-cancelled { background: #fdecea; border-left: 6px solid #dc3545; }
+        .status-processing { background: #fff6e6; border-left: 6px solid #fd7e14; }
+    /* Tracking modal styles */
+    .track-modal { display: none; position: fixed; inset: 0; align-items: center; justify-content: center; background: rgba(0,0,0,0.45); z-index: 9999; }
+    .track-modal .card { background: #fff; border-radius: 12px; padding: 22px; width: 760px; max-width: 94%; box-shadow: 0 6px 24px rgba(0,0,0,0.12); }
+    .track-address { font-weight:700; margin-bottom:8px; }
+    .track-sub { color:#666; font-size:0.95em; margin-bottom:12px; }
+    .track-steps { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:18px; }
+    .track-step { display:flex; flex-direction:column; align-items:center; width:100%; min-width:80px; }
+    .track-step .icon { width:48px; height:48px; border-radius:8px; display:flex; align-items:center; justify-content:center; background:#f0f0f0; color:#999; }
+    .track-step.completed .icon { background:#3aa23a; color:#fff; }
+    .track-step .label { margin-top:8px; color:#666; font-weight:600; font-size:0.95em; text-align:center; }
+    .track-connector { height:4px; background:#dcdcdc; flex:1; margin:0 8px; border-radius:4px; }
+    .track-connector.active { background: linear-gradient(90deg,#5cbf3a,#8bd66a); }
+    .track-close { position:absolute; right:14px; top:10px; background:transparent;border:none;font-size:18px;cursor:pointer;color:#666; }
+    </style>
+</head>
+<body>
+
+    {% include 'partials/navbar.html' %}
+
+    <div class="main">
+        <div class="parent">
+
+            {% include 'partials/user_sidebar.html' %}
+
+            <div class="div2">
+                <h2 style="margin-bottom: 20px;">Order History</h2>
+                <div class="order-history-list">
+                    {% if orders and orders|length > 0 %}
+                        {% for order in orders %}
+                            <div class="order-item status-{{ order['status'] }}" style="display: flex; align-items: center; margin-bottom: 6px; border-radius: 10px; box-shadow: 0 1px 4px #e1efd8; padding: 10px;">
+                                {% set first = order['items'][0] if order['items'] else None %}
+                                <img src="{{ first['image'] if first and first['image'] else url_for('static', filename='images/product-images/banana-lakatan.jpg') }}" alt="{{ first['name'] if first else 'Order' }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin-right: 12px; border: 1px solid #e2f0d9;">
+                                <div style="flex: 1;">
+                                    <div style="font-size: 1.05em; font-weight: bold; color: #333;">Order #{{ order['id'] }}</div>
+                                    <div style="margin: 6px 0; color: #666;">{{ order['payment_method'] or '' }}  {{ order['shipping_option'] or '' }}</div>
+                                    <div style="color: #888; font-size: 0.9em;">Ordered on: {{ order['timestamp'] }}</div>
+                                    <div style="color: #888; font-size: 0.9em;">Address: {{ order['address'] }}</div>
+                                    <div style="color: #444; font-weight:600; margin-top:6px;">Status: {{ order['status'] }}</div>
+                                    {% if order['delivery_date'] %}
+                                        <div style="color:#666; font-size:0.9em;">Delivery date: {{ order['delivery_date'] }}</div>
+                                    {% endif %}
+                                </div>
+                                <div style="margin-left: 12px; text-align: right;">
+                                    <div style="font-size: 1em; color: #333;">₱{{ '%.2f'|format(order['total']) }}</div>
+                                    <div style="font-size: 0.9em; color: #888;">Items: {{ order['items']|length }}</div>
+                                    <div style="margin-top:8px;">
+                                        <button type="button" class="track-btn" data-order-id="{{ order['id'] }}" data-status="{{ order['status'] }}" data-address="{{ order['address']|e }}" data-seller-name="{{ order['seller_name']|e }}" data-seller-address="{{ order['seller_address']|e }}" data-seller-email="{{ order['seller_email']|e }}" data-seller-phone="{{ order['seller_phone']|e }}" data-buyer-email="{{ order.get('buyer_email')|e }}" data-buyer-phone="{{ order.get('buyer_phone')|e }}" onclick="openTrackModal(this)" style="background:#4CAF50;border:none;color:#fff;padding:6px 10px;border-radius:6px;cursor:pointer;">Track</button>
+                                    </div>
+                                    {% if order['status'] == 'confirmed' and order['delivery_date'] and order['delivery_date'] <= now %}
+                                        <form action="{{ url_for('user_mark_received', order_id=order['id']) }}" method="post" style="margin-top:6px;">
+                                            <button type="submit" style="background:#28a745;border:none;color:#fff;padding:6px 10px;border-radius:6px;cursor:pointer;">Mark as Received</button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% for item in order['items'] %}
+                                <div style="display:flex;align-items:center;padding:8px 10px;border-radius:8px;margin-bottom:6px;background:#fff;box-shadow:0 1px 3px #eaeaea;">
+                                    <img src="{{ item['image'] if item['image'] else url_for('static', filename='images/product-images/banana-lakatan.jpg') }}" style="width:50px;height:50px;object-fit:cover;border-radius:8px;margin-right:10px;border:1px solid #e2f0d9;">
+                                    <div style="flex:1;">
+                                        <div style="font-weight:600">{{ item['name'] }}</div>
+                                        <div style="color:#666">Qty: {{ item['quantity'] }}</div>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <div>₱{{ '%.2f'|format(item['subtotal']) }}</div>
+                                        <div style="color:#888">Unit: ₱{{ '%.2f'|format(item['price']) }}</div>
+                                        {% if order['status'] == 'delivered' %}
+                                            {% if not item['user_rated'] %}
+                                                <div style="margin-top:6px;">
+                                                    <button type="button" 
+                                                            data-name="{{ item['name']|e }}" 
+                                                            data-order="{{ order['id'] }}" 
+                                                            data-product="{{ item['product_id'] }}" 
+                                                            onclick="openRatingModalFromBtn(this)" 
+                                                            style="background:#007bff;border:none;color:#fff;padding:6px 10px;border-radius:6px;cursor:pointer;">Rate</button>
+                                                </div>
+                                            {% else %}
+                                                <div style="margin-top:6px;color:#666;">You rated: {{ item['user_rating'] }}★</div>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <hr style="border:none;border-top:1px solid #eee;margin:8px 0;">
+                        {% endfor %}
+                    {% else %}
+                        <p>No orders yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Rating modal -->
+    <div id="ratingModal" style="display:none;position:fixed;inset:0;align-items:center;justify-content:center;background:rgba(0,0,0,0.4);z-index:9999;">
+        <div style="background:#fff;padding:24px;border-radius:12px;width:480px;max-width:95%;box-shadow:0 10px 30px rgba(0,0,0,0.15);">
+            <h3 id="ratingTitle" style="margin-bottom:16px;color:#333;">Rate product</h3>
+            <form id="ratingForm" method="post" action="{{ url_for('rate_product') }}" enctype="multipart/form-data">
+                <input type="hidden" name="order_id" id="rating_order_id">
+                <input type="hidden" name="product_id" id="rating_product_id">
+                
+                <!-- Star Rating -->
+                <div style="margin:12px 0;">
+                    <label style="font-weight:600;color:#555;display:block;margin-bottom:6px;">Rating:</label>
+                    <div class="star-rating" style="display:flex;gap:4px;align-items:center;">
+                        <div class="stars" style="display:flex;gap:2px;">
+                            <span class="star" data-rating="1" style="font-size:24px;color:#ddd;cursor:pointer;transition:color 0.2s;">★</span>
+                            <span class="star" data-rating="2" style="font-size:24px;color:#ddd;cursor:pointer;transition:color 0.2s;">★</span>
+                            <span class="star" data-rating="3" style="font-size:24px;color:#ddd;cursor:pointer;transition:color 0.2s;">★</span>
+                            <span class="star" data-rating="4" style="font-size:24px;color:#ddd;cursor:pointer;transition:color 0.2s;">★</span>
+                            <span class="star" data-rating="5" style="font-size:24px;color:#ddd;cursor:pointer;transition:color 0.2s;">★</span>
+                        </div>
+                        <span id="ratingText" style="margin-left:8px;color:#666;font-size:14px;">Click to rate</span>
+                    </div>
+                    <input type="hidden" name="stars" id="rating_stars" value="5">
+                </div>
+
+                <!-- Image Upload -->
+                <div style="margin:16px 0;">
+                    <label style="font-weight:600;color:#555;display:block;margin-bottom:6px;">Add Photos (Optional):</label>
+                    <input type="file" name="rating_image" id="rating_image" accept="image/*" 
+                           style="width:100%;padding:8px;border:2px dashed #ddd;border-radius:8px;background:#f9f9f9;">
+                    <div id="imagePreview" style="margin-top:8px;display:none;">
+                        <img id="previewImg" style="max-width:100%;max-height:150px;border-radius:8px;border:1px solid #ddd;">
+                    </div>
+                    <small style="color:#888;font-size:12px;">Supported: JPG, PNG, GIF (Max 5MB)</small>
+                </div>
+
+                <!-- Detailed Description -->
+                <div style="margin:16px 0;">
+                    <label style="font-weight:600;color:#555;display:block;margin-bottom:6px;">Detailed Review:</label>
+                    <textarea name="description" rows="4" placeholder="Share your detailed experience with this product..."
+                              style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;resize:vertical;font-family:inherit;"></textarea>
+                </div>
+
+                <!-- Quick Comment -->
+                <div style="margin:16px 0;">
+                    <label style="font-weight:600;color:#555;display:block;margin-bottom:6px;">Quick Comment (Optional):</label>
+                    <textarea name="comment" rows="2" placeholder="Quick thoughts or summary..."
+                              style="width:100%;padding:8px;border:1px solid #ddd;border-radius:8px;resize:vertical;font-family:inherit;"></textarea>
+                </div>
+
+                <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px;">
+                    <button type="button" onclick="closeRatingModal()" 
+                            style="padding:10px 16px;border-radius:8px;border:1px solid #ccc;background:#fff;color:#666;cursor:pointer;">Cancel</button>
+                    <button type="submit" 
+                            style="padding:10px 20px;border-radius:8px;background:#28a745;border:none;color:#fff;cursor:pointer;font-weight:600;">Submit Rating</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Tracking modal -->
+    <div id="trackModal" class="track-modal">
+        <div class="card" role="dialog" aria-modal="true" aria-labelledby="trackTitle" style="position:relative;">
+            <button class="track-close" onclick="closeTrackModal()">✕</button>
+            <h3 id="trackTitle">Track Order</h3>
+            <div id="trackSub" class="track-sub">Order timeline</div>
+            <div class="track-steps" id="trackSteps">
+                <div class="track-step" data-step="ordered">
+                    <div class="icon">✓</div>
+                    <div class="label">Ordered</div>
+                </div>
+                <div class="track-connector" data-conn="1"></div>
+                <div class="track-step" data-step="in_transit">
+                    <div class="icon">✓</div>
+                    <div class="label">In Transit</div>
+                </div>
+                <div class="track-connector" data-conn="2"></div>
+                <div class="track-step" data-step="out_for_delivery">
+                    <div class="icon">✓</div>
+                    <div class="label">Out for delivery</div>
+                </div>
+                <div class="track-connector" data-conn="3"></div>
+                <div class="track-step" data-step="delivered">
+                    <div class="icon">✓</div>
+                    <div class="label">Delivered</div>
+                </div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-top:16px;">
+                <div style="flex:1;min-width:220px;">
+                    <div class="track-address" style="font-weight:700;">Seller location</div>
+                    <div id="trackSeller" class="track-sub"></div>
+                    <div id="trackSellerContact" style="margin-top:6px;color:#555;font-size:0.95em;white-space:pre-line;"></div>
+                </div>
+                <div style="flex:1;min-width:220px;">
+                    <div class="track-address" style="font-weight:700;">Buyer address</div>
+                    <div id="trackAddress" class="track-sub"></div>
+                    <div id="trackBuyerContact" style="margin-top:6px;color:#555;font-size:0.95em;white-space:pre-line;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function openRatingModalFromBtn(btn){
+            if(!btn || !btn.dataset) return;
+            var productName = btn.dataset.name || '';
+            var orderId = btn.dataset.order || '';
+            var productId = btn.dataset.product || '';
+            document.getElementById('rating_order_id').value = orderId;
+            document.getElementById('rating_product_id').value = productId;
+            document.getElementById('ratingTitle').innerText = productName ? ('Rate "' + productName + '"') : 'Rate product';
+            
+            // Reset form
+            document.getElementById('ratingForm').reset();
+            document.getElementById('rating_stars').value = '5';
+            document.getElementById('imagePreview').style.display = 'none';
+            updateStarRating(5);
+            
+            document.getElementById('ratingModal').style.display = 'flex';
+        }
+        
+        function closeRatingModal(){
+            document.getElementById('ratingModal').style.display = 'none';
+        }
+
+        // Star rating functionality
+        function updateStarRating(rating) {
+            const stars = document.querySelectorAll('.star');
+            const ratingText = document.getElementById('ratingText');
+            const hiddenInput = document.getElementById('rating_stars');
+            
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.style.color = '#FFD700';
+                } else {
+                    star.style.color = '#ddd';
+                }
+            });
+            
+            const labels = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+            ratingText.innerText = labels[rating] || 'Click to rate';
+            hiddenInput.value = rating;
+        }
+
+        // Add event listeners when DOM loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Star rating clicks
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    updateStarRating(rating);
+                });
+                
+                star.addEventListener('mouseenter', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    const tempStars = document.querySelectorAll('.star');
+                    tempStars.forEach((s, index) => {
+                        s.style.color = index < rating ? '#FFD700' : '#ddd';
+                    });
+                });
+            });
+            
+            // Reset stars on mouse leave
+            document.querySelector('.stars').addEventListener('mouseleave', function() {
+                const currentRating = parseInt(document.getElementById('rating_stars').value);
+                updateStarRating(currentRating);
+            });
+
+            // Image preview functionality
+            const imageInput = document.getElementById('rating_image');
+            imageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                const preview = document.getElementById('imagePreview');
+                const previewImg = document.getElementById('previewImg');
+                
+                if (file) {
+                    // Check file size (5MB max)
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert('File size must be less than 5MB');
+                        this.value = '';
+                        preview.style.display = 'none';
+                        return;
+                    }
+                    
+                    // Check file type
+                    if (!file.type.startsWith('image/')) {
+                        alert('Please select a valid image file');
+                        this.value = '';
+                        preview.style.display = 'none';
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImg.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.style.display = 'none';
+                }
+            });
+            
+            // Initialize with 5 stars
+            updateStarRating(5);
+        });
+        // Tracking modal logic
+        function openTrackModal(btn){
+            if(!btn || !btn.dataset) return;
+            var status = (btn.dataset.status || '').toLowerCase();
+            var address = btn.dataset.address || '';
+            var sellerName = btn.dataset.sellerName || '';
+            var sellerAddress = btn.dataset.sellerAddress || '';
+            var sellerEmail = btn.dataset.sellerEmail || '';
+            var sellerPhone = btn.dataset.sellerPhone || '';
+            document.getElementById('trackAddress').innerText = address;
+            // show seller info if provided
+            var sellerEl = document.getElementById('trackSeller');
+            if(sellerName) sellerEl.innerText = sellerName + (sellerAddress ? (' — ' + sellerAddress) : '');
+            else sellerEl.innerText = (sellerAddress || '');
+            var sellerContactEl = document.getElementById('trackSellerContact');
+            // render plain text rows for seller
+            var sellerParts = [];
+            if(sellerEmail) sellerParts.push('Email: ' + sellerEmail);
+            if(sellerPhone) sellerParts.push('Phone: ' + sellerPhone);
+            sellerContactEl.innerText = sellerParts.join('\n');
+
+            // buyer contact
+            var buyerEmail = btn.dataset.buyerEmail || '';
+            var buyerPhone = btn.dataset.buyerPhone || '';
+            var buyerContactEl = document.getElementById('trackBuyerContact');
+            var buyerParts = [];
+            if(buyerEmail) buyerParts.push('Email: ' + buyerEmail);
+            if(buyerPhone) buyerParts.push('Phone: ' + buyerPhone);
+            buyerContactEl.innerText = buyerParts.join('\n');
+            // reset steps
+            var steps = Array.from(document.querySelectorAll('#trackSteps .track-step'));
+            var conns = Array.from(document.querySelectorAll('#trackSteps .track-connector'));
+            steps.forEach(function(s){ s.classList.remove('completed'); });
+            conns.forEach(function(c){ c.classList.remove('active'); });
+            // map status to progression index
+            var orderFlow = ['ordered','in_transit','out_for_delivery','delivered'];
+            // map common repo statuses to a step index
+            var idx = -1;
+            if(status === 'pending' || status === 'created' || status === 'new') idx = 0;
+            else if(status === 'processing') idx = 1;
+            else if(status === 'confirmed' || status === 'in_transit' || status === 'shipped') idx = 2;
+            else if(status === 'delivered' || status === 'received') idx = 3;
+            else if(status === 'cancelled' || status === 'canceled') idx = 0; // show minimal progress
+            else {
+                // fallback: try to match keywords
+                if(status.indexOf('deliver') !== -1) idx = 3;
+                else if(status.indexOf('transit') !== -1) idx = 2;
+                else idx = 0;
+            }
+            for(var i=0;i<=idx;i++){
+                var stepEl = document.querySelector('#trackSteps .track-step[data-step="'+orderFlow[i]+'"]');
+                if(stepEl) stepEl.classList.add('completed');
+                if(i>0){
+                    var conn = document.querySelector('#trackSteps .track-connector[data-conn="'+i+'"]');
+                    if(conn) conn.classList.add('active');
+                }
+            }
+            document.getElementById('trackModal').style.display = 'flex';
+        }
+        function closeTrackModal(){
+            document.getElementById('trackModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Track Your Order{% endblock %}
+{% block breadcrumb %}How to Track Your Order{% endblock %}
+{% block help_title %}🛍️ How to Track Your Order{% endblock %}
+
+{% block content %}
+<p>Stay updated on your order status from purchase to delivery. FarmHub makes it easy to track your fresh farm product orders.</p>
+
+<h2>Accessing Your Order History</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Log in to your FarmHub account.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Click on your profile icon or name in the navigation bar.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Select <strong>"Order History"</strong> from the dropdown menu.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> You'll see a list of all your past and current orders.
+</div>
+
+<h2>Understanding Order Status</h2>
+
+<p>Your order goes through several stages:</p>
+
+<h3>📋 Pending</h3>
+<p>Your order has been received and is waiting for the seller to confirm it.</p>
+<ul>
+    <li>The seller has been notified</li>
+    <li>Your items are being verified</li>
+</ul>
+
+<h3>✅ Confirmed</h3>
+<p>The seller has accepted your order and set a delivery date.</p>
+<ul>
+    <li>Your order is being prepared</li>
+    <li>Expected delivery date is now available</li>
+</ul>
+
+<h3>🚚 On the Way / Out for Delivery</h3>
+<p>Your order has been dispatched and is on its way to you.</p>
+<ul>
+    <li>The delivery person is en route</li>
+    <li>Expect delivery soon</li>
+</ul>
+
+<h3>📦 Delivered</h3>
+<p>Your order has been successfully delivered!</p>
+<ul>
+    <li>You should have received your items</li>
+    <li>You can now leave a rating and review</li>
+</ul>
+
+<h3>❌ Cancelled</h3>
+<p>The order has been cancelled.</p>
+<ul>
+    <li>This could be by you or the seller</li>
+    <li>No payment should be collected</li>
+</ul>
+
+<h2>Viewing Order Details</h2>
+
+<p>Click on any order to see complete details:</p>
+<ul>
+    <li><strong>Order ID:</strong> Unique order number for reference</li>
+    <li><strong>Order Date:</strong> When you placed the order</li>
+    <li><strong>Items Ordered:</strong> Products, quantities, and prices</li>
+    <li><strong>Delivery Address:</strong> Where the order is being sent</li>
+    <li><strong>Shipping Option:</strong> Delivery or pickup</li>
+    <li><strong>Payment Method:</strong> How you're paying</li>
+    <li><strong>Total Amount:</strong> Final order cost</li>
+    <li><strong>Expected Delivery:</strong> When to expect your order</li>
+</ul>
+
+<div class="tip-box">
+Save your order ID! You may need it when contacting the seller or customer support about your order.
+</div>
+
+<h2>Tracking Delivery Progress</h2>
+
+<p>For orders that are out for delivery:</p>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Go to your Order History.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Find the order marked "On the Way" or similar.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Click on the order to see detailed tracking information.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> You may see:
+    <ul>
+        <li>Seller's location</li>
+        <li>Your delivery address</li>
+        <li>Expected arrival time</li>
+        <li>Delivery person's contact (if available)</li>
+    </ul>
+</div>
+
+<h2>Getting Notifications</h2>
+
+<p>FarmHub will notify you when:</p>
+<ul>
+    <li>Your order is confirmed by the seller</li>
+    <li>The delivery date is set</li>
+    <li>Your order is out for delivery</li>
+    <li>Your order has been delivered</li>
+</ul>
+
+<div class="info-box">
+Check your notifications regularly by clicking the bell icon in the navigation bar.
+</div>
+
+<h2>What If There's a Problem?</h2>
+
+<ul>
+    <li><strong>Order delayed?</strong> Contact the seller through messages</li>
+    <li><strong>Wrong items?</strong> Report immediately after receiving</li>
+    <li><strong>Not delivered?</strong> Check the status and contact support</li>
+</ul>
+
+<div class="warning-box">
+If your order shows as "Delivered" but you haven't received it, contact the seller or customer support immediately.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='track_delivery') }}">How to Track Delivery Progress</a></li>
+        <li><a href="{{ url_for('help_article', article='delivery_times') }}">Estimated Delivery Times</a></li>
+        <li><a href="{{ url_for('help_article', article='request_return') }}">How to Request a Return</a></li>
+    </ul>
+</div>
+{% endblock %}

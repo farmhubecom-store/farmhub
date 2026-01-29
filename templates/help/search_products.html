@@ -1,0 +1,94 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Search for Farm Products{% endblock %}
+{% block breadcrumb %}How to Search for Farm Products{% endblock %}
+{% block help_title %}🌾 How to Search for Farm Products{% endblock %}
+
+{% block content %}
+<p>FarmHub makes it easy to find exactly what you're looking for. Use our search features to discover fresh farm products from local farmers.</p>
+
+<h2>Using the Search Bar</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Locate the search bar at the top of any page in the navigation area.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Type the name of the product you're looking for (e.g., "tomatoes", "chicken", "mangoes").
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Press <strong>Enter</strong> or click the search icon to see results.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Browse through the search results to find products that match your needs.
+</div>
+
+<div class="tip-box">
+Try different search terms if you don't find what you're looking for. For example, search "eggs" instead of "chicken eggs".
+</div>
+
+<h2>Search Tips</h2>
+
+<ul>
+    <li><strong>Be specific:</strong> "Lakatan banana" will give better results than just "fruit"</li>
+    <li><strong>Use common names:</strong> Search for products as you would normally call them</li>
+    <li><strong>Try variations:</strong> Some products may be listed under different names</li>
+    <li><strong>Check spelling:</strong> Make sure your search terms are spelled correctly</li>
+</ul>
+
+<h2>Browsing All Products</h2>
+
+<p>If you prefer to browse rather than search:</p>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Click on <strong>"All Products"</strong> or <strong>"Products"</strong> in the navigation menu.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Scroll through the product grid to see available items.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Click on any product to view more details.
+</div>
+
+<h2>Finding Products by Shop</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Click on <strong>"Shops"</strong> in the navigation menu.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Browse through available farmer shops.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Click on a shop to view all their products.
+</div>
+
+<div class="info-box">
+Visiting individual shops is great when you want to order multiple items from the same farmer for combined delivery.
+</div>
+
+<h2>Understanding Search Results</h2>
+
+<p>Each product in search results shows:</p>
+<ul>
+    <li><strong>Product Image:</strong> A photo of the item</li>
+    <li><strong>Product Name:</strong> The name of the product</li>
+    <li><strong>Price:</strong> Cost per unit (kg, piece, etc.)</li>
+    <li><strong>Seller/Shop:</strong> Which farmer is selling it</li>
+    <li><strong>Rating:</strong> Customer reviews (if available)</li>
+</ul>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='filter_category') }}">How to Filter by Category</a></li>
+        <li><a href="{{ url_for('help_article', article='view_product_details') }}">How to View Product Details</a></li>
+        <li><a href="{{ url_for('help_article', article='check_availability') }}">How to Check Product Availability</a></li>
+    </ul>
+</div>
+{% endblock %}

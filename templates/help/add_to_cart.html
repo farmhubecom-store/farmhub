@@ -1,0 +1,105 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to Add Products to Your Cart{% endblock %}
+{% block breadcrumb %}How to Add Products to Your Cart{% endblock %}
+{% block help_title %}🛍️ How to Add Products to Your Cart{% endblock %}
+
+{% block content %}
+<p>Building your order is easy with FarmHub's shopping cart. Learn how to add products and manage quantities before checkout.</p>
+
+<h2>Adding Items to Your Cart</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Browse products and find an item you want to buy.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Click on the product to view its details.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Select the <strong>quantity</strong> you want to order using the +/- buttons or by entering a number.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Click the <strong>"Add to Cart"</strong> button.
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> You'll see a confirmation message that the item has been added to your cart.
+</div>
+
+<div class="tip-box">
+You can add products from multiple shops to your cart, but orders will be processed separately for each shop.
+</div>
+
+<h2>Viewing Your Cart</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Click on the <strong>cart icon</strong> in the navigation bar.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> You'll see a list of all items in your cart with:
+    <ul>
+        <li>Product name and image</li>
+        <li>Price per unit</li>
+        <li>Quantity selected</li>
+        <li>Subtotal for each item</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> At the bottom, you'll see the <strong>total amount</strong> for your order.
+</div>
+
+<h2>Selecting Items for Checkout</h2>
+
+<p>When you have multiple items in your cart:</p>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Use the checkboxes next to each item to select which ones you want to purchase.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Use "Select All" to choose all items at once.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> The total will update based on your selections.
+</div>
+
+<h2>Requirements for Adding to Cart</h2>
+
+<ul>
+    <li><strong>Must be logged in:</strong> You need a FarmHub account to use the cart</li>
+    <li><strong>Product must be in stock:</strong> Out-of-stock items cannot be added</li>
+    <li><strong>Quantity limits:</strong> You can only order up to the available stock</li>
+</ul>
+
+<div class="warning-box">
+Items in your cart are not reserved. Complete your checkout promptly to secure your order, especially for popular items.
+</div>
+
+<h2>Cart Tips</h2>
+
+<ul>
+    <li><strong>Review before checkout:</strong> Double-check quantities and prices</li>
+    <li><strong>Consider shipping:</strong> Ordering more from one shop may be more efficient</li>
+    <li><strong>Save time:</strong> Add multiple items before proceeding to checkout</li>
+    <li><strong>Check availability:</strong> Items may become unavailable while in your cart</li>
+</ul>
+
+<div class="info-box">
+Your cart is saved to your account, so you can come back later to complete your purchase. However, prices and availability may change.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='edit_cart') }}">How to Remove or Edit Items in Your Cart</a></li>
+        <li><a href="{{ url_for('help_article', article='place_order') }}">How to Place an Order</a></li>
+        <li><a href="{{ url_for('help_article', article='view_product_details') }}">How to View Product Details</a></li>
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Tips</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .chat-selected {
+            background: #fbeed5;
+        }
+        .chat-unselected {
+            background: #fff;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F0F0F0;
+            color: #333;
+            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main {
+            height: 85%;
+            background-color: #fbeed5;
+            padding: 25px 50px;
+            overflow-y: auto;
+            display: flex;
+        }
+
+        .parent {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-rows: 1fr 260px;
+            gap: 10px 10px;
+            width: 100%;
+            max-width: 98vw;
+            margin: 0 auto;
+        }
+
+
+        .div2 {
+            grid-column: 2 / 3;
+            grid-row: 1 / 3;
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px 20px 10px 20px;
+            box-shadow: 0 2px 8px #f0ad4e44;
+            min-width: 0;
+            overflow-y: auto;
+        }
+
+        /* Dashboard cards and product list styles */
+        .stats-row {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 26px;
+        }
+
+        .stat-card {
+            flex: 1 1 0;
+            background: #fff;
+            border: 1px solid #e6e6e6;
+            border-radius: 12px;
+            padding: 18px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 140px;
+        }
+
+        .stat-top {
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .stat-number {
+            font-size: 34px;
+            color: #5bbd3a;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .stat-title {
+            font-size: 16px;
+            color: #222;
+            margin-top: 6px;
+            text-transform: capitalize;
+        }
+
+        .stat-footer {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-top: 12px;
+            color: #7a7a7a;
+            font-size: 13px;
+        }
+
+        /* Product list */
+        .product-list {
+            background: #eaf9ea;
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .product-row {
+            background: transparent;
+            border-radius: 8px;
+            display:flex;
+            align-items:center;
+            padding: 12px 14px;
+            gap: 12px;
+            margin-bottom: 10px;
+            flex-wrap: wrap; /* allow items to wrap on small widths */
+        }
+
+        .product-row:nth-child(even) {
+            background: rgba(0,0,0,0.02);
+        }
+
+        .thumb {
+            width:48px;
+            height:48px;
+            border-radius:6px;
+            overflow:hidden;
+            flex: 0 0 48px;
+            display:block;
+        }
+
+        .thumb img {
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            display:block;
+        }
+
+        .product-info {
+            display:flex;
+            flex-direction: column;
+            gap:6px;
+            align-items:flex-start;
+            flex: 1 1 300px; /* allow this column to grow and shrink */
+            min-width: 0; /* enable text truncation/wrapping inside */
+        }
+
+        .shop-name {
+            font-weight:600;
+            color:#444;
+            min-width:0;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        .prod-name {
+            color:#666;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        /* Make phone/email columns fixed-ish but allow wrapping */
+        .qty, .price {
+            flex: 0 0 180px;
+            max-width: 180px;
+            text-align: left;
+            color:#333;
+            font-weight:600;
+            overflow-wrap: anywhere;
+        }
+
+        .shop-desc {
+            flex: 1 1 240px;
+            min-width: 0;
+            color: #666;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+        }
+
+        .status {
+            width:36px;
+            height:36px;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:16px;
+        }
+
+        .status.ok { background:#dff6e0; color:#2f8a3a; }
+        .status.warn { background:#fff1f0; color:#d23b3b; }
+
+        @media (max-width:700px) {
+            .stat-number { font-size:28px; }
+            .stats-row { flex-direction:column; }
+        }
+
+        @media (max-width: 1100px) {
+            .parent {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            .div1, .div2, .div3 {
+                grid-column: 1 / 2 !important;
+                grid-row: auto !important;
+            }
+        }
+        /* Buttons */
+        .btn {
+            display:inline-block;
+            padding:8px 12px;
+            border-radius:6px;
+            text-decoration:none;
+            font-weight:600;
+            font-size:14px;
+        }
+        .btn-primary { background:#5bbd3a; color:#fff; }
+        .btn-secondary { background:#fff; color:#444; border:1px solid #ddd; }
+        .row-actions { display:flex; gap:8px; align-items:center; }
+    /* Modal styles */
+    .modal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:9999; }
+    .modal-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.4); }
+    .modal-panel { position:relative; background:#fff; padding:18px; border-radius:10px; width:720px; max-width:95%; box-shadow:0 8px 30px rgba(0,0,0,0.2); z-index:2; }
+    </style>
+</head>
+<body>
+
+    {% include 'partials/admin_navbar.html' %}
+
+    <div class="main">
+        <div class="parent">
+
+            {% include 'partials/admin_sidebar.html' %}
+            <div class="div2">
+
+                <div class="product-list">
+                    <!-- Add/Edit Tip Modals (UI only) -->
+                    <div id="tip-modal" class="modal" style="display:none;">
+                        <div class="modal-backdrop"></div>
+                        <div class="modal-panel">
+                            <h3 id="modal-title">Add Tip</h3>
+                            <form id="tip-form" method="post" action="#">
+                                <div style="margin-bottom:10px;">
+                                    <label for="tip-title">Title</label><br>
+                                    <input id="tip-title" name="title" type="text" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;" />
+                                </div>
+                                <div style="margin-bottom:10px;">
+                                    <label for="tip-body">Description</label><br>
+                                    <textarea id="tip-body" name="body" rows="5" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;"></textarea>
+                                </div>
+                                <div style="display:flex;justify-content:flex-end;gap:8px;">
+                                    <button type="button" class="btn btn-secondary" id="modal-cancel">Cancel</button>
+                                    <button type="submit" class="btn btn-primary" id="modal-save">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                        <h3 style="margin:0;">Tips</h3>
+                        <div class="row-actions">
+                            <!-- Placeholder link; wire up route or JS later -->
+                            <a href="#" class="btn btn-primary" id="add-tip-btn">+ Add Tip</a>
+                        </div>
+                    </div>
+
+                    {% if tips %}
+                        {% for tip in tips %}
+                            <div class="product-row">
+                                <div class="thumb">
+                                    <img src="/static/images/logo.png" alt="tip">
+                                </div>
+                                <div class="product-info">
+                                    <div class="shop-name">{{ tip.title or 'Untitled' }}</div>
+                                    <div class="prod-name">{{ tip.body or '' }}</div>
+                                </div>
+                                <div class="qty">{{ tip.created_at or '' }}</div>
+                                <div class="price">
+                                    <a href="#" class="btn btn-secondary edit-tip-btn" data-id="{{ tip.id }}">Edit</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div style="padding:12px;color:#666;">No tips found.</div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        // Modal behavior - UI only (no backend submit)
+        document.addEventListener('DOMContentLoaded', function () {
+            var modal = document.getElementById('tip-modal');
+            var modalTitle = document.getElementById('modal-title');
+            var tipTitle = document.getElementById('tip-title');
+            var tipBody = document.getElementById('tip-body');
+            var addBtn = document.getElementById('add-tip-btn');
+            var modalCancel = document.getElementById('modal-cancel');
+            var tipForm = document.getElementById('tip-form');
+
+            function openModal(mode, data) {
+                modal.style.display = 'flex';
+                if (mode === 'add') {
+                    modalTitle.textContent = 'Add Tip';
+                    tipTitle.value = '';
+                    tipBody.value = '';
+                    tipForm.setAttribute('data-mode', 'add');
+                    tipForm.action = '{{ url_for("admin_create_tip") }}';
+                } else if (mode === 'edit') {
+                    modalTitle.textContent = 'Edit Tip';
+                    tipTitle.value = data.title || '';
+                    tipBody.value = data.body || '';
+                    tipForm.setAttribute('data-mode', 'edit');
+                    tipForm.setAttribute('data-id', data.id || '');
+                    tipForm.action = '{{ url_for("admin_edit_tip", tip_id=0) }}'.replace('/0', '/' + (data.id || ''));
+                }
+            }
+
+            function closeModal() {
+                modal.style.display = 'none';
+                tipForm.removeAttribute('data-id');
+                tipForm.removeAttribute('data-mode');
+            }
+
+            if (addBtn) {
+                addBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    openModal('add');
+                });
+            }
+
+            // open edit modal for each edit button and prefill data from DOM
+            var editButtons = document.querySelectorAll('.edit-tip-btn');
+            editButtons.forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var id = btn.getAttribute('data-id');
+                    // find the nearest product-row and read title/body from it
+                    var row = btn.closest('.product-row');
+                    var title = row.querySelector('.shop-name') ? row.querySelector('.shop-name').innerText : '';
+                    var body = row.querySelector('.prod-name') ? row.querySelector('.prod-name').innerText : '';
+                    openModal('edit', { id: id, title: title, body: body });
+                });
+            });
+
+            // close when clicking cancel or backdrop
+            modal.addEventListener('click', function (e) {
+                if (e.target.classList.contains('modal-backdrop')) {
+                    closeModal();
+                }
+            });
+            modalCancel.addEventListener('click', function (e) { e.preventDefault(); closeModal(); });
+
+            // let the form submit normally to server endpoints (/admin/tips/create or /admin/tips/edit/<id>)
+            // after submit the server redirects back to /admin/tips; keep UI modal closing for non-JS fallback
+            tipForm.addEventListener('submit', function (e) {
+                // no client-side blocking; show a small disabled state
+                var saveBtn = document.getElementById('modal-save');
+                saveBtn.textContent = 'Saving...';
+                saveBtn.disabled = true;
+                // if desired, we could perform AJAX here. For now let the browser submit the form.
+            });
+        });
+    </script>
+</body>
+</html>

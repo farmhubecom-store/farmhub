@@ -1,0 +1,154 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How Commission Works{% endblock %}
+{% block breadcrumb %}How Commission Works{% endblock %}
+{% block help_title %}🤝 How Commission Works{% endblock %}
+
+{% block content %}
+<p>FarmHub charges a small commission on sales to maintain the platform and provide services. Here's everything sellers need to know about the commission system.</p>
+
+<h2>What Is Commission?</h2>
+
+<p>Commission is a percentage or fixed amount that FarmHub takes from your sales revenue. This helps cover:</p>
+<ul>
+    <li>Platform maintenance and development</li>
+    <li>Customer support services</li>
+    <li>Marketing to attract buyers</li>
+    <li>Payment processing</li>
+    <li>Server and hosting costs</li>
+</ul>
+
+<h2>How Commission Is Calculated</h2>
+
+<p>Commission is typically calculated in one of two ways:</p>
+
+<h3>Percentage-Based</h3>
+<ul>
+    <li>A percentage of your total delivered sales</li>
+    <li>Example: 5% commission on ₱10,000 sales = ₱500 commission</li>
+</ul>
+
+<h3>Fixed Amount</h3>
+<ul>
+    <li>A set amount once you reach the threshold</li>
+    <li>Example: ₱500 flat fee per month</li>
+</ul>
+
+<div class="info-box">
+The current commission rate and type are set by FarmHub administrators. Check your commission payment page for the current rates.
+</div>
+
+<h2>Commission Threshold</h2>
+
+<p>Commission is only charged when your monthly income reaches a certain threshold:</p>
+
+<div class="step-box">
+    <strong>Below Threshold:</strong> No commission is due
+</div>
+
+<div class="step-box">
+    <strong>At or Above Threshold:</strong> Commission becomes payable
+</div>
+
+<p>For example, if the threshold is ₱1,000:</p>
+<ul>
+    <li>Earn ₱800 this month → No commission due</li>
+    <li>Earn ₱1,500 this month → Commission is calculated on total earnings</li>
+</ul>
+
+<h2>Checking Your Commission Status</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Log in to your seller account.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Navigate to <strong>"Commission Payment"</strong> in the sidebar.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> View your current status:
+    <ul>
+        <li>Monthly income so far</li>
+        <li>Threshold amount</li>
+        <li>Commission rate</li>
+        <li>Amount owed (if any)</li>
+    </ul>
+</div>
+
+<h2>Commission Payment Status</h2>
+
+<h3>🟢 Clear</h3>
+<p>No commission payment is currently due. You can continue selling normally.</p>
+
+<h3>🟡 Pending</h3>
+<p>You have submitted a payment proof that is awaiting admin review.</p>
+
+<h3>🔴 Blocked</h3>
+<p>Commission is overdue. Some selling features may be restricted until payment is settled.</p>
+
+<h2>How to Pay Commission</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Go to the <strong>"Commission Payment"</strong> page.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> View the amount owed and the payment QR code.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Pay via GCash or the specified payment method by scanning the QR code.
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Take a screenshot of your payment confirmation.
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> Upload the payment proof image on the commission page.
+</div>
+
+<div class="step-box">
+    <strong>Step 6:</strong> Submit and wait for admin approval.
+</div>
+
+<div class="step-box">
+    <strong>Step 7:</strong> Once approved, your status returns to "Clear."
+</div>
+
+<div class="tip-box">
+Keep your payment receipts! The screenshot serves as proof of your payment if any issues arise.
+</div>
+
+<h2>Payment Approval Process</h2>
+
+<ol>
+    <li>You submit payment proof</li>
+    <li>Admin reviews the submission</li>
+    <li>If approved: Your commission is cleared</li>
+    <li>If rejected: You'll be notified with the reason</li>
+</ol>
+
+<div class="warning-box">
+Make sure your payment proof is clear and shows the correct amount. Blurry or incomplete screenshots may be rejected.
+</div>
+
+<h2>Tips for Commission Management</h2>
+
+<ul>
+    <li><strong>Track your earnings:</strong> Know when you're approaching the threshold</li>
+    <li><strong>Pay promptly:</strong> Avoid account restrictions</li>
+    <li><strong>Keep records:</strong> Save all payment confirmations</li>
+    <li><strong>Budget:</strong> Set aside a portion of earnings for commission</li>
+</ul>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='view_sales') }}">How to View Your Sales & Earnings</a></li>
+        <li><a href="{{ url_for('help_article', article='register_seller') }}">How to Register as a Farmer/Seller</a></li>
+        <li><a href="{{ url_for('help_article', article='contact_support') }}">How to Contact Customer Support</a></li>
+    </ul>
+</div>
+{% endblock %}

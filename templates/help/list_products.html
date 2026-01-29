@@ -1,0 +1,167 @@
+{% extends 'help/base_help.html' %}
+
+{% block title %}How to List Products{% endblock %}
+{% block breadcrumb %}How to List Your Products for Sale{% endblock %}
+{% block help_title %}🤝 How to List Your Products for Sale{% endblock %}
+
+{% block content %}
+<p>Start selling your farm products by listing them on FarmHub. This guide shows you how to create attractive product listings that convert browsers into buyers.</p>
+
+<h2>Accessing Product Management</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Log in to your seller account.
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> From your seller dashboard, click on <strong>"Products"</strong> in the sidebar.
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Click the <strong>"Add Product"</strong> button.
+</div>
+
+<h2>Creating a Product Listing</h2>
+
+<div class="step-box">
+    <strong>Step 1:</strong> Enter the <strong>Product Name</strong>
+    <ul>
+        <li>Be clear and specific (e.g., "Fresh Lakatan Bananas")</li>
+        <li>Include variety if applicable</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 2:</strong> Upload a <strong>Product Image</strong>
+    <ul>
+        <li>Use a clear, well-lit photo</li>
+        <li>Show the actual product customers will receive</li>
+        <li>Supported formats: JPG, PNG</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 3:</strong> Select the <strong>Product Category/Type</strong>
+    <ul>
+        <li>Fruits</li>
+        <li>Vegetables</li>
+        <li>Livestock</li>
+        <li>Poultry</li>
+        <li>Grains</li>
+        <li>Others</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 4:</strong> Set the <strong>Price</strong>
+    <ul>
+        <li>Enter your selling price in Pesos (₱)</li>
+        <li>Consider your costs and market rates</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 5:</strong> Select the <strong>Unit Type</strong>
+    <ul>
+        <li>Per kilogram (kg)</li>
+        <li>Per piece (pc)</li>
+        <li>Per bundle</li>
+        <li>Per pack</li>
+        <li>Per tray</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 6:</strong> Enter <strong>Available Stock</strong>
+    <ul>
+        <li>How many units do you have available?</li>
+        <li>Update this regularly as stock changes</li>
+    </ul>
+</div>
+
+<div class="step-box">
+    <strong>Step 7:</strong> Click <strong>"Add Product"</strong> or <strong>"Save"</strong> to create the listing.
+</div>
+
+<div class="tip-box">
+Products need to be approved before they appear publicly. Make sure your listings follow FarmHub guidelines.
+</div>
+
+<h2>Product Photo Tips</h2>
+
+<h3>Do:</h3>
+<ul>
+    <li>✅ Use natural lighting</li>
+    <li>✅ Show the product clearly</li>
+    <li>✅ Use a clean, simple background</li>
+    <li>✅ Show actual product quality</li>
+    <li>✅ Include multiple angles if possible</li>
+</ul>
+
+<h3>Don't:</h3>
+<ul>
+    <li>❌ Use blurry or dark photos</li>
+    <li>❌ Use stock images from the internet</li>
+    <li>❌ Mislead customers with unrealistic photos</li>
+    <li>❌ Use photos with watermarks</li>
+</ul>
+
+<h2>Pricing Your Products</h2>
+
+<p>Consider these factors when setting prices:</p>
+<ul>
+    <li><strong>Production costs:</strong> Seeds, labor, equipment</li>
+    <li><strong>Market rates:</strong> What are similar products selling for?</li>
+    <li><strong>Quality:</strong> Premium products can command higher prices</li>
+    <li><strong>Competition:</strong> What are other sellers charging?</li>
+    <li><strong>Delivery costs:</strong> Factor in if you're including delivery</li>
+</ul>
+
+<h2>Product Approval</h2>
+
+<p>After creating a product:</p>
+<ol>
+    <li>Your product will be submitted for review</li>
+    <li>Admin reviews the listing for compliance</li>
+    <li>Once approved, the product becomes visible to buyers</li>
+    <li>If rejected, you'll be notified with reasons</li>
+</ol>
+
+<div class="info-box">
+Approval ensures all products meet quality standards and are accurately represented, building trust with buyers.
+</div>
+
+<h2>Editing Products</h2>
+
+<p>To modify an existing product:</p>
+<ol>
+    <li>Go to your Products page</li>
+    <li>Find the product you want to edit</li>
+    <li>Click the <strong>"Edit"</strong> button</li>
+    <li>Make your changes</li>
+    <li>Save the updated listing</li>
+</ol>
+
+<h2>Deleting Products</h2>
+
+<p>To remove a product:</p>
+<ol>
+    <li>Go to your Products page</li>
+    <li>Find the product to delete</li>
+    <li>Click the <strong>"Delete"</strong> button</li>
+    <li>Confirm the deletion</li>
+</ol>
+
+<div class="warning-box">
+Deleting a product is permanent. Consider setting stock to 0 instead if you might want to sell it again later.
+</div>
+
+<div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        <li><a href="{{ url_for('help_article', article='manage_inventory') }}">How to Manage Inventory & Stock</a></li>
+        <li><a href="{{ url_for('help_article', article='view_sales') }}">How to View Your Sales & Earnings</a></li>
+        <li><a href="{{ url_for('help_article', article='register_seller') }}">How to Register as a Farmer/Seller</a></li>
+    </ul>
+</div>
+{% endblock %}

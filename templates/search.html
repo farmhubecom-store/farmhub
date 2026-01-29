@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #F0F0F0; color: #333; margin: 0; }
+        .main { height: 85vh; background-color: #E2F0D9; display: flex; flex-direction: column; align-items: center; padding-top: 60px; overflow-y: auto; }
+        h1 { color: #111; margin-bottom: 4px; }
+        .section { width: 90%; max-width: 1300px; margin: 18px 0 28px; }
+        .grid-products { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+        .product-card { background: #fff; border-radius: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 10px; color: #111; transition: transform 200ms ease, box-shadow 200ms ease; text-decoration: none; }
+        .product-card:hover { transform: translateY(-6px); box-shadow: 0 12px 26px rgba(0,0,0,0.14); }
+        .product-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; border: 1px solid #ddd; }
+        .product-row { display: flex; justify-content: space-between; margin-top: 8px; }
+        .grid-shops { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .shop-card { display: flex; background: #fff; border-radius: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 16px; gap: 16px; }
+        .shop-card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #E2F0D9; }
+        .shop-info { display: flex; flex-direction: column; }
+        .muted { color: #6b7280; }
+    </style>
+</head>
+<body>
+    {% include 'partials/navbar.html' %}
+
+    <div class="main">
+        <div class="section">
+            <h1>Search results for "{{ q }}"</h1>
+        </div>
+
+        <div class="section">
+            <h2 style="margin-bottom: 10px;">Products</h2>
+            {% if products and products|length > 0 %}
+                <div class="grid-products">
+                    {% for product, shop_name in products %}
+                        <a class="product-card" href="{{ url_for('view_product', product_id=product.id) }}">
+                            <img src="{{ product.image or url_for('static', filename='images/product-images/kalabasa.jpg') }}" alt="{{ product.name }}">
+                            <div class="product-row">
+                                <span>{{ product.name }}</span>
+                                <span>₱{{ product.price }}/{{ product.unit or product.price_unit or 'kg' }}</span>
+                            </div>
+                            <div class="muted" style="margin-top: 6px;">{{ shop_name }}</div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="muted">No products found.</p>
+            {% endif %}
+        </div>
+
+        <div class="section" style="margin-top: 10px;">
+            <h2 style="margin-bottom: 10px;">Shops</h2>
+            {% if shops and shops|length > 0 %}
+                <div class="grid-shops">
+                    {% for shop in shops %}
+                        <a class="shop-card" href="{{ url_for('view_shop', shop_id=shop.id) }}" style="text-decoration:none; color:inherit;">
+                            {% if shop.profile_image %}
+                                {% if shop.profile_image.startswith('/') %}
+                                    <img src="{{ shop.profile_image }}" alt="{{ shop.shop_name }}">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename='images/profiles/' ~ shop.profile_image) }}" alt="{{ shop.shop_name }}">
+                                {% endif %}
+                            {% else %}
+                                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Shop Logo">
+                            {% endif %}
+                            <div class="shop-info">
+                                <strong>{{ shop.shop_name }}</strong>
+                                <span class="muted">{{ shop.description }}</span>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="muted">No shops found.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
