@@ -2561,6 +2561,69 @@ def admin_view_users():
     return render_template("admin/view_users.html", users=users, total_users=total_users, total_shops=total_shops, total_products=total_products)
 
 
+@app.route('/admin/user/delete/<int:user_id>', methods=['POST'])
+def admin_delete_user(user_id):
+    if not session.get('admin_logged_in') or session.get('user_type') != 'admin':
+        flash('Please log in as admin to perform this action.', 'warning')
+        return redirect(url_for('login'))
+
+    user = User.query.get_or_404(user_id)
+    try:
+        # Delete related records first
+        Cart.query.filter_by(user_id=user_id).delete()
+        
+        # Get orders for this user and delete their order items
+        orders = Order.query.filter_by(user_id=user_id).all()
+        for order in orders:
+            OrderItem.query.filter_by(order_id=order.id).delete()
+        Order.query.filter_by(user_id=user_id).delete()
+        
+        Rating.query.filter_by(user_id=user_id).delete()
+        Notification.query.filter_by(user_id=user_id).delete()
+        Message.query.filter((Message.sender_id == user_id) & (Message.sender_type == 'user')).delete()
+        Message.query.filter((Message.receiver_id == user_id) & (Message.receiver_type == 'user')).delete()
+        
+        db.session.delete(user)
+        db.session.commit()
+        flash('User account deleted successfully.', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Failed to delete user: {e}', 'danger')
+    return redirect(url_for('admin_view_users'))
+
+
+@app.route('/admin/shop/delete/<int:shop_id>', methods=['POST'])
+def admin_delete_shop(shop_id):
+    if not session.get('admin_logged_in') or session.get('user_type') != 'admin':
+        flash('Please log in as admin to perform this action.', 'warning')
+        return redirect(url_for('login'))
+
+    shop = Shop.query.get_or_404(shop_id)
+    try:
+        # Delete related records first
+        products = Product.query.filter_by(shop_id=shop_id).all()
+        for product in products:
+            # Delete product-related records
+            Cart.query.filter_by(product_id=product.id).delete()
+            OrderItem.query.filter_by(product_id=product.id).delete()
+            Rating.query.filter_by(product_id=product.id).delete()
+            db.session.delete(product)
+        
+        # Delete shop-related records
+        Order.query.filter_by(shop_id=shop_id).delete()
+        Notification.query.filter_by(shop_id=shop_id).delete()
+        Message.query.filter((Message.sender_id == shop_id) & (Message.sender_type == 'shop')).delete()
+        Message.query.filter((Message.receiver_id == shop_id) & (Message.receiver_type == 'shop')).delete()
+        
+        db.session.delete(shop)
+        db.session.commit()
+        flash('Shop and all its products deleted successfully.', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Failed to delete shop: {e}', 'danger')
+    return redirect(url_for('admin_view_shops'))
+
+
 @app.route('/admin/product/approve/<int:product_id>', methods=['POST'])
 def admin_approve_product(product_id):
     if not session.get('admin_logged_in') or session.get('user_type') != 'admin':
