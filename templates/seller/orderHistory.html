@@ -105,7 +105,17 @@
                         {% for order in orders %}
                             <div class="order-item status-{{ order['status'] }}" style="display:flex;align-items:center;padding:10px;border-radius:8px;margin-bottom:8px;box-shadow:0 1px 3px #eaeaea;">
                                 {% set first = order['items'][0] if order['items'] else None %}
-                                <img src="{{ first['image'] if first and first['image'] else url_for('static', filename='images/product-images/banana-lakatan.jpg') }}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;margin-right:12px;border:1px solid #e2f0d9;">
+                                {% if first and first['image'] %}
+                                    {% if first['image'].startswith('http') or first['image'].startswith('https') %}
+                                        <img src="{{ first['image'] }}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;margin-right:12px;border:1px solid #e2f0d9;">
+                                    {% elif first['image'].startswith('/') %}
+                                        <img src="{{ first['image'] }}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;margin-right:12px;border:1px solid #e2f0d9;">
+                                    {% else %}
+                                        <img src="{{ url_for('static', filename='images/product-images/' ~ first['image']) }}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;margin-right:12px;border:1px solid #e2f0d9;">
+                                    {% endif %}
+                                {% else %}
+                                    <img src="{{ url_for('static', filename='images/product-images/banana-lakatan.jpg') }}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;margin-right:12px;border:1px solid #e2f0d9;">
+                                {% endif %}
                                 <div style="flex:1;">
                                     <div style="font-weight:700">Order #{{ order['id'] }} - {{ order['buyer_name'] or 'Buyer' }}</div>
                                     <div style="color:#666;font-size:0.9em">Ordered on: {{ order['timestamp'] }}</div>
@@ -153,7 +163,17 @@
                             </div>
                             {% for item in order['items'] %}
                                 <div style="display:flex;align-items:center;padding:8px 10px;border-radius:8px;margin-bottom:6px;background:#f9f9f9;">
-                                    <img src="{{ item['image'] if item['image'] else url_for('static', filename='images/product-images/banana-lakatan.jpg') }}" style="width:50px;height:50px;object-fit:cover;border-radius:8px;margin-right:10px;border:1px solid #e2f0d9;">
+                                    {% if item['image'] %}
+                                        {% if item['image'].startswith('http') or item['image'].startswith('https') %}
+                                            <img src="{{ item['image'] }}" style="width:50px;height:50px;object-fit:cover;border-radius:8px;margin-right:10px;border:1px solid #e2f0d9;">
+                                        {% elif item['image'].startswith('/') %}
+                                            <img src="{{ item['image'] }}" style="width:50px;height:50px;object-fit:cover;border-radius:8px;margin-right:10px;border:1px solid #e2f0d9;">
+                                        {% else %}
+                                            <img src="{{ url_for('static', filename='images/product-images/' ~ item['image']) }}" style="width:50px;height:50px;object-fit:cover;border-radius:8px;margin-right:10px;border:1px solid #e2f0d9;">
+                                        {% endif %}
+                                    {% else %}
+                                        <img src="{{ url_for('static', filename='images/product-images/banana-lakatan.jpg') }}" style="width:50px;height:50px;object-fit:cover;border-radius:8px;margin-right:10px;border:1px solid #e2f0d9;">
+                                    {% endif %}
                                     <div style="flex:1;">
                                         <div style="font-weight:600">{{ item['name'] }}</div>
                                         <div style="color:#666">Qty: {{ item['quantity'] }}</div>

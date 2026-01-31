@@ -337,7 +337,17 @@
 
     <div class="main">
         <div class="product-images">
-            <img src="{{ product.image or url_for('static', filename='images/product-images/kalabasa.jpg') }}" alt="{{ product.name }}">
+            {% if product.image %}
+                {% if product.image.startswith('http') or product.image.startswith('https') %}
+                    <img src="{{ product.image }}" alt="{{ product.name }}">
+                {% elif product.image.startswith('/') %}
+                    <img src="{{ product.image }}" alt="{{ product.name }}">
+                {% else %}
+                    <img src="{{ url_for('static', filename='images/product-images/' ~ product.image) }}" alt="{{ product.name }}">
+                {% endif %}
+            {% else %}
+                <img src="{{ url_for('static', filename='images/product-images/kalabasa.jpg') }}" alt="{{ product.name }}">
+            {% endif %}
         </div>
     <div class="product-desc">
             <div class="product-name">
@@ -474,8 +484,16 @@
                             <!-- User Avatar -->
                             <div style="flex-shrink: 0;">
                                 {% if rating.user_profile_image %}
-                                    <img src="{{ rating.user_profile_image }}" alt="{{ rating.user_name }}" 
-                                         style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #e1efd8;">
+                                    {% if rating.user_profile_image.startswith('http') or rating.user_profile_image.startswith('https') %}
+                                        <img src="{{ rating.user_profile_image }}" alt="{{ rating.user_name }}" 
+                                             style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #e1efd8;">
+                                    {% elif rating.user_profile_image.startswith('/') %}
+                                        <img src="{{ rating.user_profile_image }}" alt="{{ rating.user_name }}" 
+                                             style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #e1efd8;">
+                                    {% else %}
+                                        <img src="{{ url_for('static', filename='images/profiles/' ~ rating.user_profile_image) }}" alt="{{ rating.user_name }}" 
+                                             style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #e1efd8;">
+                                    {% endif %}
                                 {% else %}
                                     <div style="width: 50px; height: 50px; border-radius: 50%; background: #e1efd8; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #67A93B;">
                                         {{ rating.user_name[0] if rating.user_name else 'U' }}
@@ -508,11 +526,25 @@
                                 {% if rating.image %}
                                 <div style="margin: 15px 0;">
                                     <div style="font-size: 0.9em; color: #666; margin-bottom: 6px;">📸 Customer Photo:</div>
-                                    <img src="{{ rating.image }}" alt="Review photo by {{ rating.user_name }}" 
-                                         style="max-width: 320px; max-height: 220px; border-radius: 10px; border: 2px solid #e1efd8; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;"
-                                         onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'"
-                                         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'"
-                                         onclick="openImageModal('{{ rating.image }}')">
+                                    {% if rating.image.startswith('http') or rating.image.startswith('https') %}
+                                        <img src="{{ rating.image }}" alt="Review photo by {{ rating.user_name }}" 
+                                             style="max-width: 320px; max-height: 220px; border-radius: 10px; border: 2px solid #e1efd8; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;"
+                                             onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'"
+                                             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'"
+                                             onclick="openImageModal('{{ rating.image }}')">
+                                    {% elif rating.image.startswith('/') %}
+                                        <img src="{{ rating.image }}" alt="Review photo by {{ rating.user_name }}" 
+                                             style="max-width: 320px; max-height: 220px; border-radius: 10px; border: 2px solid #e1efd8; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;"
+                                             onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'"
+                                             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'"
+                                             onclick="openImageModal('{{ rating.image }}')">
+                                    {% else %}
+                                        <img src="{{ url_for('static', filename='images/rating-images/' ~ rating.image) }}" alt="Review photo by {{ rating.user_name }}" 
+                                             style="max-width: 320px; max-height: 220px; border-radius: 10px; border: 2px solid #e1efd8; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;"
+                                             onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'"
+                                             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'"
+                                             onclick="openImageModal('{{ url_for('static', filename='images/rating-images/' ~ rating.image) }}')">
+                                    {% endif %}
                                     <div style="font-size: 0.8em; color: #888; margin-top: 4px; font-style: italic;">Click to view full size</div>
                                 </div>
                                 {% endif %}

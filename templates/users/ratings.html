@@ -94,7 +94,17 @@
                         <div class="rated-item" style="background: #f9f9f9; border-radius: 12px; box-shadow: 0 2px 6px #e1efd8; padding: 20px; margin-bottom: 20px;">
                             <!-- Header section with product info and star rating -->
                             <div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
-                                <img src="{{ item.image_url }}" alt="{{ item.name }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px; margin-right: 20px; border: 1px solid #e2f0d9;">
+                                {% if item.image_url %}
+                                    {% if item.image_url.startswith('http') or item.image_url.startswith('https') %}
+                                        <img src="{{ item.image_url }}" alt="{{ item.name }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px; margin-right: 20px; border: 1px solid #e2f0d9;">
+                                    {% elif item.image_url.startswith('/') %}
+                                        <img src="{{ item.image_url }}" alt="{{ item.name }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px; margin-right: 20px; border: 1px solid #e2f0d9;">
+                                    {% else %}
+                                        <img src="{{ url_for('static', filename='images/product-images/' ~ item.image_url) }}" alt="{{ item.name }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px; margin-right: 20px; border: 1px solid #e2f0d9;">
+                                    {% endif %}
+                                {% else %}
+                                    <img src="{{ url_for('static', filename='images/product-images/kalabasa.jpg') }}" alt="{{ item.name }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px; margin-right: 20px; border: 1px solid #e2f0d9;">
+                                {% endif %}
                                 <div style="flex: 1;">
                                     <div style="font-size: 1.2em; font-weight: bold; color: #333; margin-bottom: 5px;">{{ item.name }}</div>
                                     <div style="margin: 4px 0; color: #666;">{{ item.category }}</div>
@@ -118,9 +128,19 @@
                             {% if item.rating_image %}
                             <div style="margin: 15px 0;">
                                 <div style="font-weight: 600; color: #555; margin-bottom: 8px;">My Photo:</div>
-                                <img src="{{ item.rating_image }}" alt="My review photo" 
-                                     style="max-width: 300px; max-height: 200px; border-radius: 8px; border: 1px solid #ddd; cursor: pointer;"
-                                     onclick="openImageModal('{{ item.rating_image }}')">
+                                {% if item.rating_image.startswith('http') or item.rating_image.startswith('https') %}
+                                    <img src="{{ item.rating_image }}" alt="My review photo" 
+                                         style="max-width: 300px; max-height: 200px; border-radius: 8px; border: 1px solid #ddd; cursor: pointer;"
+                                         onclick="openImageModal('{{ item.rating_image }}')">
+                                {% elif item.rating_image.startswith('/') %}
+                                    <img src="{{ item.rating_image }}" alt="My review photo" 
+                                         style="max-width: 300px; max-height: 200px; border-radius: 8px; border: 1px solid #ddd; cursor: pointer;"
+                                         onclick="openImageModal('{{ item.rating_image }}')">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename='images/rating-images/' ~ item.rating_image) }}" alt="My review photo" 
+                                         style="max-width: 300px; max-height: 200px; border-radius: 8px; border: 1px solid #ddd; cursor: pointer;"
+                                         onclick="openImageModal('{{ url_for('static', filename='images/rating-images/' ~ item.rating_image) }}')">
+                                {% endif %}
                             </div>
                             {% endif %}
 

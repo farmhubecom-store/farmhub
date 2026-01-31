@@ -36,7 +36,17 @@
                 <div class="grid-products">
                     {% for product, shop_name in products %}
                         <a class="product-card" href="{{ url_for('view_product', product_id=product.id) }}">
-                            <img src="{{ product.image or url_for('static', filename='images/product-images/kalabasa.jpg') }}" alt="{{ product.name }}">
+                            {% if product.image %}
+                                {% if product.image.startswith('http') or product.image.startswith('https') %}
+                                    <img src="{{ product.image }}" alt="{{ product.name }}">
+                                {% elif product.image.startswith('/') %}
+                                    <img src="{{ product.image }}" alt="{{ product.name }}">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename='images/product-images/' ~ product.image) }}" alt="{{ product.name }}">
+                                {% endif %}
+                            {% else %}
+                                <img src="{{ url_for('static', filename='images/product-images/kalabasa.jpg') }}" alt="{{ product.name }}">
+                            {% endif %}
                             <div class="product-row">
                                 <span>{{ product.name }}</span>
                                 <span>₱{{ product.price }}/{{ product.unit or product.price_unit or 'kg' }}</span>
@@ -57,7 +67,9 @@
                     {% for shop in shops %}
                         <a class="shop-card" href="{{ url_for('view_shop', shop_id=shop.id) }}" style="text-decoration:none; color:inherit;">
                             {% if shop.profile_image %}
-                                {% if shop.profile_image.startswith('/') %}
+                                {% if shop.profile_image.startswith('http') or shop.profile_image.startswith('https') %}
+                                    <img src="{{ shop.profile_image }}" alt="{{ shop.shop_name }}">
+                                {% elif shop.profile_image.startswith('/') %}
                                     <img src="{{ shop.profile_image }}" alt="{{ shop.shop_name }}">
                                 {% else %}
                                     <img src="{{ url_for('static', filename='images/profiles/' ~ shop.profile_image) }}" alt="{{ shop.shop_name }}">

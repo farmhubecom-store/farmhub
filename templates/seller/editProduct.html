@@ -130,7 +130,13 @@
                         <label for="product-image" style="font-weight: 500;">Product Image</label>
                         {% if product.image %}
                         <div style="margin-bottom: 10px;">
-                            <img src="{{ product.image }}" alt="{{ product.name }}" style="max-width: 200px; border-radius: 8px; border: 1px solid #b7d7a8;">
+                            {% if product.image.startswith('http') or product.image.startswith('https') %}
+                                <img src="{{ product.image }}" alt="{{ product.name }}" style="max-width: 200px; border-radius: 8px; border: 1px solid #b7d7a8;">
+                            {% elif product.image.startswith('/') %}
+                                <img src="{{ product.image }}" alt="{{ product.name }}" style="max-width: 200px; border-radius: 8px; border: 1px solid #b7d7a8;">
+                            {% else %}
+                                <img src="{{ url_for('static', filename='images/product-images/' ~ product.image) }}" alt="{{ product.name }}" style="max-width: 200px; border-radius: 8px; border: 1px solid #b7d7a8;">
+                            {% endif %}
                             <p style="font-size: 0.85em; color: #666; margin-top: 5px;">Current image (upload new to replace)</p>
                         </div>
                         {% endif %}
