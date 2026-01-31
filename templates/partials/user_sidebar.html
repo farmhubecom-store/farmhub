@@ -272,7 +272,9 @@
     <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
     <div class="user-avatar" onclick="openProfileModal();">
         {% if session.get('user_profile_image') %}
-            {% if session['user_profile_image'].startswith('/') %}
+            {% if session['user_profile_image'].startswith('http') or session['user_profile_image'].startswith('https') %}
+                <img src="{{ session['user_profile_image'] }}" alt="Profile Picture" style="width:130px;height:130px;border-radius:50%;object-fit:cover;" />
+            {% elif session['user_profile_image'].startswith('/') %}
                 <img src="{{ session['user_profile_image'] }}" alt="Profile Picture" style="width:130px;height:130px;border-radius:50%;object-fit:cover;" />
             {% else %}
                 <img src="{{ url_for('static', filename='images/profiles/' ~ session['user_profile_image']) }}" alt="Profile Picture" style="width:130px;height:130px;border-radius:50%;object-fit:cover;" />

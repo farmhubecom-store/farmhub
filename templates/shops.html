@@ -168,7 +168,9 @@
             <div class="shop-card">
                 {# show shop profile image when available, handle stored '/static/..' path or just filename #}
                 {% if shop.profile_image %}
-                    {% if shop.profile_image.startswith('/') %}
+                    {% if shop.profile_image.startswith('http') or shop.profile_image.startswith('https') %}
+                        <img src="{{ shop.profile_image }}" alt="{{ shop.shop_name }}" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 25px; border: 2px solid #E2F0D9; object-fit: cover;">
+                    {% elif shop.profile_image.startswith('/') %}
                         <img src="{{ shop.profile_image }}" alt="{{ shop.shop_name }}" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 25px; border: 2px solid #E2F0D9; object-fit: cover;">
                     {% else %}
                         <img src="{{ url_for('static', filename='images/profiles/' ~ shop.profile_image) }}" alt="{{ shop.shop_name }}" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 25px; border: 2px solid #E2F0D9; object-fit: cover;">

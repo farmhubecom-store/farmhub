@@ -233,7 +233,17 @@
                         {% for user in users %}
                             <div class="product-row">
                                 <div class="thumb">
-                                    <img src="/static/images/profile-circle.png" alt="user">
+                                    {% if user.profile_image %}
+                                        {% if user.profile_image.startswith('http') or user.profile_image.startswith('https') %}
+                                            <img src="{{ user.profile_image }}" alt="user">
+                                        {% elif user.profile_image.startswith('/') %}
+                                            <img src="{{ user.profile_image }}" alt="user">
+                                        {% else %}
+                                            <img src="{{ url_for('static', filename='images/profiles/' ~ user.profile_image) }}" alt="user">
+                                        {% endif %}
+                                    {% else %}
+                                        <img src="/static/images/profile-circle.png" alt="user">
+                                    {% endif %}
                                 </div>
                                 <div class="product-info">
                                     <div class="shop-name">{{ user.first_name }} {{ user.last_name }}</div>

@@ -234,7 +234,13 @@
                             <div class="product-row">
                                 <div class="thumb">
                                     {% if shop.profile_image %}
-                                        <img src="{{ shop.profile_image }}" alt="shop">
+                                        {% if shop.profile_image.startswith('http') or shop.profile_image.startswith('https') %}
+                                            <img src="{{ shop.profile_image }}" alt="shop">
+                                        {% elif shop.profile_image.startswith('/') %}
+                                            <img src="{{ shop.profile_image }}" alt="shop">
+                                        {% else %}
+                                            <img src="{{ url_for('static', filename='images/profiles/' ~ shop.profile_image) }}" alt="shop">
+                                        {% endif %}
                                     {% else %}
                                         <img src="/static/images/profile-circle.png" alt="shop">
                                     {% endif %}
