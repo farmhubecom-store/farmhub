@@ -79,7 +79,17 @@
         <!-- Shop Header Card -->
         <div style="background: #fff; border-radius: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); width: 90%; max-width: 900px; margin-bottom: 32px; display: flex; align-items: center; padding: 28px 32px; position: relative;">
             <div style="width: 90px; height: 90px; background: #f0f0f0; border: 2px solid #e2e2e2; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-right: 28px;">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Shop Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                {% if shop.profile_image %}
+                    {% if shop.profile_image.startswith('http') or shop.profile_image.startswith('https') %}
+                        <img src="{{ shop.profile_image }}" alt="Shop Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                    {% elif shop.profile_image.startswith('/') %}
+                        <img src="{{ shop.profile_image }}" alt="Shop Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='images/profiles/' ~ shop.profile_image) }}" alt="Shop Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                    {% endif %}
+                {% else %}
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Shop Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                {% endif %}
             </div>
             <div style="flex: 1;">
                 <div style="display: flex; align-items: flex-start; justify-content: space-between;">
