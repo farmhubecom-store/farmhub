@@ -8,6 +8,7 @@ from sqlalchemy import func, text
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import time
 
 
 from werkzeug.utils import secure_filename
@@ -1156,11 +1157,17 @@ def upload_user_profile_image():
         return redirect(request.referrer or url_for('user_account'))
 
     if file and allowed_file(file.filename):
+        # Check file size (5MB limit)
+        if file.content_length > 5 * 1024 * 1024:
+            flash('File size too large. Please upload a file smaller than 5MB.', 'danger')
+            return redirect(request.referrer or url_for('user_account'))
+        
         try:
             user = User.query.get_or_404(user_id)
             
-            # Upload to Cloudinary
-            upload_result = cloudinary.uploader.upload(file, folder="profile-images")
+            # Upload to Cloudinary with naming convention
+            public_id = f"user_{user_id}_{int(time.time())}"
+            upload_result = cloudinary.uploader.upload(file, folder="profile-images", public_id=public_id)
             user.profile_image = upload_result['secure_url']
             db.session.commit()
             
@@ -1193,11 +1200,17 @@ def upload_shop_profile_image():
         return redirect(request.referrer or url_for('seller_account'))
 
     if file and allowed_file(file.filename):
+        # Check file size (5MB limit)
+        if file.content_length > 5 * 1024 * 1024:
+            flash('File size too large. Please upload a file smaller than 5MB.', 'danger')
+            return redirect(request.referrer or url_for('seller_account'))
+        
         try:
             shop = Shop.query.get_or_404(shop_id)
             
-            # Upload to Cloudinary
-            upload_result = cloudinary.uploader.upload(file, folder="profile-images")
+            # Upload to Cloudinary with naming convention
+            public_id = f"shop_{shop_id}_{int(time.time())}"
+            upload_result = cloudinary.uploader.upload(file, folder="profile-images", public_id=public_id)
             shop.profile_image = upload_result['secure_url']
             db.session.commit()
             
@@ -1229,9 +1242,15 @@ def upload_admin_profile_image():
         return redirect(request.referrer or url_for('admin_dashboard'))
 
     if file and allowed_file(file.filename):
+        # Check file size (5MB limit)
+        if file.content_length > 5 * 1024 * 1024:
+            flash('File size too large. Please upload a file smaller than 5MB.', 'danger')
+            return redirect(request.referrer or url_for('admin_dashboard'))
+        
         try:
-            # Upload to Cloudinary
-            upload_result = cloudinary.uploader.upload(file, folder="profile-images")
+            # Upload to Cloudinary with naming convention
+            public_id = f"admin_{int(time.time())}"
+            upload_result = cloudinary.uploader.upload(file, folder="profile-images", public_id=public_id)
             
             # Save to database
             admin = Admin.query.first()
@@ -1672,8 +1691,13 @@ def rate_product():
         if 'rating_image' in request.files:
             file = request.files['rating_image']
             if file and file.filename != '' and allowed_file(file.filename):
-                # Upload to Cloudinary
-                upload_result = cloudinary.uploader.upload(file, folder="rating-images")
+                # Check file size (5MB limit)
+                if file.content_length > 5 * 1024 * 1024:
+                    flash('Rating image file size too large. Please upload a file smaller than 5MB.', 'danger')
+                    return redirect(request.referrer or url_for('user_order_history'))
+                # Upload to Cloudinary with naming convention
+                public_id = f"rating_{user_id}_{product_id}_{int(time.time())}"
+                upload_result = cloudinary.uploader.upload(file, folder="rating-images", public_id=public_id)
                 image_path = upload_result['secure_url']
 
         existing = Rating.query.filter_by(user_id=user_id, product_id=product_id, order_id=order_id).first()
@@ -1795,8 +1819,13 @@ def add_product():
 
         image_path = None
         if image_file and allowed_file(image_file.filename):
-            # Upload to Cloudinary
-            upload_result = cloudinary.uploader.upload(image_file, folder="product-images")
+            # Check file size (5MB limit)
+            if image_file.content_length > 5 * 1024 * 1024:
+                flash('Product image file size too large. Please upload a file smaller than 5MB.', 'danger')
+                return redirect(url_for('add_product'))
+            # Upload to Cloudinary with naming convention
+            public_id = f"product_{shop_id}_{int(time.time())}"
+            upload_result = cloudinary.uploader.upload(image_file, folder="product-images", public_id=public_id)
             image_path = upload_result['secure_url']
 
         new_product = Product(
@@ -1845,8 +1874,13 @@ def edit_product(product_id):
         
         image_file = request.files.get("product-image")
         if image_file and allowed_file(image_file.filename):
-            # Upload to Cloudinary
-            upload_result = cloudinary.uploader.upload(image_file, folder="product-images")
+            # Check file size (5MB limit)
+            if image_file.content_length > 5 * 1024 * 1024:
+                flash('Product image file size too large. Please upload a file smaller than 5MB.', 'danger')
+                return redirect(url_for('edit_product', product_id=product_id))
+            # Upload to Cloudinary with naming convention
+            public_id = f"product_{shop_id}_{product_id}_{int(time.time())}"
+            upload_result = cloudinary.uploader.upload(image_file, folder="product-images", public_id=public_id)
             product.image = upload_result['secure_url']
         
         db.session.commit()
